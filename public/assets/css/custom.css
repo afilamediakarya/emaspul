@@ -182,7 +182,15 @@ font-style: normal;
 font-weight: 400;
 letter-spacing: 0.005em;
 
-/* Text/Dark */
-
 color: #2D2248;
+padding: 2rem;
+margin-top: 2rem;
+}
+
+.fz-12{
+    font-size: 12px;
+}
+
+.fz-16{
+    font-size: 16px;
 }

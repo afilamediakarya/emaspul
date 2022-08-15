@@ -29,7 +29,7 @@ use App\Http\Controllers\dokumenDesaController;
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'do_login'])->name('do_login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('set-tahun-penganggaran', [generalController::class, 'setTahunAnggaran'])->name('set-tahun-penganggaran');
+Route::get('/set-tahun-penganggaran', [generalController::class, 'setTahunAnggaran'])->name('set-tahun-penganggaran');
 Route::get('/', [generalController::class, 'index'])->name('index');
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['check_auth:1']], function () {
@@ -81,6 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/bidang', [generalController::class, 'get_bidang'])->name('get_data.bidang');
         Route::get('/unit-kerja', [generalController::class, 'get_unit_kerja'])->name('get_data.unit_kerja');
         Route::get('/master-verifikasi/{params}', [generalController::class, 'get_master_verifikasi'])->name('get_data.master_verifikasi');
+        Route::get('/documentByVerifikasi', [generalController::class, 'documentByVerifikasi'])->name('get_data.documentByVerifikasi');
         Route::post('/master-verifikasi/', [generalController::class, 'master_verifikasi'])->name('get_data.master_verifikasi.store');
     });  
 

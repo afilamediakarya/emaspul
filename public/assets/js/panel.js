@@ -8,6 +8,90 @@ class Control {
 
     modal_content(title,url){
         $('.modal-title').html(title);
+
+        $.ajax({
+            url : url,
+            method : 'GET',
+            success : function (res) {
+                let tanggal_perbub = '-';
+                let nomor_perbub = '-';
+                let row = '';
+                $.each(res.document,function name(x,y) {
+
+                    if (y.tanggal_perbub !== null) {
+                        tanggal_perbub = y.tanggal_perbub;
+                    }
+
+                    if (y.nomor_perbub !== null) {
+                        nomor_perbub = y.nomor_perbub;
+                    }
+
+                    $('.content_detail_1').html(y.nama_documents);
+                  
+                    $('.content_detail_3').html(y.verifikator);
+                    $('.content_detail_4').html(nomor_perbub);
+                    $('.content_detail_5').html(tanggal_perbub);
+
+                    if (y.status_document == '1') {
+                        $('.content_detail_2').html('<button class="btn btn-light-danger btn-sm">Belum Verifikasi</button>');  
+                    }else if(y.status_document == '2'){
+                        $('.content_detail_2').html(`<button class="btn btn-light-dark btn-sm">Perbaikan</button>`);
+                    }else if(y.status_document == '3'){
+                        $('.content_detail_2').html(`<button class="btn btn-light-warning btn-sm">Belum Selesai</button>`);
+                    }else{
+                        $('.content_detail_2').html(`<button class="btn btn-light-success btn-sm"> Selesai</button>`);
+                    }
+                })
+
+                $.each(res.master_verifikasi, function (i,v) {
+                    let tindak_lanjut = '-';
+                    let kesesuaian = '-';
+                    if (v.tindak_lanjut !== null) {
+                        tindak_lanjut = v.tindak_lanjut;
+                    }
+
+                    if (v.verifikasi == '1') {
+                        kesesuaian = `<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_310_17035)">
+                        <path d="M17.5098 7.74121H16.2536C15.9804 7.74121 15.7205 7.87246 15.5598 8.09746L11.3491 13.9367L9.44197 11.2903C9.28125 11.068 9.02411 10.9341 8.74822 10.9341H7.49197C7.31786 10.9341 7.21608 11.1323 7.31786 11.2742L10.6554 15.9028C10.7342 16.0129 10.8381 16.1025 10.9586 16.1644C11.079 16.2262 11.2124 16.2585 11.3478 16.2585C11.4831 16.2585 11.6166 16.2262 11.737 16.1644C11.8574 16.1025 11.9613 16.0129 12.0402 15.9028L17.6813 8.08139C17.7857 7.93943 17.6839 7.74121 17.5098 7.74121Z" fill="#50CD89"/>
+                        <path d="M12.5 0C5.87321 0 0.5 5.37321 0.5 12C0.5 18.6268 5.87321 24 12.5 24C19.1268 24 24.5 18.6268 24.5 12C24.5 5.37321 19.1268 0 12.5 0ZM12.5 21.9643C6.99821 21.9643 2.53571 17.5018 2.53571 12C2.53571 6.49821 6.99821 2.03571 12.5 2.03571C18.0018 2.03571 22.4643 6.49821 22.4643 12C22.4643 17.5018 18.0018 21.9643 12.5 21.9643Z" fill="#50CD89"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_310_17035">
+                        <rect width="24" height="24" fill="white" transform="translate(0.5)"/>
+                        </clipPath>
+                        </defs>
+                        </svg>                        
+                        `;
+                    }else{
+                        kesesuaian = `<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_310_17047)">
+                        <path d="M17.1448 7.78948C17.1448 7.67162 17.0483 7.5752 16.9305 7.5752L15.1626 7.58323L12.5001 10.7573L9.84029 7.58591L8.06975 7.57787C7.9519 7.57787 7.85547 7.67162 7.85547 7.79216C7.85547 7.84305 7.87422 7.89127 7.90636 7.93145L11.3912 12.0832L7.90636 16.2323C7.87399 16.2716 7.85604 16.3207 7.85547 16.3716C7.85547 16.4895 7.9519 16.5859 8.06975 16.5859L9.84029 16.5779L12.5001 13.4038L15.1599 16.5752L16.9278 16.5832C17.0456 16.5832 17.1421 16.4895 17.1421 16.3689C17.1421 16.3181 17.1233 16.2698 17.0912 16.2297L13.6117 12.0806L17.0965 7.92877C17.1287 7.89127 17.1448 7.84037 17.1448 7.78948Z" fill="#F1416C"/>
+                        <path d="M12.5 0.0268555C5.87321 0.0268555 0.5 5.40007 0.5 12.0269C0.5 18.6536 5.87321 24.0269 12.5 24.0269C19.1268 24.0269 24.5 18.6536 24.5 12.0269C24.5 5.40007 19.1268 0.0268555 12.5 0.0268555ZM12.5 21.9911C6.99821 21.9911 2.53571 17.5286 2.53571 12.0269C2.53571 6.52507 6.99821 2.06257 12.5 2.06257C18.0018 2.06257 22.4643 6.52507 22.4643 12.0269C22.4643 17.5286 18.0018 21.9911 12.5 21.9911Z" fill="#F1416C"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_310_17047">
+                        <rect width="24" height="24" fill="white" transform="translate(0.5)"/>
+                        </clipPath>
+                        </defs>
+                        </svg>
+                        
+                        `;
+                    }
+                    row += `<tr>
+                        <td>${i+1}</td>
+                        <td>${v.master_verifikasi['indikator']}</td>
+                        <td>${kesesuaian}</td>
+                        <td>${tindak_lanjut}</td>
+                    </tr>`;                    
+                })
+           
+                $('#table_detail tbody').html(row);
+            },
+            error : function (xhr) {
+                alert('gagal');
+            }
+        })
     }
 
     overlay_form(type,module, url = null){

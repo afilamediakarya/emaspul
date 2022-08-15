@@ -273,7 +273,7 @@
                 orderable: false,
                 render: function(data, type, full, meta) {
                     let disabled = '';
-                    if (data.status_document == '4') {
+                    if (data.status_document == '4' || data.status_document == '2') {
                         disabled = 'disabled'
                     }
                     return `

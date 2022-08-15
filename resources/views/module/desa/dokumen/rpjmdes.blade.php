@@ -189,7 +189,7 @@
 </div>
 
 <div class="modal fade" tabindex="-1" id="kt_modal_1" aria-hidden="true">
-    <div class="modal-dialog modal-md modal-xl modal-dialog-centered">
+    <div class="modal-dialog modal-md modal-xl">
         <div class="modal-content rounded">
             <div class="modal-header">
                 <h5 class="modal-title"> title</h5>
@@ -203,13 +203,49 @@
 
             <div class="modal-body pt-0 pb-15 px-5 px-xl-20">
                <div class="box_detail">
-                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <span class="fz-12">Nama Dokumen</span>
+                            <p class="fz-16 content_detail_1"></p>
+                        </div>
+                   </div>
+                   <div class="row">
+                        <div class="col-lg-6">
+                            <span class="fz-12">Status</span>
+                            <p class="fz-16 content_detail_2"></p>
+                        </div>
+                        <div class="col-lg-6">
+                            <span class="fz-12">Verifikator</span>
+                            <p class="fz-16 content_detail_3"></p>
+                        </div>
+                   </div>
+                   <div class="row">
+                        <div class="col-lg-6">
+                            <span class="fz-12">Nomor Perbub</span>
+                            <p class="fz-16 content_detail_4"></p>
+                        </div>
+                        <div class="col-lg-6">
+                            <span class="fz-12">Tanggal Perbub</span>
+                            <p class="fz-16 content_detail_5"></p>
+                        </div>
+                   </div>
                </div>
+
+               <table id="table_detail" class="table table-row-dashed table-row-gray-300 gy-7">
+                    <thead>
+                        <tr class="fw-bolder fs-6 text-gray-800">
+                            <th>No</th>
+                            <th>Indikator</th>
+                            <th>Kesesuaian</th>
+                            <th>Tindak Lanjut Penyempurnaan</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -249,8 +285,8 @@
 
     $(document).on('click','.button-detail', function (e) {
         e.preventDefault();
-        // let url = '/general/byParams/'+$(this).attr('data-id');
-       let url = '';
+        
+       let url = `/get-data/documentByVerifikasi?jenis=${$(this).attr('data-jenis')}&document=${$(this).attr('data-id')}`;
         control.modal_content('Detail RPJMDes', url);
     })
 
@@ -295,6 +331,7 @@
             {
                 targets: 4,
                 render: function(data, type, full, meta) {
+                    
                     if (data.status_document == '1') {
                       return  `<button class="btn btn-light-danger btn-sm">Belum Verifikasi</button>`;
                     }else if(data.status_document == '2'){
@@ -314,13 +351,13 @@
                 render: function(data, type, full, meta) {
                     console.log(data)
                     let disabled = '';
-                    if (data.status_document == '4') {
+                    if (data.status_document == '4' || data.status_document == '2') {
                         disabled = 'disabled'
                     }
                     return `
                         <button type="button" ${disabled} data-id="${data.id}" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" class="btn btn_green button-update btn-sm"> <svg style="position: relative;bottom: 2px;" width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 0.515625C10.0938 0.515625 9.74479 0.661458 9.45312 0.953125L4.39062 6L4.01562 7.90625L3.85938 8.64062L4.59375 8.48438L6.5 8.10938L11.5469 3.04688C11.8385 2.75521 11.9844 2.40625 11.9844 2C11.9844 1.59375 11.8385 1.24479 11.5469 0.953125C11.2552 0.661458 10.9062 0.515625 10.5 0.515625ZM10.5 1.48438C10.6146 1.48438 10.7292 1.54167 10.8438 1.65625C10.9583 1.77083 11.0156 1.88542 11.0156 2C11.0156 2.11458 10.9583 2.22917 10.8438 2.34375L6 7.1875L5.14062 7.35938L5.3125 6.5L10.1562 1.65625C10.2708 1.54167 10.3854 1.48438 10.5 1.48438ZM0 2.5V12.5H10V5.90625L9 6.90625V11.5H1V3.5H5.59375L6.59375 2.5H0Z" fill="white"/></svg> Edit</button>
 
-                        <a href="javascript:;" type="button" data-id="${data.id}"  data-bs-toggle="modal" data-bs-target="#kt_modal_1" class="btn btn-info button-detail btn-sm"> <i class="fa fa-eye" aria-hidden="true"></i> Lihat</a>
+                        <a href="javascript:;" type="button" data-id="${data.id}" data-jenis="${data.jenis_document}"  data-bs-toggle="modal" data-bs-target="#kt_modal_1" class="btn btn-info button-detail btn-sm"> <i class="fa fa-eye" aria-hidden="true"></i> Lihat</a>
                         `;
                 },
             }

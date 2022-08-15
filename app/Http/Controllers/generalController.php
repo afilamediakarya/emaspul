@@ -75,11 +75,11 @@ class generalController extends Controller
         }else if($type == '1'){
             // $data = document::with('verifikator')->select('id','nama_documents','periode_awal','periode_akhir','status_document','id_perangkat','id_verifikator','file_document')->where('jenis_document','1')->latest()->get();
 
-            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=1");
+            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=1");
 
         }else if($type == '2'){
 
-            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.file_document,documents.status_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=2");
+            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.file_document,documents.status_document,documents.jenis_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=2");
 
         }else if($type == '5'){
             // $data = document::select('id','nama_documents','id_verifikator','file_document')->where('jenis_document','5')->latest()->get();
@@ -129,6 +129,20 @@ class generalController extends Controller
                 'message' => 'RPJMD Gagal di Proses',
             ],400);
         }
+    }
+
+    public function documentByVerifikasi(){
+        // $result = array();
+        $jenis = request('jenis');
+        $document = request('document');
+        $data = DB::select("SELECT documents.id,documents.nama_documents, documents.nomor_perbub,documents.tanggal_perbub,documents.status_document,  (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." AND id=".$document." LIMIT 1");
+
+        $master_verifikasi = $this->get_master_verifikasi($document);
+
+        return [
+            'document' => $data,
+            'master_verifikasi' => $master_verifikasi
+        ];
     }
 
     public function master_verifikasi(Request $request){
@@ -279,7 +293,7 @@ class generalController extends Controller
         $data->status_document = 4;
         $data->jenis_document = 9;
         $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = 0;
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
         $data->user_insert = Auth::user()->id;
         $data->file_document = $filename;
         $data->save();
@@ -326,7 +340,7 @@ class generalController extends Controller
         $data->status_document = 4;
         $data->jenis_document = 10;
         $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = 0;
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
         $data->user_insert = Auth::user()->id;
         $data->file_document = $filename;
         $data->save();
@@ -380,7 +394,7 @@ class generalController extends Controller
         $data->periode_awal = $request->periode_awal;
         $data->periode_akhir = $request->periode_akhir;
         $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = 0;
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
         $data->user_insert = Auth::user()->id;
         $data->file_document = $filename;
         $data->save();
@@ -429,7 +443,7 @@ class generalController extends Controller
         $data->periode_awal = $request->periode_awal;
         $data->periode_akhir = $request->periode_akhir;
         $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = 0;
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
         $data->user_insert = Auth::user()->id;
         $data->file_document = $filename;
         $data->save();
@@ -474,7 +488,7 @@ class generalController extends Controller
         $data->status_document = 1;
         $data->jenis_document = 2;
         $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = 0;
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
         $data->user_insert = Auth::user()->id;
         $data->file_document = $filename;
         $data->save();
@@ -518,7 +532,7 @@ class generalController extends Controller
         $data->status_document = 4;
         $data->jenis_document = 5;
         $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = 0;
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
         $data->user_insert = Auth::user()->id;
         $data->file_document = $filename;
         $data->save();
@@ -559,7 +573,7 @@ class generalController extends Controller
         $data->periode_awal = $request->periode_awal;
         $data->periode_akhir = $request->periode_akhir;
         $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = 0;
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
         $data->user_insert = Auth::user()->id;
         if (isset($request->file)) {
             $uploadedFile = $request->file('file');
@@ -609,7 +623,7 @@ class generalController extends Controller
         $data->status_document = 4;
         $data->jenis_document = 9;
         $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = 0;
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
         $data->user_insert = Auth::user()->id;
         if (isset($request->file)) {
             $uploadedFile = $request->file('file');
@@ -655,7 +669,7 @@ class generalController extends Controller
         $data->status_document = 4;
         $data->jenis_document = 10;
         $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = 0;
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
         $data->user_insert = Auth::user()->id;
         if (isset($request->file)) {
             $uploadedFile = $request->file('file');
@@ -699,12 +713,12 @@ class generalController extends Controller
 
         $data = document::where('id',$params)->first();
         $data->nama_documents = $request->nama_documents;
-        $data->status_document = 1;
+        $data->status_document = 2;
         $data->jenis_document = 1;
         $data->periode_awal = $request->periode_awal;
         $data->periode_akhir = $request->periode_akhir;
         $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = 0;
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
         $data->user_insert = Auth::user()->id;
         if (isset($request->file)) {
             $uploadedFile = $request->file('file');
@@ -746,10 +760,10 @@ class generalController extends Controller
 
         $data = document::where('id',$params)->first();
         $data->nama_documents = $request->nama_documents;
-        $data->status_document = 1;
+        $data->status_document = 2;
         $data->jenis_document = 2;
         $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = 0;
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
         $data->user_insert = Auth::user()->id;
         if (isset($request->file)) {
             $uploadedFile = $request->file('file');
@@ -794,7 +808,7 @@ class generalController extends Controller
         $data->status_document = 4;
         $data->jenis_document = 5;
         $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = 0;
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
         $data->user_insert = Auth::user()->id;
         if (isset($request->file)) {
             $uploadedFile = $request->file('file');
