@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope&display=swap');
+#logo_{
+    width: 43%;
+    position: relative;
+    left: 5rem;
+    top: 6px;
+}
+
+.aside-menu-custom{
+    background-color: #005DC5;
+}
+
+.aside-logo-custom{
+    background-color: #005DC5;
+}
+
+.active_custom{
+    transition: color .2s ease,background-color .2s ease;
+    background-color: #282EAD;
+}
+
+.active_custom span{
+    color: #FFDE06;
+}
+
+.title-header-topbar{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 27px;
+    letter-spacing: 0.005em;
+    font-family: 'Manrope', sans-serif;
+
+    color: #222C53;
+}
+
+.logo_md{
+    width: 26%;
+}
+
+.text_label_logo{
+    font-family: 'Nunito Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    align-items: center;
+    text-align: center;
+    margin-top: 1rem;
+    color: #FFFFFF;
+}
+
+.text_page_logo{
+    font-family: 'Manrope', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 33px;
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+}
+
+.background_bottom{
+    width: 64%;
+    position: absolute;
+    bottom: 0;
+}
+
+.btn_general{
+    background: #005DC5;
+    color: #FFFFFF;
+}
+
+.btn_green{
+    background: #2FA464;
+    color: #FFFFFF;
+}
+
+.btn_green:hover{
+    color: #FFFFFF;
+    background: #237d4c;
+}
+
+.btn_red{
+    background: #F1416C;
+    color: #FFFFFF;
+}
+
+.btn_red:hover{
+    background: #c73659;
+    color: #FFFFFF;
+}
+
+.btn-cancel{
+    background: #FFFFFF;
+    color: #45414D;
+}
+
+.btn_general:hover{
+    color: #FFFFFF;
+    background: #034c9e;
+}
+
+.menu-item:hover{
+    transition: color .2s ease,background-color .2s ease;
+    background-color: #282EAD;
+}
+
+.widget_red{
+    background: #F1416C;
+}
+
+.widget_yellow{
+    background: #FFC700;
+}
+
+.widget_green{
+    background: #50CD89;
+}
+
+
+.widget_dashboard{
+  
+    border-radius: 12px;
+    width: 100%;
+    padding: 24px 14px 6px 14px;
+    /* padding: 20px; */
+}
+
+.widget_dashboard h1{
+    font-family: 'Nunito Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.widget_dashboard h2{
+    font-family: 'Nunito Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+    color: #FFFFFF;
+    margin-top: 4rem;
+}
+
+.widget_dashboard h2 span{
+    font-family: 'Nunito Sans', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    color: #FFFFFF;
+}
+
+.btn-custom{
+    background: #F8F9FE;
+    font-family: 'Nunito Sans', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 22px;
+
+    letter-spacing: 0.005em;
+
+    color: #005DC5;
+}
+
+.btn-append{
+    border: 1px solid #005DC5;
+border-radius: 4px;
+margin-top: 1rem;
+}
+
+.box_detail{
+    background: #F7F9FF;
+border: 1px solid #EAEBF4;
+border-radius: 4px;
+font-family: 'Nunito Sans', sans-serif;
+font-style: normal;
+font-weight: 400;
+letter-spacing: 0.005em;
+
+/* Text/Dark */
+
+color: #2D2248;
+}
