@@ -13,6 +13,24 @@ use Str;
 use Auth;
 class generalController extends Controller
 {
+
+    public function index(){
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->id_role == 1) {
+                return redirect('dashboard-admin');
+            } elseif ($user->id_role == 2) {
+                return redirect('dashboard-admin-opd');
+            }elseif ($user->id_role == 3) {
+                return redirect('dashboard.admin_desa');
+            }elseif ($user->id_role == 4) {
+                return redirect('dashboard.admin.verifikator');
+            }
+        }else{
+            return redirect('login');
+        }
+    }
+
     public function get_desa(){
         $data = DB::table('desa')->select('id','nama as value')->get();
         return $data;

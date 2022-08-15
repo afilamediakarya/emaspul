@@ -30,6 +30,7 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'do_login'])->name('do_login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('set-tahun-penganggaran', [generalController::class, 'setTahunAnggaran'])->name('set-tahun-penganggaran');
+Route::get('/', [generalController::class, 'index'])->name('index');
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['check_auth:1']], function () {
         Route::get('/dashboard-admin', [DashboardController::class, 'dashboard_admin'])->name('dashboard.admin');
