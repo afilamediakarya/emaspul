@@ -1,5 +1,6 @@
 .env
 node_modules
+vendor
 storage
 todo.txt
 .DS_Store
