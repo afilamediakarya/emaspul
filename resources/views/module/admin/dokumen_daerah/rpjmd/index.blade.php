@@ -156,17 +156,6 @@
                         </div>
                         <!--end::File-->
 
-                        <!--begin::Progress-->
-                        <div class="dropzone-progress">
-                            <div class="progress">
-                                <div
-                                    class="progress-bar bg-primary"
-                                    role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-dz-uploadprogress>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end::Progress-->
-
                         <!--begin::Toolbar-->
                         <div class="dropzone-toolbar">
                             <span class="dropzone-start"><i class="bi bi-play-fill fs-3"></i></span>
@@ -187,17 +176,18 @@
         </div>
         <!--end::Col-->
     </div>
-    <div class="progress">
-        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-
-
+    
                 <div class="separator separator-dashed mt-8 mb-5"></div>
-                    <div class="">
-                        <button type="submit" class="btn btn_general btn-sm btn-submit">Simpan</button>
-                        <button type="reset" class="btn mr-2 btn-light btn-cancel btn-sm">Batal</button>
-                    </div>
+                <div class="progress mb-5" style="display:none">
+                    <div id="myBar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="">
+                    <button type="submit" class="btn btn_general btn-sm btn-submit">Simpan</button>
+                    <button type="reset" class="btn mr-2 btn-light btn-cancel btn-sm">Batal</button>
+                </div>
            </form>
+         
+            
         </div>
         <!--end::Card body-->
     </div>

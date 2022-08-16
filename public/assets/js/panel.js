@@ -217,38 +217,55 @@ class Control {
         });
     }
 
-    progress_bar_process(percentage, timer)
+    progress_bar_process(percentage, timer,message,type_,table_)
     {
-        // console.log('percentage : '+percentage)
-        $('.progress-bar').css('width',percentage +'%');
+        console.log('percentage : '+percentage+'%');
+        $('#myBar').css('width',percentage +'%');
+        $('#myBar').trigger('change');
         if(percentage > 100)
         {
             clearInterval(timer);
-            $('.progress-bar').css('width', '0%');
+            $('#myBar').css('width', '0%');
+
+            swal.fire({
+                text: `${message}`,
+                icon: "success",
+                buttonsStyling: false,
+                confirmButtonText: "Ok, got it!",
+                confirmButtonColor: '#354C9F',
+                customClass: {
+                    confirmButton: "btn font-weight-bold btn-light-primary"
+                }
+            }).then(function() {
+                if (type_ == 'type_1') {
+                    window.location.href = response;
+                }else{
+                    $('#side_form_close').trigger('click');
+                    table_.DataTable().ajax.reload();
+                    $('.progress').css('display', 'none');
+                }
+            });
         }
     }
 
     submitFormMultipart(url,role_data = null,module = null,element){
         let this_ = this;
-     
         let type_ = this.type;
         let table_ = this.table;
-
         let message = `${module} berhasil di ${role_data}`;
 
+      
         $.ajaxSetup({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
         });
-        // let form = $('form')[0];
         var formData = this.formData;
         console.log(element);
         for (let index = 0; index < element.length; index++) {
             formData.append(`${element[index]}`,$(`#${element[index]}`).val());
         }
        
-
         $.ajax({
             type: "POST",
             url: url,
@@ -262,31 +279,16 @@ class Control {
             success: function (response) {
                 console.log(response);
                 $('.text-danger').html('');
-
+                $('.btn-submit').html('sdfdsf');
+       
                 var percentage = 0;
 
                 var timer = setInterval(function(){
                  percentage = percentage + 20;
-                 this_.progress_bar_process(percentage, timer);
+                 this_.progress_bar_process(percentage, timer, message,type_,table_);
                 }, 1000);
 
-                // swal.fire({
-                //     text: `${message}`,
-                //     icon: "success",
-                //     buttonsStyling: false,
-                //     confirmButtonText: "Ok, got it!",
-                //     confirmButtonColor: '#354C9F',
-                //     customClass: {
-                //         confirmButton: "btn font-weight-bold btn-light-primary"
-                //     }
-                // }).then(function() {
-                //     if (type_ == 'type_1') {
-                //         window.location.href = response;
-                //     }else{
-                //         $('#side_form_close').trigger('click');
-                //         table_.DataTable().ajax.reload();
-                //     }
-                // });
+        
             },
             error : function (xhr) {
                 $('.text-danger').html('');
@@ -358,7 +360,6 @@ class Control {
                         </td>
                         <td>
                         <div class="mb-10 mt-5">
-
                                 <div class="radio-inline">
                                         <div class="form-check form-check-custom form-check-solid">
                                             <input class="form-check-input" value="1" type="radio" ${checked_true} name="status[${x}]" id="flexRadioDefault${x}">

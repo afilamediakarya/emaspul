@@ -213,12 +213,6 @@ class generalController extends Controller
     }
 
     public function storeDocuments(Request $request){
-        return response()->json([
-            'type' => 'success',
-            'status' => true,
-            'message' => 'RPJMD Berhasil di Tambahkan',
-            'data' => ''
-        ],200);
         $jenis = request('jenis');
         $data = array();
         if ($jenis == 'RPJMD') {
