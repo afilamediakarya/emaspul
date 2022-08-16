@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\document;
-use Illuminate\Support\Facades\Storage;
-use Str;
 class dokumenDesaController extends Controller
 {
     public function index(){

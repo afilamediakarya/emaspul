@@ -84,6 +84,16 @@ class generalController extends Controller
         }else if($type == '5'){
             // $data = document::select('id','nama_documents','id_verifikator','file_document')->where('jenis_document','5')->latest()->get();
             $data = DB::select("SELECT documents.id,documents.nama_documents,documents.file_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=5");
+        }else if($type == '3'){
+            // $data = document::with('verifikator')->select('id','nama_documents','periode_awal','periode_akhir','status_document','id_perangkat','id_verifikator','file_document')->where('jenis_document','1')->latest()->get();
+
+            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=3");
+
+        }else if($type == '4'){
+            // $data = document::with('verifikator')->select('id','nama_documents','periode_awal','periode_akhir','status_document','id_perangkat','id_verifikator','file_document')->where('jenis_document','1')->latest()->get();
+
+            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=4");
+
         }
      
        
@@ -179,6 +189,10 @@ class generalController extends Controller
             $url = '/dokumen-desa?type=RPJMDes';
         }elseif($jenis == 'RKPDes'){
             $url = '/dokumen-desa?type=RKPDes';
+        }elseif($jenis == 'Renstra'){
+            $url = '/dokumen-skpd?type=Renstra';
+        }elseif($jenis == 'Renja'){
+            $url = '/dokumen-skpd?type=Renja';
         }
 
         if ($data) {
@@ -199,6 +213,12 @@ class generalController extends Controller
     }
 
     public function storeDocuments(Request $request){
+        return response()->json([
+            'type' => 'success',
+            'status' => true,
+            'message' => 'RPJMD Berhasil di Tambahkan',
+            'data' => ''
+        ],200);
         $jenis = request('jenis');
         $data = array();
         if ($jenis == 'RPJMD') {
@@ -215,6 +235,12 @@ class generalController extends Controller
             $this->verifikasiDocument( json_decode($data->content(), true)['data']['jenis_document'] ,json_decode($data->content(), true)['data']['id']);
         }elseif ($jenis == 'sdgs') {
             $data = $this->store_dokumen_sdgs($request);
+        }elseif ($jenis == 'renstra'){
+            $data = $this->store_dokumen_renstra($request);
+            $this->verifikasiDocument( json_decode($data->content(), true)['data']['jenis_document'] ,json_decode($data->content(), true)['data']['id']);   
+        }elseif ($jenis == 'renja'){
+            $data = $this->store_dokumen_renja($request);
+            $this->verifikasiDocument( json_decode($data->content(), true)['data']['jenis_document'] ,json_decode($data->content(), true)['data']['id']);   
         }
 
         $history = new document_history;
@@ -240,6 +266,10 @@ class generalController extends Controller
             $data = $this->update_dokumen_rkpdes($request,$params);
         }elseif ($jenis == 'sdgs') {
             $data = $this->update_dokumen_sdgs($request,$params);
+        }elseif ($jenis == 'renstra') {
+            $data = $this->update_dokumen_renstra($request,$params);
+        }elseif ($jenis == 'renja') {
+            $data = $this->update_dokumen_renja($request,$params);
         }
 
         $history = new document_history;
@@ -508,6 +538,112 @@ class generalController extends Controller
             ],400);
         }
     }
+
+    public function store_dokumen_renstra($request){
+       
+        $validated = $request->validate([
+            'nama_documents' => 'required',
+            'nomor_perbub' => 'required',
+            'tanggal_perbub' => 'required',
+            'file' => 'required|mimes:pdf|max:30000',
+            'periode_awal' => 'required',
+            'periode_akhir' => 'required',
+        ]);
+
+        $uploadedFile = $request->file('file');
+        
+        $filename = '0_'.'dokumen_opd_'.Str::slug($request->nama_documents, '_').'_renstra_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
+        
+        // id_perangkat | jenis | nama | tahun
+        // public_uploads
+        Storage::disk('public')->putFileAs(
+          '/files/dokumen_opd/renstra',
+          $uploadedFile,
+          $filename
+        );
+
+        $data = new document();
+        $data->nama_documents = $request->nama_documents;
+        $data->nomor_perbub = $request->nomor_perbub;
+        $data->tanggal_perbub = $request->tanggal_perbub;
+        $data->status_document = 1;
+        $data->jenis_document = 3;
+        $data->periode_awal = $request->periode_awal;
+        $data->periode_akhir = $request->periode_akhir;
+        $data->tahun = session('tahun_penganggaran');
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
+        $data->user_insert = Auth::user()->id;
+        $data->file_document = $filename;
+        $data->save();
+      
+
+        if ($data) {
+            return response()->json([
+                'type' => 'success',
+                'status' => true,
+                'message' => 'Renstra Berhasil di Tambahkan',
+                'data' => $data
+            ],200);
+        }else{
+            return response()->json([
+                'type' => 'failed',
+                'status' => false,
+                'message' => 'Renstra Gagal di Proses',
+            ],400);
+        }
+    }
+
+    public function store_dokumen_renja($request){
+       
+        $validated = $request->validate([
+            'nama_documents' => 'required',
+            'nomor_perbub' => 'required',
+            'tanggal_perbub' => 'required',
+            'file' => 'required|mimes:pdf|max:30000',
+        ]);
+
+        $uploadedFile = $request->file('file');
+        
+        $filename = '0_'.'dokumen_opd_'.Str::slug($request->nama_documents, '_').'_renja_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
+        
+        // id_perangkat | jenis | nama | tahun
+        // public_uploads
+        Storage::disk('public')->putFileAs(
+          '/files/dokumen_opd/renja',
+          $uploadedFile,
+          $filename
+        );
+
+        $data = new document();
+        $data->nama_documents = $request->nama_documents;
+        $data->nomor_perbub = $request->nomor_perbub;
+        $data->tanggal_perbub = $request->tanggal_perbub;
+        $data->status_document = 1;
+        $data->jenis_document = 4;
+        $data->tahun = session('tahun_penganggaran');
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
+        $data->user_insert = Auth::user()->id;
+        $data->file_document = $filename;
+        $data->save();
+      
+
+        if ($data) {
+            return response()->json([
+                'type' => 'success',
+                'status' => true,
+                'message' => 'Renja Berhasil di Tambahkan',
+                'data' => $data
+            ],200);
+        }else{
+            return response()->json([
+                'type' => 'failed',
+                'status' => false,
+                'message' => 'Renja Gagal di Proses',
+            ],400);
+        }
+    }
+
+    // BATAAS
 
     public function store_dokumen_sdgs($request){
        
@@ -837,6 +973,112 @@ class generalController extends Controller
                 'type' => 'failed',
                 'status' => false,
                 'message' => 'SDGd Desa Gagal di Proses',
+            ],400);
+        }
+    }
+
+    public function update_dokumen_renstra($request,$params){
+       
+        $validated = $request->validate([
+            'nama_documents' => 'required',
+            'nomor_perbub' => 'required',
+            'tanggal_perbub' => 'required',
+            'file' => 'mimes:pdf|max:30000',
+            'periode_awal' => 'required',
+            'periode_akhir' => 'required',
+        ]);
+
+        $data = document::where('id',$params)->first();
+        $data->nama_documents = $request->nama_documents;
+        $data->nomor_perbub = $request->nomor_perbub;
+        $data->tanggal_perbub = $request->tanggal_perbub;
+        $data->status_document = 2;
+        $data->jenis_document = 3;
+        $data->periode_awal = $request->periode_awal;
+        $data->periode_akhir = $request->periode_akhir;
+        $data->tahun = session('tahun_penganggaran');
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
+        $data->user_insert = Auth::user()->id;
+        if (isset($request->file)) {
+            $uploadedFile = $request->file('file');
+        
+            $filename = '0_'.'dokumen_opd_'.Str::slug($request->nama_documents, '_').'_renstra_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
+      
+            Storage::disk('public')->putFileAs(
+                '/files/dokumen_opd/renstra',
+              $uploadedFile,
+              $filename
+            );
+
+            $data->file_document = $filename;
+        }
+
+        $data->save();
+      
+        if ($data) {
+            return response()->json([
+                'type' => 'success',
+                'status' => true,
+                'message' => 'Renstra Berhasil di Update',
+                'data' => $data
+            ],200);
+        }else{
+            return response()->json([
+                'type' => 'failed',
+                'status' => false,
+                'message' => 'Renstra Gagal di Proses',
+            ],400);
+        }
+    }
+
+    public function update_dokumen_renja($request,$params){
+       
+        $validated = $request->validate([
+            'nama_documents' => 'required',
+            'nomor_perbub' => 'required',
+            'tanggal_perbub' => 'required',
+            'file' => 'mimes:pdf|max:30000',
+        ]);
+
+        $data = document::where('id',$params)->first();
+        $data->nama_documents = $request->nama_documents;
+        $data->nomor_perbub = $request->nomor_perbub;
+        $data->tanggal_perbub = $request->tanggal_perbub;
+        $data->status_document = 2;
+        $data->jenis_document = 4;
+        $data->periode_awal = $request->periode_awal;
+        $data->periode_akhir = $request->periode_akhir;
+        $data->tahun = session('tahun_penganggaran');
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
+        $data->user_insert = Auth::user()->id;
+        if (isset($request->file)) {
+            $uploadedFile = $request->file('file');
+        
+            $filename = '0_'.'dokumen_opd_'.Str::slug($request->nama_documents, '_').'_renja_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
+      
+            Storage::disk('public')->putFileAs(
+                '/files/dokumen_opd/renja',
+              $uploadedFile,
+              $filename
+            );
+
+            $data->file_document = $filename;
+        }
+
+        $data->save();
+      
+        if ($data) {
+            return response()->json([
+                'type' => 'success',
+                'status' => true,
+                'message' => 'Renja Berhasil di Update',
+                'data' => $data
+            ],200);
+        }else{
+            return response()->json([
+                'type' => 'failed',
+                'status' => false,
+                'message' => 'Renja Gagal di Proses',
             ],400);
         }
     }

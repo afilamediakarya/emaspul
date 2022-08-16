@@ -10,6 +10,7 @@ use App\Http\Controllers\akunController;
 use App\Http\Controllers\rpjmdController;
 use App\Http\Controllers\rkpdController;
 use App\Http\Controllers\dokumenDesaController;
+use App\Http\Controllers\dokumenOpdController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,11 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::group(['middleware' => ['check_auth:2']], function () {
         Route::get('/dashboard-admin-opd', [DashboardController::class, 'dashboard_admin_opd'])->name('dashboard.admin_opd');
+        Route::prefix('akun-opd')->group(function () {
+            Route::prefix('dokumen')->group(function () {
+                Route::get('/', [dokumenOpdController::class, 'index']);
+            });
+        }); 
     });
 
     Route::group(['middleware' => ['check_auth:3']], function () {
@@ -101,6 +107,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('dokumen-desa')->group(function () {
         Route::get('/', [dokumenDesaController::class, 'index_verifikator']);
         Route::get('/verifikasi', [dokumenDesaController::class, 'verifikasi']);
+        // Route::get('/rkpd', [rkpdController::class, 'index'])->name('rkpd');
+        // Route::get('/lainnya', [rkpdController::class, 'index_'])->name('lainnya'); 
+    });
+
+    Route::prefix('dokumen-skpd')->group(function () {
+        Route::get('/', [dokumenOpdController::class, 'index_verifikator']);
+        Route::get('/verifikasi', [dokumenOpdController::class, 'verifikasi']);
         // Route::get('/rkpd', [rkpdController::class, 'index'])->name('rkpd');
         // Route::get('/lainnya', [rkpdController::class, 'index_'])->name('lainnya'); 
     });

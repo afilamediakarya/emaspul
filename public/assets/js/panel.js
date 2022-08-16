@@ -217,8 +217,20 @@ class Control {
         });
     }
 
+    progress_bar_process(percentage, timer)
+    {
+        // console.log('percentage : '+percentage)
+        $('.progress-bar').css('width',percentage +'%');
+        if(percentage > 100)
+        {
+            clearInterval(timer);
+            $('.progress-bar').css('width', '0%');
+        }
+    }
+
     submitFormMultipart(url,role_data = null,module = null,element){
-        // let data =  $('.form-data').serialize();
+        let this_ = this;
+     
         let type_ = this.type;
         let table_ = this.table;
 
@@ -235,10 +247,6 @@ class Control {
         for (let index = 0; index < element.length; index++) {
             formData.append(`${element[index]}`,$(`#${element[index]}`).val());
         }
-        // $.each(element, function (index, label) {
-        //     formData.append(`${label}=`,$(`#${label}`).val());
-        // })
-
        
 
         $.ajax({
@@ -247,26 +255,38 @@ class Control {
             data: formData,
             contentType: false,
             processData: false,
+            beforeSend:function()
+            {
+             $('.progress').css('display', 'block');
+            },
             success: function (response) {
                 console.log(response);
                 $('.text-danger').html('');
-                swal.fire({
-                    text: `${message}`,
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    confirmButtonColor: '#354C9F',
-                    customClass: {
-                        confirmButton: "btn font-weight-bold btn-light-primary"
-                    }
-                }).then(function() {
-                    if (type_ == 'type_1') {
-                        window.location.href = response;
-                    }else{
-                        $('#side_form_close').trigger('click');
-                        table_.DataTable().ajax.reload();
-                    }
-                });
+
+                var percentage = 0;
+
+                var timer = setInterval(function(){
+                 percentage = percentage + 20;
+                 this_.progress_bar_process(percentage, timer);
+                }, 1000);
+
+                // swal.fire({
+                //     text: `${message}`,
+                //     icon: "success",
+                //     buttonsStyling: false,
+                //     confirmButtonText: "Ok, got it!",
+                //     confirmButtonColor: '#354C9F',
+                //     customClass: {
+                //         confirmButton: "btn font-weight-bold btn-light-primary"
+                //     }
+                // }).then(function() {
+                //     if (type_ == 'type_1') {
+                //         window.location.href = response;
+                //     }else{
+                //         $('#side_form_close').trigger('click');
+                //         table_.DataTable().ajax.reload();
+                //     }
+                // });
             },
             error : function (xhr) {
                 $('.text-danger').html('');
