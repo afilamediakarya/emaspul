@@ -9,12 +9,13 @@ class unitBidang extends Model
 {
     use HasFactory;
     protected $table = 'unit_bidang_verifikasi';
-    protected $with = ['perangkat_desa'];
+    protected $with = ['perangkat'];
+
     public function bidangVerifikator(){
         return $this->hasMany(unitBidang::class,'id','id_bidang');
     }
 
-    public function perangkat_desa(){
-        return $this->hasOne(perangkat_desa::class,'id','id_perangkat');
+    public function perangkat(){ 
+        return $this->hasOne(unitKerja::class,'id','id_perangkat');
     }
 }
