@@ -14,7 +14,7 @@
                     <thead>
                         <tr class="fw-bolder fs-6 text-gray-800">
                             <th>No</th>
-                            <th>Nama Desa</th>
+                            <th>Nama Satuan Kerja</th>
                             <th>Nama Dokumen</th>
                             <th>Aksi</th>
                         </tr>
@@ -36,14 +36,17 @@
 @section('script')
 <script>
      let control = new Control('type_2');
-     let element = ['nama_documents','periode_awal','periode_akhir'];
-
-
     // /storage/files/dokumen_daerah/rpjmdes/
     $(document).on('click','.button-show', function (e) {
         e.preventDefault();
-        window.open('/storage/files/dokumen_daerah/sdgs/'+$(this).attr('data-label'), '_blank');
+        window.open('/storage/files/dokumen_opd/renstra/'+$(this).attr('data-label'), '_blank');
     })
+
+    $(document).on('click', '.btn-verifikasi', function (e) {
+            e.preventDefault();
+            let params = $(this).attr('data-id');
+          window.location.href = `/dokumen-desa/verifikasi?document=${params}&jenis=Renstra`;
+     })
 
     $(function () {
       
@@ -54,7 +57,7 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                 }  
             },{
-                data:'nama_desa',
+                data:'nama_unit_kerja'
             },{
                 data:'nama_documents'
             },{
@@ -65,21 +68,22 @@
             {
                 targets: -1,
                 title: 'Aksi',
-                // width: '15rem',
+                width: '20rem',
                 orderable: false,
                 render: function(data, type, full, meta) {
-                    console.log(data);
+                    let disabled = '';
+                    if (data.status_document == '3') {
+                        disabled = 'disabled'
+                    }
                     return `
-
                         <a href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm"> <i class="fa fa-eye" aria-hidden="true"></i> Tampilkan</a>
                         `;
                 },
             }
         ];
-        control.initDatatable('/general/datatable-list?jenis=5&type=type_b',columns,columnDefs);
+        control.initDatatable('/general/datatable-list?jenis=6&type=type_c',columns,columnDefs);
         control.form_upload();
-       
-
+    
     })
 
 </script>

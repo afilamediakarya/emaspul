@@ -110,7 +110,7 @@
                 },
             }
         ];
-        control.initDatatable('/general/datatable-list?jenis=2',columns,columnDefs);
+        control.initDatatable('/general/datatable-list?jenis=2&type=type_b',columns,columnDefs);
         control.form_upload();
        
 

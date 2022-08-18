@@ -9,6 +9,7 @@ use App\Models\document_history;
 use App\Models\master_verifikasi;
 use App\Models\verifikasi_document;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\InfoRequest;
 use Str;
 use Auth;
 class generalController extends Controller
@@ -63,39 +64,17 @@ class generalController extends Controller
     }
 
     public function datatable_list(){
-        $type = request('jenis');
+        $jenis = request('jenis');
+        $type = request('type');
         $data = array();
 
-        if ($type == '8') {
-            $data = document::select('id','nama_documents','nomor_perbub','tanggal_perbub','file_document')->where('jenis_document','8')->latest()->get();
-        }else if($type == '9'){
-            $data = document::select('id','nama_documents','nomor_perbub','tanggal_perbub','file_document')->where('jenis_document','9')->latest()->get();
-        }else if($type == '10'){
-            $data = document::select('id','nama_documents','file_document')->where('jenis_document','10')->latest()->get();
-        }else if($type == '1'){
-            // $data = document::with('verifikator')->select('id','nama_documents','periode_awal','periode_akhir','status_document','id_perangkat','id_verifikator','file_document')->where('jenis_document','1')->latest()->get();
-
-            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=1");
-
-        }else if($type == '2'){
-
-            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.file_document,documents.status_document,documents.jenis_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=2");
-
-        }else if($type == '5'){
-            // $data = document::select('id','nama_documents','id_verifikator','file_document')->where('jenis_document','5')->latest()->get();
-            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.file_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=5");
-        }else if($type == '3'){
-            // $data = document::with('verifikator')->select('id','nama_documents','periode_awal','periode_akhir','status_document','id_perangkat','id_verifikator','file_document')->where('jenis_document','1')->latest()->get();
-
-            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=3");
-
-        }else if($type == '4'){
-            // $data = document::with('verifikator')->select('id','nama_documents','periode_awal','periode_akhir','status_document','id_perangkat','id_verifikator','file_document')->where('jenis_document','1')->latest()->get();
-
-            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=4");
-
-        }
-     
+        if ($type == 'type_a') {
+            $data = document::select('id','nama_documents','nomor_perbub','tanggal_perbub','file_document')->where('jenis_document',$jenis)->latest()->get();
+        }else if($type == 'type_b'){
+            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis);
+        }else{
+            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis);
+        }     
        
 
         if ($data) {
@@ -212,67 +191,221 @@ class generalController extends Controller
         }
     }
 
+    public function perform(InfoRequest $request) 
+    {
+        
+    }
+
+    public function check_files($params1, $params2) 
+    {
+        $data = document::where('nama_documents',$params1)->where('id_perangkat',Auth::user()->id_unit_kerja)->where('jenis_document',$params2)->where('tahun',session('tahun_penganggaran'))->exists();
+        return $data;
+    }
+
     public function storeDocuments(Request $request){
         $jenis = request('jenis');
+        $type = request('type');
         $data = array();
-        if ($jenis == 'RPJMD') {
-            $data = $this->store_dokumen_rpjmd($request);
-        }elseif($jenis == 'RKPD'){
-            $data = $this->store_dokumen_rkpd($request);
-        }elseif ($jenis == 'daerah') {
-            $data = $this->store_dokumen_daerah($request);
-        }elseif ($jenis == 'rpjmdes'){
-            $data = $this->store_dokumen_rpjmdes($request);
-            $this->verifikasiDocument( json_decode($data->content(), true)['data']['jenis_document'] ,json_decode($data->content(), true)['data']['id']);
-        }elseif ($jenis == 'rkpdes') {
-            $data = $this->store_dokumen_rkpdes($request);
-            $this->verifikasiDocument( json_decode($data->content(), true)['data']['jenis_document'] ,json_decode($data->content(), true)['data']['id']);
-        }elseif ($jenis == 'sdgs') {
-            $data = $this->store_dokumen_sdgs($request);
-        }elseif ($jenis == 'renstra'){
-            $data = $this->store_dokumen_renstra($request);
-            $this->verifikasiDocument( json_decode($data->content(), true)['data']['jenis_document'] ,json_decode($data->content(), true)['data']['id']);   
-        }elseif ($jenis == 'renja'){
-            $data = $this->store_dokumen_renja($request);
-            $this->verifikasiDocument( json_decode($data->content(), true)['data']['jenis_document'] ,json_decode($data->content(), true)['data']['id']);   
+        $status_document = 0;
+        $jenis_document = 0;
+
+        if ($type == 'type_a') {
+            $status_document = 4;
+        }else{
+            $status_document = 1;
         }
 
-        $history = new document_history;
-        $history->action = 'tambah data';
-        $history->id_documents = json_decode($data->content(), true)['data']['id'];
-        $history->user_insert = Auth::user()->id;
-        $history->save();
-        return $data;
+        if ($jenis == 'rpjmd') {
+            $jenis_document = 8;
+        }elseif($jenis == 'rkpd'){
+            $jenis_document = 9;
+        }elseif ($jenis == 'daerah') {
+            $jenis_document = 10;
+        }elseif ($jenis == 'rpjmdes'){
+            $jenis_document = 1;
+        }elseif ($jenis == 'rkpdes') {
+            $jenis_document = 2;
+        }elseif ($jenis == 'sdgs') {
+            $jenis_document = 5;
+        }elseif ($jenis == 'renstra'){
+            $jenis_document = 3;
+        }elseif ($jenis == 'renja'){
+            $jenis_document = 4;
+        }elseif ($jenis == 'sektoral') {
+            $jenis_document = 6;
+        }elseif ($jenis == 'skpd') {
+            $jenis_document = 7;
+        }
+
+        
+        $check_files = $this->check_files($request->nama_documents,$jenis_document);
+
+        if ($check_files > 0) {
+            return response()->json([
+                'type' => 'invalid_file',
+                'status' => false,
+                'message' => 'Maaf, Dokumen sudah ada',
+            ],200);
+        }else {
+            $uploadedFile = $request->file('file');
+        
+            $filename = '0_'.$request->referensi_nama_dokumen.'_'.Str::slug($request->nama_documents, '_').'_'.$jenis.'_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
+
+            Storage::disk('public')->putFileAs(
+            '/files/'.$request->referensi_nama_dokumen.'/'.$jenis,
+            $uploadedFile,
+            $filename
+            );
+
+            if ($type == 'type_a') {
+                $status_document = 4;
+            }else{
+                $status_document = 1;
+            }
+
+            $data = new document();
+            $data->nama_documents = $request->nama_documents;
+            $data->nomor_perbub = $request->nomor_perbub;
+            $data->tanggal_perbub = $request->tanggal_perbub;
+            $data->status_document = $status_document;
+            $data->jenis_document = $jenis_document;
+            $data->periode_awal = $request->periode_awal;
+            $data->periode_akhir = $request->periode_akhir;
+            $data->tahun = session('tahun_penganggaran');
+            $data->id_perangkat = Auth::user()->id_unit_kerja;
+            $data->user_insert = Auth::user()->id;
+            $data->file_document = $filename;
+            $data->save();
+
+            if ($type == 'type_b') {
+                $this->verifikasiDocument($data->jenis_document, $data->id);
+            }
+
+            $history = new document_history;
+            $history->action = 'tambah data';
+            $history->id_documents = $data->id;
+            $history->user_insert = Auth::user()->id;
+            $history->save();
+        
+            if ($data) {
+                return response()->json([
+                    'type' => 'success',
+                    'status' => true,
+                    'message' => $jenis.' berhasil di proses',
+                    'data' => $data
+                ],200);
+            }else{
+                return response()->json([
+                    'type' => 'failed',
+                    'status' => false,
+                    'message' => $jenis.' Gagal di proses',
+                ],400);
+            }
+        }
+
     }
 
     public function updateDocuments(Request $request,$params){
         $jenis = request('jenis');
+        $type = request('type');
         $data = array();
-        if ($jenis == 'RPJMD') {
-            $data = $this->update_dokumen_rpjmd($request,$params);
-        }elseif($jenis == 'RKPD'){
-            $data = $this->update_dokumen_rkpd($request,$params);
-        }elseif ($jenis == 'daerah') {
-            $data = $this->update_dokumen_daerah($request,$params);
-        }elseif ($jenis == 'rpjmdes'){
-            $data = $this->update_dokumen_rpjmdes($request,$params);
-        }elseif ($jenis == 'rkpdes'){
-            $data = $this->update_dokumen_rkpdes($request,$params);
-        }elseif ($jenis == 'sdgs') {
-            $data = $this->update_dokumen_sdgs($request,$params);
-        }elseif ($jenis == 'renstra') {
-            $data = $this->update_dokumen_renstra($request,$params);
-        }elseif ($jenis == 'renja') {
-            $data = $this->update_dokumen_renja($request,$params);
+
+        $status_document = 0;
+        $jenis_document = 0;
+
+        if ($type == 'type_a') {
+            $status_document = 4;
+        }else{
+            $status_document = 1;
         }
+
+        if ($jenis == 'rpjmd') {
+            $jenis_document = 8;
+        }elseif($jenis == 'rkpd'){
+            $jenis_document = 9;
+        }elseif ($jenis == 'daerah') {
+            $jenis_document = 10;
+        }elseif ($jenis == 'rpjmdes'){
+            $jenis_document = 1;
+        }elseif ($jenis == 'rkpdes') {
+            $jenis_document = 2;
+        }elseif ($jenis == 'sdgs') {
+            $jenis_document = 5;
+        }elseif ($jenis == 'renstra'){
+            $jenis_document = 3;
+        }elseif ($jenis == 'renja'){
+            $jenis_document = 4;
+        }elseif ($jenis == 'sektoral') {
+            $jenis_document = 6;
+        }elseif ($jenis == 'skpd') {
+            $jenis_document = 7;
+        }
+
+        $data = document::where('id',$params)->first();
+        $data->nama_documents = $request->nama_documents;
+        $data->nomor_perbub = $request->nomor_perbub;
+        $data->tanggal_perbub = $request->tanggal_perbub;
+        $data->status_document = $status_document;
+        $data->jenis_document = $jenis_document;
+        $data->periode_awal = $request->periode_awal;
+        $data->periode_akhir = $request->periode_akhir;
+        $data->tahun = session('tahun_penganggaran');
+        $data->id_perangkat = Auth::user()->id_unit_kerja;
+        $data->user_insert = Auth::user()->id;
+        if (isset($request->file)) {
+            $uploadedFile = $request->file('file');
+        
+            $filename = '0_'.$request->referensi_nama_dokumen.'_'.Str::slug($request->nama_documents, '_').'_'.$jenis.'_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
+      
+            Storage::disk('public')->putFileAs(
+            '/files/'.$request->referensi_nama_dokumen.'/'.$jenis,
+            $uploadedFile,
+            $filename
+            );
+
+            $data->file_document = $filename;
+        }
+
+        $data->save();
+
+        // if ($jenis == 'RPJMD') {
+        //     $data = $this->update_dokumen_rpjmd($request,$params);
+        // }elseif($jenis == 'RKPD'){
+        //     $data = $this->update_dokumen_rkpd($request,$params);
+        // }elseif ($jenis == 'daerah') {
+        //     $data = $this->update_dokumen_daerah($request,$params);
+        // }elseif ($jenis == 'rpjmdes'){
+        //     $data = $this->update_dokumen_rpjmdes($request,$params);
+        // }elseif ($jenis == 'rkpdes'){
+        //     $data = $this->update_dokumen_rkpdes($request,$params);
+        // }elseif ($jenis == 'sdgs') {
+        //     $data = $this->update_dokumen_sdgs($request,$params);
+        // }elseif ($jenis == 'renstra') {
+        //     $data = $this->update_dokumen_renstra($request,$params);
+        // }elseif ($jenis == 'renja') {
+        //     $data = $this->update_dokumen_renja($request,$params);
+        // }
 
         $history = new document_history;
         $history->action = 'update data';
-        $history->id_documents = json_decode($data->content(), true)['data']['id'];
+        $history->id_documents = $data->id;
         $history->user_insert = Auth::user()->id;
         $history->save();
 
-        return $data;
+        if ($data) {
+            return response()->json([
+                'type' => 'success',
+                'status' => true,
+                'message' => $jenis.' berhasil di proses',
+                'data' => $data
+            ],200);
+        }else{
+            return response()->json([
+                'type' => 'failed',
+                'status' => false,
+                'message' => $jenis.' Gagal di proses',
+            ],400);
+        }
     }
 
     public function byParams($params){
@@ -291,397 +424,6 @@ class generalController extends Controller
         }
     }
 
-    public function store_dokumen_rkpd($request){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'nomor_perbub' => 'required',
-            'tanggal_perbub' => 'required',
-            'file' => 'required|mimes:pdf|max:30000',
-        ]);
-
-        $uploadedFile = $request->file('file');
-        
-        $filename = '0_'.'dokumen_daerah_'.Str::slug($request->nama_documents, '_').'_rkpd_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-
-        Storage::disk('public')->putFileAs(
-          'files/dokumen_daerah/rkpd',
-          $uploadedFile,
-          $filename
-        );
-
-        $data = new document();
-        $data->nama_documents = $request->nama_documents;
-        $data->nomor_perbub = $request->nomor_perbub;
-        $data->tanggal_perbub = $request->tanggal_perbub;
-        $data->status_document = 4;
-        $data->jenis_document = 9;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        $data->file_document = $filename;
-        $data->save();
-      
-
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'RKPD Berhasil di Tambahkan',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'RKPD Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function store_dokumen_daerah($request){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'file' => 'required|mimes:pdf|max:30000',
-        ]);
-        // return $request->all();
-
-        $uploadedFile = $request->file('file');
-        
-        $filename = '0_'.'dokumen_daerah_'.Str::slug($request->nama_documents, '_').'_daerah_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-        
-        // id_perangkat | jenis | nama | tahun
-  
-        Storage::disk('public')->putFileAs(
-          'files/dokumen_daerah/lainnya',
-          $uploadedFile,
-          $filename
-        );
-
-        $data = new document();
-        $data->nama_documents = $request->nama_documents;
-        $data->status_document = 4;
-        $data->jenis_document = 10;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        $data->file_document = $filename;
-        $data->save();
-      
-
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'Dokumen Berhasil di Tambahkan',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'Dokumen Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function store_dokumen_rpjmd($request){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'nomor_perbub' => 'required',
-            'tanggal_perbub' => 'required',
-            'file' => 'required|mimes:pdf|max:30000',
-            'periode_awal' => 'required',
-            'periode_akhir' => 'required',
-        ]);
-
-        $uploadedFile = $request->file('file');
-        
-        $filename = '0_'.'dokumen_daerah_'.Str::slug($request->nama_documents, '_').'_rpjmd_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-        
-        // id_perangkat | jenis | nama | tahun
-        // public_uploads
-        Storage::disk('public')->putFileAs(
-          '/files/dokumen_daerah/rpjmd',
-          $uploadedFile,
-          $filename
-        );
-
-        $data = new document();
-        $data->nama_documents = $request->nama_documents;
-        $data->nomor_perbub = $request->nomor_perbub;
-        $data->tanggal_perbub = $request->tanggal_perbub;
-        $data->status_document = 4;
-        $data->jenis_document = 8;
-        $data->periode_awal = $request->periode_awal;
-        $data->periode_akhir = $request->periode_akhir;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        $data->file_document = $filename;
-        $data->save();
-      
-
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'RPJMD Berhasil di Tambahkan',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'RPJMD Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function store_dokumen_rpjmdes($request){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'file' => 'required|mimes:pdf|max:30000',
-            'periode_awal' => 'required',
-            'periode_akhir' => 'required',
-        ]);
-
-        $uploadedFile = $request->file('file');
-        
-        $filename = '0_'.'dokumen_desa_'.Str::slug($request->nama_documents, '_').'_rpjmdes_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-
-  
-        Storage::disk('public')->putFileAs(
-          'files/dokumen_daerah/rpjmdes',
-          $uploadedFile,
-          $filename
-        );
-
-        $data = new document();
-        $data->nama_documents = $request->nama_documents;
-        $data->status_document = 1;
-        $data->jenis_document = 1;
-        $data->periode_awal = $request->periode_awal;
-        $data->periode_akhir = $request->periode_akhir;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        $data->file_document = $filename;
-        $data->save();
-      
-
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'RPJMDes Berhasil di Tambahkan',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'RPJMDes Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function store_dokumen_rkpdes($request){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'file' => 'required|mimes:pdf|max:30000',
-        ]);
-
-        $uploadedFile = $request->file('file');
-
-        $filename = '0_'.'dokumen_desa_'.Str::slug($request->nama_documents, '_').'_rkpdes_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-
-  
-        Storage::disk('public')->putFileAs(
-          'files/dokumen_daerah/rkpdes',
-          $uploadedFile,
-          $filename
-        );
-
-        $data = new document();
-        $data->nama_documents = $request->nama_documents;
-        $data->status_document = 1;
-        $data->jenis_document = 2;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        $data->file_document = $filename;
-        $data->save();
-      
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'RKPDes Berhasil di Tambah',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'RKPDes Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function store_dokumen_renstra($request){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'nomor_perbub' => 'required',
-            'tanggal_perbub' => 'required',
-            'file' => 'required|mimes:pdf|max:30000',
-            'periode_awal' => 'required',
-            'periode_akhir' => 'required',
-        ]);
-
-        $uploadedFile = $request->file('file');
-        
-        $filename = '0_'.'dokumen_opd_'.Str::slug($request->nama_documents, '_').'_renstra_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-        
-        // id_perangkat | jenis | nama | tahun
-        // public_uploads
-        Storage::disk('public')->putFileAs(
-          '/files/dokumen_opd/renstra',
-          $uploadedFile,
-          $filename
-        );
-
-        $data = new document();
-        $data->nama_documents = $request->nama_documents;
-        $data->nomor_perbub = $request->nomor_perbub;
-        $data->tanggal_perbub = $request->tanggal_perbub;
-        $data->status_document = 1;
-        $data->jenis_document = 3;
-        $data->periode_awal = $request->periode_awal;
-        $data->periode_akhir = $request->periode_akhir;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        $data->file_document = $filename;
-        $data->save();
-      
-
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'Renstra Berhasil di Tambahkan',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'Renstra Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function store_dokumen_renja($request){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'nomor_perbub' => 'required',
-            'tanggal_perbub' => 'required',
-            'file' => 'required|mimes:pdf|max:30000',
-        ]);
-
-        $uploadedFile = $request->file('file');
-        
-        $filename = '0_'.'dokumen_opd_'.Str::slug($request->nama_documents, '_').'_renja_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-        
-        // id_perangkat | jenis | nama | tahun
-        // public_uploads
-        Storage::disk('public')->putFileAs(
-          '/files/dokumen_opd/renja',
-          $uploadedFile,
-          $filename
-        );
-
-        $data = new document();
-        $data->nama_documents = $request->nama_documents;
-        $data->nomor_perbub = $request->nomor_perbub;
-        $data->tanggal_perbub = $request->tanggal_perbub;
-        $data->status_document = 1;
-        $data->jenis_document = 4;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        $data->file_document = $filename;
-        $data->save();
-      
-
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'Renja Berhasil di Tambahkan',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'Renja Gagal di Proses',
-            ],400);
-        }
-    }
-
-    // BATAAS
-
-    public function store_dokumen_sdgs($request){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'file' => 'required|mimes:pdf|max:30000',
-        ]);
-
-        $uploadedFile = $request->file('file');
-
-        $filename = '0_'.'dokumen_desa_'.Str::slug($request->nama_documents, '_').'_sdgs_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-
-  
-        Storage::disk('public')->putFileAs(
-          'files/dokumen_daerah/sdgs',
-          $uploadedFile,
-          $filename
-        );
-
-        $data = new document();
-        $data->nama_documents = $request->nama_documents;
-        $data->status_document = 4;
-        $data->jenis_document = 5;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        $data->file_document = $filename;
-        $data->save();
-      
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'SDGd Desa Berhasil di Tambah',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'SDGd Desa Gagal di Proses',
-            ],400);
-        }
-    }
 
     public function update_dokumen_rpjmd($request,$params){
        
@@ -733,346 +475,6 @@ class generalController extends Controller
                 'type' => 'failed',
                 'status' => false,
                 'message' => 'RPJMD Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function update_dokumen_rkpd($request,$params){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'nomor_perbub' => 'required',
-            'tanggal_perbub' => 'required',
-            'file' => 'mimes:pdf|max:30000',
-        ]);
-
-        $data = document::where('id',$params)->first();
-        $data->nama_documents = $request->nama_documents;
-        $data->nomor_perbub = $request->nomor_perbub;
-        $data->tanggal_perbub = $request->tanggal_perbub;
-        $data->status_document = 4;
-        $data->jenis_document = 9;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        if (isset($request->file)) {
-            $uploadedFile = $request->file('file');
-        
-            $filename = '0_'.'dokumen_daerah_'.Str::slug($request->nama_documents, '_').'_rpkpd_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-      
-            Storage::disk('public')->putFileAs(
-              'files/dokumen_daerah/rpjmd',
-              $uploadedFile,
-              $filename
-            );
-
-            $data->file_document = $filename;
-        }
-
-        $data->save();
-      
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'RPJMD Berhasil di Update',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'RPJMD Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function update_dokumen_daerah($request,$params){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'file' => 'mimes:pdf|max:30000',
-        ]);
-
-        $data = document::where('id',$params)->first();
-        $data->nama_documents = $request->nama_documents;
-        $data->status_document = 4;
-        $data->jenis_document = 10;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        if (isset($request->file)) {
-            $uploadedFile = $request->file('file');
-        
-            $filename = '0_'.'dokumen_daerah_'.Str::slug($request->nama_documents, '_').'_daerah_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-      
-            Storage::disk('public')->putFileAs(
-              'files/dokumen_daerah/lainnya',
-              $uploadedFile,
-              $filename
-            );
-
-            $data->file_document = $filename;
-        }
-
-        $data->save();
-      
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'Dokumen Berhasil di Update',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'Dokumen Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function update_dokumen_rpjmdes($request,$params){
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'file' => 'mimes:pdf|max:30000',
-            'periode_awal' => 'required',
-            'periode_akhir' => 'required',
-        ]);
-
-        $data = document::where('id',$params)->first();
-        $data->nama_documents = $request->nama_documents;
-        $data->status_document = 2;
-        $data->jenis_document = 1;
-        $data->periode_awal = $request->periode_awal;
-        $data->periode_akhir = $request->periode_akhir;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        if (isset($request->file)) {
-            $uploadedFile = $request->file('file');
-        
-            $filename = '0_'.'dokumen_desa_'.Str::slug($request->nama_documents, '_').'_rpjmdes_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-
-            Storage::disk('public')->putFileAs(
-            'files/dokumen_daerah/rpjmdes',
-            $uploadedFile,
-            $filename
-            );
-
-            $data->file_document = $filename;
-        }
-        $data->save();
-      
-
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'RPJMDes Berhasil di Tambahkan',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'RPJMDes Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function update_dokumen_rkpdes($request, $params){
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'file' => 'mimes:pdf|max:30000',
-        ]);
-
-        $data = document::where('id',$params)->first();
-        $data->nama_documents = $request->nama_documents;
-        $data->status_document = 2;
-        $data->jenis_document = 2;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        if (isset($request->file)) {
-            $uploadedFile = $request->file('file');
-
-            $filename = '0_'.'dokumen_desa_'.Str::slug($request->nama_documents, '_').'_rkpdes_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-
-            Storage::disk('public')->putFileAs(
-                'files/dokumen_daerah/rkpdes',
-                $uploadedFile,
-                $filename
-            );
-
-            $data->file_document = $filename;
-        }
-        $data->save();
-      
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'RKPDes Berhasil di Update',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'RKPDes Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function update_dokumen_sdgs($request,$params){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'file' => 'mimes:pdf|max:30000',
-        ]);
-
-        $data = document::where('id',$params)->first();
-        $data->nama_documents = $request->nama_documents;
-        $data->status_document = 4;
-        $data->jenis_document = 5;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        if (isset($request->file)) {
-            $uploadedFile = $request->file('file');
-
-            $filename = '0_'.'dokumen_desa_'.Str::slug($request->nama_documents, '_').'_sdgs_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-    
-      
-            Storage::disk('public')->putFileAs(
-              'files/dokumen_daerah/sdgs',
-              $uploadedFile,
-              $filename
-            );
-            $data->file_document = $filename;
-        }
-        $data->save();
-      
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'SDGd Desa Berhasil di Update',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'SDGd Desa Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function update_dokumen_renstra($request,$params){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'nomor_perbub' => 'required',
-            'tanggal_perbub' => 'required',
-            'file' => 'mimes:pdf|max:30000',
-            'periode_awal' => 'required',
-            'periode_akhir' => 'required',
-        ]);
-
-        $data = document::where('id',$params)->first();
-        $data->nama_documents = $request->nama_documents;
-        $data->nomor_perbub = $request->nomor_perbub;
-        $data->tanggal_perbub = $request->tanggal_perbub;
-        $data->status_document = 2;
-        $data->jenis_document = 3;
-        $data->periode_awal = $request->periode_awal;
-        $data->periode_akhir = $request->periode_akhir;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        if (isset($request->file)) {
-            $uploadedFile = $request->file('file');
-        
-            $filename = '0_'.'dokumen_opd_'.Str::slug($request->nama_documents, '_').'_renstra_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-      
-            Storage::disk('public')->putFileAs(
-                '/files/dokumen_opd/renstra',
-              $uploadedFile,
-              $filename
-            );
-
-            $data->file_document = $filename;
-        }
-
-        $data->save();
-      
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'Renstra Berhasil di Update',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'Renstra Gagal di Proses',
-            ],400);
-        }
-    }
-
-    public function update_dokumen_renja($request,$params){
-       
-        $validated = $request->validate([
-            'nama_documents' => 'required',
-            'nomor_perbub' => 'required',
-            'tanggal_perbub' => 'required',
-            'file' => 'mimes:pdf|max:30000',
-        ]);
-
-        $data = document::where('id',$params)->first();
-        $data->nama_documents = $request->nama_documents;
-        $data->nomor_perbub = $request->nomor_perbub;
-        $data->tanggal_perbub = $request->tanggal_perbub;
-        $data->status_document = 2;
-        $data->jenis_document = 4;
-        $data->periode_awal = $request->periode_awal;
-        $data->periode_akhir = $request->periode_akhir;
-        $data->tahun = session('tahun_penganggaran');
-        $data->id_perangkat = Auth::user()->id_unit_kerja;
-        $data->user_insert = Auth::user()->id;
-        if (isset($request->file)) {
-            $uploadedFile = $request->file('file');
-        
-            $filename = '0_'.'dokumen_opd_'.Str::slug($request->nama_documents, '_').'_renja_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
-      
-            Storage::disk('public')->putFileAs(
-                '/files/dokumen_opd/renja',
-              $uploadedFile,
-              $filename
-            );
-
-            $data->file_document = $filename;
-        }
-
-        $data->save();
-      
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'message' => 'Renja Berhasil di Update',
-                'data' => $data
-            ],200);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'Renja Gagal di Proses',
             ],400);
         }
     }

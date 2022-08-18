@@ -79,9 +79,14 @@
                 <input type="hidden" name="id">
                 <div class="mb-10">
                     <label class="form-label">Nama Dokumen</label>
-                    <input type="text" id="nama_documents" class="form-control form-control-solid" name="nama_documents" placeholder="Masukkan Nama Dokumen">
+                    <select name="nama_documents" class="form-control form-control-solid" id="nama_documents">
+                        <option selected disabled>Pilih Nama Dokumen</option>
+                        <option value="Dokumen RKPD Pokok">Dokumen RKPD Pokok</option>
+                        <option value="Dokumen RKPD Perubahan">Dokumen RKPD Perubahan</option>
+                    </select>
                     <small class="text-danger nama_documents_error"></small>
                 </div>
+                <input type="hidden" name="referensi_nama_dokumen" id="referensi_nama_dokumen" value="dokumen_daerah">
                 <div class="mb-10">
                     <label class="form-label">Nomor Perbub</label>
                     <input type="text" class="form-control form-control-solid" id="nomor_perbub" name="nomor_perbub" placeholder="Masukkan Nomor Perbub">
@@ -156,6 +161,9 @@
     </div>
 
                 <div class="separator separator-dashed mt-8 mb-5"></div>
+                <div class="progress mb-5" style="display:none">
+                    <div id="myBar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
                     <div class="">
                         <button type="submit" class="btn btn_general btn-sm btn-submit">Simpan</button>
                         <button type="reset" class="btn mr-2 btn-light btn-cancel btn-sm">Batal</button>
@@ -171,7 +179,7 @@
 @section('script')
 <script>
      let control = new Control('type_2');
-     let element = ['nama_documents','nomor_perbub','tanggal_perbub'];
+     let element = ['nama_documents','nomor_perbub','tanggal_perbub','referensi_nama_dokumen'];
     $(document).on('click','#button-side-form', function () {
         $('#password_content').show();
         control.overlay_form('Tambah','Data RKPD');
@@ -181,12 +189,10 @@
         e.preventDefault();
         let type = $(this).attr('data-type');
         if (type == 'add') {
-            alert('add');
-            control.submitFormMultipart('/general/storeDocuments?jenis=RKPD','Tambah','RKPD',element);
+            control.submitFormMultipart('/general/storeDocuments?jenis=rkpd&type=type_a','Tambah','RKPD',element);
         }else{
-            alert('update');
             let id = $("input[name='id']").val();
-            control.submitFormMultipart('/general/updateDocuments/'+id+'?jenis=RKPD','Update','RKPD',element);
+            control.submitFormMultipart('/general/updateDocuments/'+id+'?jenis=rkpd&type=type_a','Update','RKPD',element);
         }
     });
 
@@ -234,7 +240,7 @@
                 },
             }
         ];
-        control.initDatatable('/general/datatable-list?jenis=9',columns,columnDefs);
+        control.initDatatable('/general/datatable-list?jenis=9&type=type_a',columns,columnDefs);
         control.form_upload();
        
 

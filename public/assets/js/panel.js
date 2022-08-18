@@ -225,7 +225,6 @@ class Control {
         if(percentage > 100)
         {
             clearInterval(timer);
-            $('#myBar').css('width', '0%');
 
             swal.fire({
                 text: `${message}`,
@@ -243,6 +242,7 @@ class Control {
                     $('#side_form_close').trigger('click');
                     table_.DataTable().ajax.reload();
                     $('.progress').css('display', 'none');
+                    $('#myBar').css('width', '0%');
                 }
             });
         }
@@ -279,14 +279,17 @@ class Control {
             success: function (response) {
                 console.log(response);
                 $('.text-danger').html('');
-                $('.btn-submit').html('sdfdsf');
-       
-                var percentage = 0;
+                if (response.status == true) {
+                    var percentage = 0;
+                    var timer = setInterval(function(){
+                     percentage = percentage + 20;
+                     this_.progress_bar_process(percentage, timer, message,type_,table_);
+                    }, 1000);
+                }else{
+                    Swal.fire("Gagal Memproses data!",`${response.message}`, "warning");
+                }
 
-                var timer = setInterval(function(){
-                 percentage = percentage + 20;
-                 this_.progress_bar_process(percentage, timer, message,type_,table_);
-                }, 1000);
+              
 
         
             },

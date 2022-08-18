@@ -1,6 +1,6 @@
 @extends('general.layout')
 @section('button')
-<button class="btn btn_general btn-sm " data-kt-drawer-show="true" data-kt-drawer-target="#side_form" id="button-side-form"><i class="fa fa-plus-circle" style="color:#ffffff" aria-hidden="true"></i> Tambah Dokumen Renja</button>
+<button class="btn btn_general btn-sm " data-kt-drawer-show="true" data-kt-drawer-target="#side_form" id="button-side-form"><i class="fa fa-plus-circle" style="color:#ffffff" aria-hidden="true"></i> Tambah Dokumen Lainnya</button>
 @endsection
 @section('content')
 <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -18,8 +18,6 @@
                         <tr class="fw-bolder fs-6 text-gray-800">
                             <th>No</th>
                             <th>Nama Dokumen</th>
-                            <th>Verifikator</th>
-                            <th>status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -79,25 +77,10 @@
                 <input type="hidden" name="id">
                 <div class="mb-10">
                     <label class="form-label">Nama Dokumen</label>
-                    <select name="nama_documents" class="form-control form-control-solid" id="nama_documents">
-                        <option selected disabled>Pilih Nama Dokumen</option>
-                        <option value="Dokumen Renja Pokok">Dokumen Renja Pokok</option>
-                        <option value="Dokumen Renja Perubahan">Dokumen Renja Perubahan</option>
-                    </select>
+                    <input type="text" id="nama_documents" class="form-control form-control-solid" name="nama_documents" placeholder="Masukkan Nama Dokumen">
                     <small class="text-danger nama_documents_error"></small>
                 </div>
-                <input type="hidden" name="referensi_nama_dokumen" id="referensi_nama_dokumen" value="dokumen_skpd">
-                <div class="mb-10">
-                    <label class="form-label">Nomor Perbub</label>
-                    <input type="text" class="form-control form-control-solid" id="nomor_perbub" name="nomor_perbub" placeholder="Masukkan Nomor Perbub">
-                    <small class="text-danger nomor_perbub_error"></small>
-                </div>
-
-                <div class="mb-10">
-                    <label class="form-label">Tanggal Perbub</label>
-                    <input type="date" class="form-control form-control-solid" id="tanggal_perbub" name="tanggal_perbub">
-                    <small class="text-danger tanggal_perbub_error"></small>
-                </div>
+                <input type="hidden" name="referensi_nama_dokumen" value="dokumen_skpd">
 
                 <div class="form-group row">
         <!--begin::Label-->
@@ -175,106 +158,31 @@
     <!--end::Card-->
 </div>
 
-<div class="modal fade" tabindex="-1" id="kt_modal_1" aria-hidden="true">
-    <div class="modal-dialog modal-md modal-xl">
-        <div class="modal-content rounded">
-            <div class="modal-header">
-                <h5 class="modal-title"> title</h5>
-
-                <!--begin::Close-->
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <span class="svg-icon svg-icon-2x"></span>
-                </div>
-                <!--end::Close-->
-            </div>
-
-            <div class="modal-body pt-0 pb-15 px-5 px-xl-20">
-               <div class="box_detail">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <span class="fz-12">Nama Dokumen</span>
-                            <p class="fz-16 content_detail_1"></p>
-                        </div>
-                   </div>
-                   <div class="row">
-                        <div class="col-lg-6">
-                            <span class="fz-12">Status</span>
-                            <p class="fz-16 content_detail_2"></p>
-                        </div>
-                        <div class="col-lg-6">
-                            <span class="fz-12">Verifikator</span>
-                            <p class="fz-16 content_detail_3"></p>
-                        </div>
-                   </div>
-                   <div class="row">
-                        <div class="col-lg-6">
-                            <span class="fz-12">Nomor Perbub</span>
-                            <p class="fz-16 content_detail_4"></p>
-                        </div>
-                        <div class="col-lg-6">
-                            <span class="fz-12">Tanggal Perbub</span>
-                            <p class="fz-16 content_detail_5"></p>
-                        </div>
-                   </div>
-               </div>
-
-               <table id="table_detail" class="table table-row-dashed table-row-gray-300 gy-7">
-                    <thead>
-                        <tr class="fw-bolder fs-6 text-gray-800">
-                            <th>No</th>
-                            <th>Indikator</th>
-                            <th>Kesesuaian</th>
-                            <th>Tindak Lanjut Penyempurnaan</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 @endsection
 @section('script')
 <script>
      let control = new Control('type_2');
-     let element = ['nama_documents','nomor_perbub','tanggal_perbub','referensi_nama_dokumen'];
+     let element = ['nama_documents'];
     $(document).on('click','#button-side-form', function () {
         $('#password_content').show();
-        control.overlay_form('Tambah','Data Renja');
+        control.overlay_form('Tambah','Data Lainnya');
     })
 
     $(document).on('submit', ".form-data", function(e){
         e.preventDefault();
         let type = $(this).attr('data-type');
         if (type == 'add') {
-            control.submitFormMultipart('/general/storeDocuments?jenis=renja&type=type_b','Tambah','Dokumen Renja',element);
+            control.submitFormMultipart('/general/storeDocuments?jenis=skpd&type=type_a','Tambah','Dokumen Data Lainnya',element);
         }else{
             let id = $("input[name='id']").val();
-            control.submitFormMultipart('/general/updateDocuments/'+id+'?jenis=renja&type=type_b','Update','Dokumen Renja',element);
+            control.submitFormMultipart('/general/updateDocuments/'+id+'?jenis=skpd&type=type_a','Update','Dokumen Data Lainnya',element);
         }
     });
-
-    $(document).on('change','#desa-select', function () {
-        let text = $("#desa-select option:selected").text();
-        $('input[name="nama_desa"]').val(text);
-    })
 
     $(document).on('click','.button-update', function (e) {
         e.preventDefault();
         let url = '/general/byParams/'+$(this).attr('data-id');
-        control.overlay_form('Update','Data Renja', url);
-    })
-
-    $(document).on('click','.button-detail', function (e) {
-        e.preventDefault();
-        
-       let url = `/get-data/documentByVerifikasi?jenis=${$(this).attr('data-jenis')}&document=${$(this).attr('data-id')}`;
-        control.modal_content('Detail Renstra', url);
+        control.overlay_form('Update','Data Lainnya', url);
     })
 
     $(function () {
@@ -288,60 +196,23 @@
             },{
                 data:'nama_documents'
             },{
-                data:'verifikator'
-            },{
-                data:null
-            },{
-                data:null,
+                data:'id',
             }
         ];
         let columnDefs = [
-            {
-                targets: 2,
-                render: function(data, type, full, meta) {
-                    if (data == null) {
-                        return '-'; 
-                    }else{
-                        return data; 
-                    }
-                    
-                }
-            },
-            {
-                targets: 3,
-                render: function(data, type, full, meta) {
-                    
-                    if (data.status_document == '1') {
-                      return  `<button class="btn btn-light-danger btn-sm">Belum Verifikasi</button>`;
-                    }else if(data.status_document == '2'){
-                        return  `<button class="btn btn-light-dark btn-sm">Perbaikan</button>`;
-                    }else if(data.status_document == '3'){
-                        return  `<button class="btn btn-light-warning btn-sm">Belum Selesai</button>`;
-                    }else{
-                        return  `<button class="btn btn-light-success btn-sm"> Selesai</button>`;
-                    }
-                }
-            },
             {
                 targets: -1,
                 title: 'Aksi',
                 // width: '15rem',
                 orderable: false,
                 render: function(data, type, full, meta) {
-                    console.log(data)
-                    let disabled = '';
-                    if (data.status_document == '4' || data.status_document == '2') {
-                        disabled = 'disabled'
-                    }
                     return `
-                        <button type="button" ${disabled} data-id="${data.id}" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" class="btn btn_green button-update btn-sm"> <svg style="position: relative;bottom: 2px;" width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 0.515625C10.0938 0.515625 9.74479 0.661458 9.45312 0.953125L4.39062 6L4.01562 7.90625L3.85938 8.64062L4.59375 8.48438L6.5 8.10938L11.5469 3.04688C11.8385 2.75521 11.9844 2.40625 11.9844 2C11.9844 1.59375 11.8385 1.24479 11.5469 0.953125C11.2552 0.661458 10.9062 0.515625 10.5 0.515625ZM10.5 1.48438C10.6146 1.48438 10.7292 1.54167 10.8438 1.65625C10.9583 1.77083 11.0156 1.88542 11.0156 2C11.0156 2.11458 10.9583 2.22917 10.8438 2.34375L6 7.1875L5.14062 7.35938L5.3125 6.5L10.1562 1.65625C10.2708 1.54167 10.3854 1.48438 10.5 1.48438ZM0 2.5V12.5H10V5.90625L9 6.90625V11.5H1V3.5H5.59375L6.59375 2.5H0Z" fill="white"/></svg> Edit</button>
-
-                        <a href="javascript:;" type="button" data-id="${data.id}" data-jenis="${data.jenis_document}"  data-bs-toggle="modal" data-bs-target="#kt_modal_1" class="btn btn-info button-detail btn-sm"> <i class="fa fa-eye" aria-hidden="true"></i> Lihat</a>
+                        <a href="javascript:;" type="button" data-id="${data}" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" class="btn btn_green button-update btn-sm"> <svg style="position: relative;bottom: 2px;" width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 0.515625C10.0938 0.515625 9.74479 0.661458 9.45312 0.953125L4.39062 6L4.01562 7.90625L3.85938 8.64062L4.59375 8.48438L6.5 8.10938L11.5469 3.04688C11.8385 2.75521 11.9844 2.40625 11.9844 2C11.9844 1.59375 11.8385 1.24479 11.5469 0.953125C11.2552 0.661458 10.9062 0.515625 10.5 0.515625ZM10.5 1.48438C10.6146 1.48438 10.7292 1.54167 10.8438 1.65625C10.9583 1.77083 11.0156 1.88542 11.0156 2C11.0156 2.11458 10.9583 2.22917 10.8438 2.34375L6 7.1875L5.14062 7.35938L5.3125 6.5L10.1562 1.65625C10.2708 1.54167 10.3854 1.48438 10.5 1.48438ZM0 2.5V12.5H10V5.90625L9 6.90625V11.5H1V3.5H5.59375L6.59375 2.5H0Z" fill="white"/></svg> Edit</a>
                         `;
                 },
             }
         ];
-        control.initDatatable('/general/datatable-list?jenis=4&type=type_c',columns,columnDefs);
+        control.initDatatable('/general/datatable-list?jenis=7&type=type_a',columns,columnDefs);
         control.form_upload();
        
 

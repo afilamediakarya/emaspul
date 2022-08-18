@@ -83,9 +83,7 @@
 										<!--begin::Label-->
 										<label class="form-label fw-bolder text-dark fs-6 mb-0">Password</label>
 										<!--end::Label-->
-										<!--begin::Link-->
-										<a href="authentication/flows/aside/password-reset.html" class="link-primary fs-6">Lupa password ?</a>
-										<!--end::Link-->
+									
 									</div>
 									<!--end::Wrapper-->
 									<!--begin::Input-->

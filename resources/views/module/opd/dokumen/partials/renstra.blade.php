@@ -124,7 +124,7 @@
                 },
             }
         ];
-        control.initDatatable('/general/datatable-list?jenis=3',columns,columnDefs);
+        control.initDatatable('/general/datatable-list?jenis=3&type=type_c',columns,columnDefs);
         control.form_upload();
     
     })

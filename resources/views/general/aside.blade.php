@@ -102,6 +102,22 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Renja</span>
                         </a>
                     </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ url('dokumen-skpd?type=Sektoral') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Data Sektoral</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ url('dokumen-skpd?type=Skpd') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Lainnya</span>
+                        </a>
+                    </div>
                 </div>
             </div>	
 
@@ -226,6 +242,33 @@
                     <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Renja</span>
                 </a>
             </div>
+
+            <div class="menu-item">
+                <a class="menu-link" href="{{ url('/akun-opd/dokumen?type=Data-sektoral') }}">
+                    <span class="menu-icon">          
+                        <span class="svg-icon svg-icon-2">
+                        <svg width="17" height="21" viewBox="0 0 17 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.7 3.5V19.25H15.3V21H1.7C0.765 21 0 20.2125 0 19.25V3.5H1.7ZM11.05 6.125H15.725L11.05 1.3125V6.125ZM5.1 0H11.9L17 5.25V15.75C17 16.7213 16.2435 17.5 15.3 17.5H5.1C4.1565 17.5 3.4 16.7125 3.4 15.75V1.75C3.4 0.77875 4.1565 0 5.1 0ZM12.75 14V12.25H5.1V14H12.75ZM15.3 10.5V8.75H5.1V10.5H15.3Z" style="fill:white"/>
+                        </svg>
+                        </span>
+                    </span>
+                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Data Sektoral SKPD</span>
+                </a>
+            </div>
+
+            <div class="menu-item">
+                <a class="menu-link" href="{{ url('/akun-opd/dokumen?type=Data-lainnya') }}">
+                    <span class="menu-icon">          
+                        <span class="svg-icon svg-icon-2">
+                        <svg width="17" height="21" viewBox="0 0 17 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.2273 0H3.28409C3.17784 0 3.09091 0.084375 3.09091 0.1875V1.5C3.09091 1.60312 3.17784 1.6875 3.28409 1.6875H15.2614V17.8125C15.2614 17.9156 15.3483 18 15.4545 18H16.8068C16.9131 18 17 17.9156 17 17.8125V0.75C17 0.335156 16.6547 0 16.2273 0ZM13.1364 3H0.772727C0.345312 3 0 3.33516 0 3.75V16.1883C0 16.3875 0.0821021 16.5773 0.226988 16.718L4.41179 20.7797C4.46491 20.8312 4.52528 20.8734 4.59048 20.9086V20.9531H4.6919C4.77642 20.9836 4.86577 21 4.95753 21H13.1364C13.5638 21 13.9091 20.6648 13.9091 20.25V3.75C13.9091 3.33516 13.5638 3 13.1364 3ZM5.3608 19.5H5.35597L1.73864 15.9891V15.9844H5.3608V19.5Z" style="fill:white"/>
+                        </svg>
+                        </span>
+                    </span>
+                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Lainnya</span>
+                </a>
+            </div>
+            
 
             @endif
 

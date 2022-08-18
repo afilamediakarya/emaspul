@@ -220,7 +220,7 @@
     // /storage/files/dokumen_daerah/rpjmdes/
     $(document).on('click','.button-show', function (e) {
         e.preventDefault();
-        window.open('/storage/files/dokumen_daerah/rpjmdes/'+$(this).attr('data-label'), '_blank');
+        window.open('/storage/files/dokumen_desa/rpjmdes/'+$(this).attr('data-label'), '_blank');
     })
 
     $(document).on('click', '.btn-verifikasi', function (e) {
@@ -302,7 +302,7 @@
                 },
             }
         ];
-        control.initDatatable('/general/datatable-list?jenis=1',columns,columnDefs);
+        control.initDatatable('/general/datatable-list?jenis=1&type=type_b',columns,columnDefs);
         control.form_upload();
     
     })

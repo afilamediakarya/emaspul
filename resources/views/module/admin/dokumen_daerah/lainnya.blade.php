@@ -80,7 +80,7 @@
                     <input type="text" id="nama_documents" class="form-control form-control-solid" name="nama_documents" placeholder="Masukkan Nama Dokumen">
                     <small class="text-danger nama_documents_error"></small>
                 </div>
-
+                <input type="hidden" name="referensi_nama_dokumen" id="referensi_nama_dokumen" value="dokumen_daerah">
 
                 <div class="form-group row">
         <!--begin::Label-->
@@ -144,6 +144,9 @@
     </div>
 
                 <div class="separator separator-dashed mt-8 mb-5"></div>
+                <div class="progress mb-5" style="display:none">
+                    <div id="myBar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
                     <div class="">
                         <button type="submit" class="btn btn_general btn-sm btn-submit">Simpan</button>
                         <button type="reset" class="btn mr-2 btn-light btn-cancel btn-sm">Batal</button>
@@ -159,7 +162,7 @@
 @section('script')
 <script>
      let control = new Control('type_2');
-     let element = ['nama_documents','periode_awal','periode_akhir','nomor_perbub','tanggal_perbub'];
+     let element = ['nama_documents'];
     $(document).on('click','#button-side-form', function () {
         $('#password_content').show();
         control.overlay_form('Tambah','Data Lainnya');
@@ -169,10 +172,10 @@
         e.preventDefault();
         let type = $(this).attr('data-type');
         if (type == 'add') {
-            control.submitFormMultipart('/general/storeDocuments?jenis=daerah','Tambah','Dokumen Lainnya',element);
+            control.submitFormMultipart('/general/storeDocuments?jenis=daerah&type=type_a','Tambah','Dokumen Lainnya',element);
         }else{
             let id = $("input[name='id']").val();
-            control.submitFormMultipart('/general/updateDocuments/'+id+'?jenis=daerah','Update','Dokumen Lainnya',element);
+            control.submitFormMultipart('/general/updateDocuments/'+id+'?jenis=daerah&type=type_a','Update','Dokumen Lainnya',element);
         }
     });
 
@@ -215,7 +218,7 @@
                 },
             }
         ];
-        control.initDatatable('/general/datatable-list?jenis=10',columns,columnDefs);
+        control.initDatatable('/general/datatable-list?jenis=10&type=type_a',columns,columnDefs);
         control.form_upload();
        
 

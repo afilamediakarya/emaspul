@@ -1,6 +1,6 @@
 @extends('general.layout')
 @section('button')
-<button class="btn btn_general btn-sm " data-kt-drawer-show="true" data-kt-drawer-target="#side_form" id="button-side-form"><i class="fa fa-plus-circle" style="color:#ffffff" aria-hidden="true"></i> Tambah Dokumen RMJDes</button>
+<button class="btn btn_general btn-sm " data-kt-drawer-show="true" data-kt-drawer-target="#side_form" id="button-side-form"><i class="fa fa-plus-circle" style="color:#ffffff" aria-hidden="true"></i> Tambah Dokumen SGDes</button>
 @endsection
 @section('content')
 <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -77,10 +77,13 @@
                 <input type="hidden" name="id">
                 <div class="mb-10">
                     <label class="form-label">Nama Dokumen</label>
-                    <input type="text" id="nama_documents" class="form-control form-control-solid" name="nama_documents" placeholder="Masukkan Nama Dokumen">
+                    <select name="nama_documents" class="form-control form-control-solid" id="nama_documents">
+                        <option selected disabled>Pilih Nama Dokumen</option>
+                        <option value="Dokumen SDGs">Dokumen SDGs</option>
+                    </select>
                     <small class="text-danger nama_documents_error"></small>
                 </div>
-           
+                <input type="hidden" name="referensi_nama_dokumen" id="referensi_nama_dokumen" value="dokumen_desa">
 
                 <div class="form-group row">
         <!--begin::Label-->
@@ -144,6 +147,9 @@
     </div>
 
                 <div class="separator separator-dashed mt-8 mb-5"></div>
+                <div class="progress mb-5" style="display:none">
+                    <div id="myBar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
                     <div class="">
                         <button type="submit" class="btn btn_general btn-sm btn-submit">Simpan</button>
                         <button type="reset" class="btn mr-2 btn-light btn-cancel btn-sm">Batal</button>
@@ -159,7 +165,7 @@
 @section('script')
 <script>
      let control = new Control('type_2');
-     let element = ['nama_documents'];
+     let element = ['nama_documents','referensi_nama_dokumen'];
     $(document).on('click','#button-side-form', function () {
         $('#password_content').show();
         control.overlay_form('Tambah','Data SDGs Desa');
@@ -169,10 +175,10 @@
         e.preventDefault();
         let type = $(this).attr('data-type');
         if (type == 'add') {
-            control.submitFormMultipart('/general/storeDocuments?jenis=sdgs','Tambah','Dokumen SDGs Desa',element);
+            control.submitFormMultipart('/general/storeDocuments?jenis=sdgs&type=type_a','Tambah','Dokumen SDGs Desa',element);
         }else{
             let id = $("input[name='id']").val();
-            control.submitFormMultipart('/general/updateDocuments/'+id+'?jenis=sdgs','Update','Dokumen SDGs Desa',element);
+            control.submitFormMultipart('/general/updateDocuments/'+id+'?jenis=sdgs&type=type_a','Update','Dokumen SDGs Desa',element);
         }
     });
 
@@ -221,7 +227,7 @@
                 },
             }
         ];
-        control.initDatatable('/general/datatable-list?jenis=5',columns,columnDefs);
+        control.initDatatable('/general/datatable-list?jenis=5&type=type_b',columns,columnDefs);
         control.form_upload();
        
 

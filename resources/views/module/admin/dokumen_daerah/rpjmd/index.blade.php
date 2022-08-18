@@ -1,4 +1,7 @@
 @extends('general.layout')
+@section('style')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+@endsection
 @section('button')
 <button class="btn btn_general btn-sm " data-kt-drawer-show="true" data-kt-drawer-target="#side_form" id="button-side-form"><i class="fa fa-plus-circle" style="color:#ffffff" aria-hidden="true"></i> Tambah Dokumen RPJMD</button>
 @endsection
@@ -79,37 +82,28 @@
                 <input type="hidden" name="id">
                 <div class="mb-10">
                     <label class="form-label">Nama Dokumen</label>
-                    <input type="text" id="nama_documents" class="form-control form-control-solid" name="nama_documents" placeholder="Masukkan Nama Dokumen">
+                    <select name="nama_documents" class="form-control form-control-solid" id="nama_documents">
+                        <option selected disabled>Pilih Nama Dokumen</option>
+                        <option value="Dokumen RPJMD Pokok">Dokumen RPJMD Pokok</option>
+                        <option value="Dokumen RPJMD Perubahan">Dokumen RPJMD Perubahan</option>
+                    </select>
                     <small class="text-danger nama_documents_error"></small>
                 </div>
 
+                <input type="hidden" name="referensi_nama_dokumen" id="referensi_nama_dokumen" value="dokumen_daerah">
               
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="mb-10">
                             <label class="form-label">Pilih Tahun Awal</label>
-                            <select name="periode_awal" class="form-control form-control-solid" id="periode_awal">
-                                <option selected disabled> Pilih Tahun </option>
-                                <option value="2020">2020</option>
-                                <option value="2021"> 2021 </option>
-                                <option value="2023"> 2023 </option>
-                                <option value="2024"> 2024</option>
-                                <option value="2025"> 2025 </option>
-                            </select>
+                            <input type="text" class="form-control form-control-solid datepicker" id="periode_awal" name="periode_awal" />
                             <small class="text-danger periode_awal_error"></small>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="mb-10">
                             <label class="form-label">Pilih Tahun Akhir</label>
-                            <select name="periode_akhir" class="form-control form-control-solid" id="periode_akhir">
-                                <option selected disabled> Pilih Tahun </option>
-                                <option value="2020">2020</option>
-                                <option value="2021"> 2021 </option>
-                                <option value="2023"> 2023 </option>
-                                <option value="2024"> 2024</option>
-                                <option value="2025"> 2025 </option>
-                            </select>
+                            <input type="text" class="form-control form-control-solid datepicker" id="periode_akhir" name="periode_akhir" />
                             <small class="text-danger periode_akhir_error"></small>
                          </div>
                     </div>
@@ -196,9 +190,10 @@
 
 @endsection
 @section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
      let control = new Control('type_2');
-     let element = ['nama_documents','periode_awal','periode_akhir','nomor_perbub','tanggal_perbub'];
+     let element = ['nama_documents','periode_awal','periode_akhir','nomor_perbub','tanggal_perbub','referensi_nama_dokumen'];
     $(document).on('click','#button-side-form', function () {
         $('#password_content').show();
         control.overlay_form('Tambah','Data RPJMD');
@@ -208,10 +203,10 @@
         e.preventDefault();
         let type = $(this).attr('data-type');
         if (type == 'add') {
-            control.submitFormMultipart('/general/storeDocuments?jenis=RPJMD','Tambah','RPJMD',element);
+            control.submitFormMultipart('/general/storeDocuments?jenis=rpjmd&type=type_a','Tambah','RPJMD',element);
         }else{
             let id = $("input[name='id']").val();
-            control.submitFormMultipart('/general/updateDocuments/'+id+'?jenis=RPJMD','Update','Akun',element);
+            control.submitFormMultipart('/general/updateDocuments/'+id+'?jenis=rpjmd&type=type_a','Update','Akun',element);
         }
     });
 
@@ -228,7 +223,12 @@
     })
 
     $(function () {
-      
+        $(".datepicker").datepicker({
+            format: "yyyy",
+            viewMode: "years", 
+            minViewMode: "years",
+            autoclose:true
+        }); 
         let columns = [
             { 
             data : null, 
@@ -259,7 +259,7 @@
                 },
             }
         ];
-        control.initDatatable('/general/datatable-list?jenis=8',columns,columnDefs);
+        control.initDatatable('/general/datatable-list?jenis=8&type=type_a',columns,columnDefs);
         control.form_upload();
        
 
