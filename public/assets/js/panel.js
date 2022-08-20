@@ -207,6 +207,7 @@ class Control {
                     }else{
                         $('#side_form_close').trigger('click');
                         table_.DataTable().ajax.reload();
+                        $("form")[0].reset();
                     }
                 });
             },
@@ -242,9 +243,11 @@ class Control {
                     window.location.href = response;
                 }else{
                     $('#side_form_close').trigger('click');
+                    $('.dropzone-delete').trigger('click');
                     table_.DataTable().ajax.reload();
                     $('.progress').css('display', 'none');
                     $('#myBar').css('width', '0%');
+                    $("form")[0].reset();
                 }
             });
         }
@@ -288,6 +291,7 @@ class Control {
                      this_.progress_bar_process(percentage, timer, message,type_,table_);
                     }, 1000);
                 }else{
+                    $("form")[0].reset();
                     Swal.fire("Gagal Memproses data!",`${response.message}`, "warning");
                 }
 
