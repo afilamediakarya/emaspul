@@ -133,20 +133,25 @@ License: For each use you must have a valid license purchased only from above li
 								<!--begin::Topbar-->
 								<div class="d-flex align-items-stretch flex-shrink-0">
 									<div class="d-flex align-items-center mr-5">
-										<div class="input-group input-group-solid">
+	
+									<div class="input-group input-group-solid">
 											<input type="text" class="form-control" disabled="" aria-label="Text input with dropdown button" value="Tahun Penganggaran">
 											<div class="input-group-append">
-												<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												{{session('tahun_penganggaran')}}</button>
-												<div class="dropdown-menu dropdown-menu-right" style="">
+											<div class="dropdown">
+												<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+												{{Session::get('tahun_penganggaran')}}
+												</button>
+												<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 												@php
 													$tahun_anggaran = session()->has('tahun_penganggaran') ? (int)session('tahun_penganggaran') : (int)date('Y');
 												@endphp
-												@for ($i = $tahun_anggaran - 3;$i <= $tahun_anggaran + 3; $i++)
+												@for ($i = $tahun_anggaran - 22;$i <= $tahun_anggaran + 3; $i++)
 													<a class="dropdown-item"
 													href="{{route('set-tahun-penganggaran',['tahun' => $i])}}">{{$i}}</a>
 												@endfor
-												</div>
+												</ul>
+											</div>	
+												
 											</div>
 										</div>
 									</div>

@@ -6,16 +6,18 @@ class Control {
         this.formData = new FormData();
     }
 
-    modal_content(title,url){
+    modal_content(title,url,url_konsederan){
         $('.modal-title').html(title);
 
         $.ajax({
             url : url,
             method : 'GET',
             success : function (res) {
+                console.log(res);
                 let tanggal_perbub = '-';
                 let nomor_perbub = '-';
                 let row = '';
+                $('#konsederan').attr('href',url_konsederan)
                 $.each(res.document,function name(x,y) {
 
                     if (y.tanggal_perbub !== null) {

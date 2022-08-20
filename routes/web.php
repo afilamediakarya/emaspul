@@ -107,6 +107,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('dokumen-desa')->group(function () {
         Route::get('/', [dokumenDesaController::class, 'index_verifikator']);
         Route::get('/verifikasi', [dokumenDesaController::class, 'verifikasi']);
+        Route::get('/konsederan', [dokumenDesaController::class, 'konsederan']);
         // Route::get('/rkpd', [rkpdController::class, 'index'])->name('rkpd');
         // Route::get('/lainnya', [rkpdController::class, 'index_'])->name('lainnya'); 
     });
@@ -114,6 +115,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('dokumen-skpd')->group(function () {
         Route::get('/', [dokumenOpdController::class, 'index_verifikator']);
         Route::get('/verifikasi', [dokumenOpdController::class, 'verifikasi']);
+        Route::get('/konsederan', [dokumenOpdController::class, 'konsederan']);
         // Route::get('/rkpd', [rkpdController::class, 'index'])->name('rkpd');
         // Route::get('/lainnya', [rkpdController::class, 'index_'])->name('lainnya'); 
     });

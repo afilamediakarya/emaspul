@@ -177,9 +177,51 @@
             </div>
 
             <div class="modal-body pt-0 pb-15 px-5 px-xl-20">
+            <a href="#" id="konsederan" target="_blank" class="btn btn-danger mt-5 btn-sm">
+                <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.2667 5.82386H10.6476C10.5795 5.82386 10.5238 5.87957 10.5238 5.94767V6.56671C10.5238 6.63481 10.5795 6.69052 10.6476 6.69052H11.2667C11.3348 6.69052 11.3905 6.63481 11.3905 6.56671V5.94767C11.3905 5.87957 11.3348 5.82386 11.2667 5.82386ZM11.7619 4.21433H9.90476V0.93338C9.90476 0.865285 9.84905 0.80957 9.78095 0.80957H3.21905C3.15095 0.80957 3.09524 0.865285 3.09524 0.93338V4.21433H1.2381C0.554048 4.21433 0 4.76838 0 5.45243V10.5286C0 10.8025 0.22131 11.0239 0.495238 11.0239H3.09524V13.0667C3.09524 13.1348 3.15095 13.1905 3.21905 13.1905H9.78095C9.84905 13.1905 9.90476 13.1348 9.90476 13.0667V11.0239H12.5048C12.7787 11.0239 13 10.8025 13 10.5286V5.45243C13 4.76838 12.446 4.21433 11.7619 4.21433ZM4.14762 1.86195H8.85238V4.21433H4.14762V1.86195ZM8.85238 12.1381H4.14762V7.86671H8.85238V12.1381ZM11.9476 9.97147H9.90476V6.81433H3.09524V9.97147H1.05238V5.45243C1.05238 5.35028 1.13595 5.26671 1.2381 5.26671H11.7619C11.864 5.26671 11.9476 5.35028 11.9476 5.45243V9.97147Z" fill="white"/>
+                </svg>
+                Cetak Konsederan</a>
                <div class="box_detail">
-                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <span class="fz-12">Nama Dokumen</span>
+                            <p class="fz-16 content_detail_1"></p>
+                        </div>
+                   </div>
+                   <div class="row">
+                        <div class="col-lg-6">
+                            <span class="fz-12">Status</span>
+                            <p class="fz-16 content_detail_2"></p>
+                        </div>
+                        <div class="col-lg-6">
+                            <span class="fz-12">Verifikator</span>
+                            <p class="fz-16 content_detail_3"></p>
+                        </div>
+                   </div>
+                   <div class="row">
+                        <div class="col-lg-6">
+                            <span class="fz-12">Nomor Perbub</span>
+                            <p class="fz-16 content_detail_4"></p>
+                        </div>
+                        <div class="col-lg-6">
+                            <span class="fz-12">Tanggal Perbub</span>
+                            <p class="fz-16 content_detail_5"></p>
+                        </div>
+                   </div>
                </div>
+
+                <table id="table_detail" class="table table-row-dashed table-row-gray-300 gy-7">
+                    <thead>
+                        <tr class="fw-bolder fs-6 text-gray-800">
+                            <th>No</th>
+                            <th>Indikator</th>
+                            <th>Kesesuaian</th>
+                            <th>Tindak Lanjut Penyempurnaan</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
 
             <div class="modal-footer">
@@ -225,7 +267,7 @@
     $(document).on('click','.button-detail', function (e) {
         e.preventDefault();
         let url = `/get-data/documentByVerifikasi?jenis=${$(this).attr('data-jenis')}&document=${$(this).attr('data-id')}`;
-        control.modal_content('Detail RKPDes', url);
+        control.modal_content('Detail RKPDes', url, `/dokumen-desa/konsederan?document=${$(this).attr('data-id')}&jenis=rkpdes`);
     })
 
     $(function () {
