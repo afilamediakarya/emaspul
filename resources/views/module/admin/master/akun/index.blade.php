@@ -188,10 +188,8 @@
         e.preventDefault();
         let type = $(this).attr('data-type');
         if (type == 'add') {
-            alert('add');
             control.submitForm('/akun/store','Tambah','Akun');
         }else{
-            alert('update');
             let id = $("input[name='id']").val();
             control.submitForm('/akun/update/'+id,'Update','Akun');
         }
