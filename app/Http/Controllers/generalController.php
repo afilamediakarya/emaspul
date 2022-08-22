@@ -55,7 +55,7 @@ class generalController extends Controller
 
     public function get_master_verifikasi($params){
        
-        $data = verifikasi_document::with('master_verifikasi')->where('id_documents',$params)->get();
+        $data = verifikasi_document::select('verifikasi_documents.id','verifikasi_documents.id_documents','verifikasi_documents.id_master_verifikasi','verifikasi_documents.tindak_lanjut','verifikasi_documents.verifikasi','documents.jenis_document','documents.nama_documents')->with('master_verifikasi')->join('documents','verifikasi_documents.id_documents','=','documents.id')->where('id_documents',$params)->get();
         return $data;
     }
 
@@ -80,7 +80,7 @@ class generalController extends Controller
             if (Auth::user()->id_role == 3) {
                 $other_query = "AND documents.id_perangkat =".Auth::user()->id_unit_kerja;
             }
-            
+
             $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." ".$other_query);
         }else{
             $other_query = '';
@@ -148,8 +148,25 @@ class generalController extends Controller
         ];
     }
 
+    public function create_nomor_konsederan($jenis_document, $jenis, $nama){
+        $num = 0;
+        $data = document::where('nama_documents',$nama)->where('jenis_document',$jenis_document)->where('tahun',session('tahun_penganggaran'))->whereNotNull('nomor_konsederan')->get()->count();
+
+        if ($data >= 9) {
+            $num = $data + 1;
+        }else{
+            $num = '0'.$data + 1;
+        }
+        
+
+        $nomor_konsederan = $num.'/'.$this->getBulanRomawi().'/verifikasi.'.$jenis.'/Bappelitbangda/'.date('Y');
+        return $nomor_konsederan;
+    }
+
     public function master_verifikasi(Request $request){
+        // return $request;
         $jenis = request('jenis');
+        // return $jenis;
         $data = array();
         $url = '';
         $status_document = 1;
@@ -175,6 +192,9 @@ class generalController extends Controller
             $document = document::where('id',request('document'))->first();
             $document->id_verifikator = Auth::user()->id;
             $document->status_document = $status_document;
+            if (is_null($document->nomor_konsederan)) {
+                $document->nomor_konsederan =  $this->create_nomor_konsederan($request->jenis_document,$jenis,$request->nama_documents);
+            }
             $document->save();
         }
 
@@ -274,22 +294,12 @@ class generalController extends Controller
        return $bulan_romawi;
     }
 
-    public function create_nomor_konsederan($jenis_document, $jenis, $nama){
-        
-        $data = document::where('nama_documents',$nama)->where('jenis_document',$jenis_document)->where('tahun',session('tahun_penganggaran'))->get()->count();
-        $num = $data + 1;
-
-        $nomor_konsederan = '0'.$num.'/'.$this->getBulanRomawi().'/verifikasi.'.$jenis.'/Bappelitbangda/'.date('Y');
-        return $nomor_konsederan;
-    }
-
     public function storeDocuments(Request $request){
         $jenis = request('jenis');
         $type = request('type');
         $data = array();
         $status_document = 0;
         $jenis_document = 0;
-        $nomor_konsederan = '';
 
 
         if ($type == 'type_a') {
@@ -312,10 +322,10 @@ class generalController extends Controller
             $jenis_document = 5;
         }elseif ($jenis == 'renstra'){
             $jenis_document = 3;
-            $nomor_konsederan = $this->create_nomor_konsederan($jenis_document,$jenis,$request->nama_documents);
+            // $nomor_konsederan = $this->create_nomor_konsederan($jenis_document,$jenis,$request->nama_documents);
         }elseif ($jenis == 'renja'){
             $jenis_document = 4;
-            $nomor_konsederan = $this->create_nomor_konsederan($jenis_document,$jenis,$request->nama_documents);
+            // $nomor_konsederan = $this->create_nomor_konsederan($jenis_document,$jenis,$request->nama_documents);
         }elseif ($jenis == 'sektoral') {
             $jenis_document = 6;
         }elseif ($jenis == 'skpd') {
@@ -359,7 +369,6 @@ class generalController extends Controller
             $data->id_perangkat = Auth::user()->id_unit_kerja;
             $data->user_insert = Auth::user()->id;
             $data->file_document = $filename;
-            $data->nomor_konsederan = $nomor_konsederan;
             $data->save();
 
             if ($type == 'type_b') {

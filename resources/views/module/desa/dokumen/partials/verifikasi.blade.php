@@ -12,6 +12,8 @@
 
                 <div class="py-5">
                     <form class="form-data">
+                        <input type="hidden" id="jenis_document" name="jenis_document">
+                        <input type="hidden" id="nama_documents" name="nama_documents">
                     <table id="kt_table_data" class="table table-row-dashed table-row-gray-300 gy-7">
                         <thead>
                             <tr class="fw-bolder fs-6 text-gray-800">

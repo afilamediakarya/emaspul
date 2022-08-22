@@ -367,6 +367,9 @@ class Control {
                 console.log(res);
                 let html = '';
                 let tindak_lanjut = '';
+
+                $('#jenis_document').val(res[0]['jenis_document']);
+                $('#nama_documents').val(res[0]['nama_documents']);
             
                 $.each(res, function (x,y) {
                     let checked_true = '';
