@@ -196,26 +196,37 @@ class Control {
             success: function (response) {
                 console.log(response);
                 $('.text-danger').html('');
-                swal.fire({
-                    text: `${message}`,
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "Ok, got it!",
-                    confirmButtonColor: '#354C9F',
-                    customClass: {
-                        confirmButton: "btn font-weight-bold btn-light-primary"
-                    }
-                }).then(function() {
-                    if (type_ == 'type_1') {
-                        window.location.href = response;
-                    }else if(type_ == 'type_3'){
-                        window.location.href = response.url;
+                if (type_ == 'type_1') { 
+                    if (response.status == true) {
+                        Swal.fire("Sukses!",'Anda berhasil login', "success");
+                        setTimeout(function() { 
+                            window.location.href = response.callback;
+                        }, 2000);
+                        
                     }else{
-                        $('#side_form_close').trigger('click');
-                        table_.DataTable().ajax.reload();
-                        $("form")[0].reset();
+                        Swal.fire("Maaf anda gagal login!",`${response.callback}`, "warning");
                     }
-                });
+                }else{
+                    swal.fire({
+                        text: `${message}`,
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        confirmButtonColor: '#354C9F',
+                        customClass: {
+                            confirmButton: "btn font-weight-bold btn-light-primary"
+                        }
+                    }).then(function() {
+                       if(type_ == 'type_3'){
+                            window.location.href = response.url;
+                        }else{
+                            $('#side_form_close').trigger('click');
+                            table_.DataTable().ajax.reload();
+                            $("form")[0].reset();
+                        }
+                    });
+                }
+               
             },
             error : function (xhr) {
                 $('.text-danger').html('');

@@ -37,18 +37,37 @@ class AuthController extends Controller
             $user = Auth::user();
             // dd($user);
            if ($user->id_role == 1) {
-                return '/dashboard-admin';
+                return response()->json([
+                    'type' => 'success',
+                    'status' => true,
+                    'callback' => '/dashboard-admin',
+                ]);
             } elseif ($user->id_role == 2) {
-                return '/dashboard-admin-opd';
+                return response()->json([
+                    'type' => 'success',
+                    'status' => true,
+                    'callback' => '/dashboard-admin-opd'
+                ]);
             }elseif ($user->id_role == 3) {
-                return '/dashboard-admin-desa';
+                return response()->json([
+                    'type' => 'success',
+                    'status' => true,
+                    'callback' => '/dashboard-admin-desa'
+                ]);
             }elseif ($user->id_role == 4) {
-                return '/dashboard-admin-verifikator';
+                return response()->json([
+                    'type' => 'success',
+                    'status' => true,
+                    'callback' => '/dashboard-admin-verifikator'
+                ]);
             }
-
         } 
         else{ 
-            return redirect()->back()->with('error', 'These credentials do not match our records.');
+            return response()->json([
+                'type' => 'warning',
+                'status' => false,
+                'callback' => 'Silahkan isi username dan password anda dengan benar',
+            ]);
         } 
     }
 

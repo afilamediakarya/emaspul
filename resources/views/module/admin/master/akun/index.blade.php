@@ -100,7 +100,7 @@
                     <small class="text-danger username_error"></small>
                 </div>
 
-                <div class="row" id="password_content">
+                <div class="row">
                     <div class="col-lg-6">
                         <div class="mb-10">
                             <label class="form-label">Password</label>
@@ -162,6 +162,8 @@
 
                     <small class="text-danger status_error"></small>
                 </div>
+                <!-- id="password_content" -->
+             
 
                 <div class="separator separator-dashed mt-8 mb-5"></div>
                     <div class="">

@@ -117,6 +117,7 @@ class akunController extends Controller
             'role' => 'required',
             'status' => 'required',
             'username' => 'required',
+            'password' => 'confirmed|min:6',
         ]);
       
         $data = User::where('id',$params)->first();
@@ -128,6 +129,9 @@ class akunController extends Controller
         $data->id_role = $request->role;
         $data->status = $request->status;
         $data->username = $request->username;
+        if (isset($request->password)) {
+            $data->password = Hash::make($request->password);
+        }
         $data->save();
 
         if ($data) {

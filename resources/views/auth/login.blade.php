@@ -124,16 +124,6 @@
         <script src="{{ asset('assets/js/panel.js') }}"></script>
 		<!--end::Page Custom Javascript-->
 		<!--end::Javascript-->
-		@if(Session::has('error'))
-		  <script>
-			  let message_ = '{{session('error')}}';
-			  Swal.fire(
-				  "Maaf anda gagal login",
-				  message_,
-				  'error'
-			  );
-		  </script>
-	  @endif
         <script>
 			
             let control = new Control('type_1');
