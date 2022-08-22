@@ -28,6 +28,12 @@ class Control {
                         nomor_perbub = y.nomor_perbub;
                     }
 
+                    if (y.verifikator == null) {
+                        $('#konsederan').css('display','none');
+                    }else{
+                        $('#konsederan').css('display','block');
+                    }
+
                     $('.content_detail_1').html(y.nama_documents);
                   
                     $('.content_detail_3').html(y.verifikator);

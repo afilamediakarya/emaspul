@@ -79,24 +79,25 @@ class generalController extends Controller
         }else if($type == 'type_b'){
             $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." AND documents.id_perangkat =".Auth::user()->id_unit_kerja);
         }else{
-            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis);
+            $other_query = '';
+            if (Auth::user()->id_role == 2) {
+                $other_query = "AND documents.user_insert =".Auth::user()->id;
+                $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." ".$other_query);
+            }else{
+                // return Auth::user()->id_unit_kerja; 
+
+                // $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator, (SELECT unit_bidang_verifikasi.id_bidang FROM unit_bidang_verifikasi WHERE documents.id_perangkat = ".Auth::user()->id_unit_kerja.") AS bidang_verifikasi FROM documents where jenis_document=".$jenis." ".$other_query);
+
+                $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat where documents.jenis_document = ".$jenis." AND unit_bidang_verifikasi.id_bidang=".Auth::user()->id_unit_kerja);
+            }
+           
         }     
        
-
-        if ($data) {
-            return response()->json([
-                'type' => 'success',
-                'status' => true,
-                'data' => $data,
-            ]);
-        }else{
-            return response()->json([
-                'type' => 'failed',
-                'status' => false,
-                'message' => 'Data Gagal di Proses',
-                'data' => $data,
-            ]);
-        }
+        return response()->json([
+            'type' => 'success',
+            'status' => true,
+            'data' => $data,
+        ]);
     }
 
     public function verifikasiDocument($params,$id){
@@ -204,8 +205,75 @@ class generalController extends Controller
 
     public function check_files($params1, $params2) 
     {
-        $data = document::where('nama_documents',$params1)->where('id_perangkat',Auth::user()->id_unit_kerja)->where('jenis_document',$params2)->where('tahun',session('tahun_penganggaran'))->exists();
+        $data = document::where('nama_documents',$params1)->where('id_perangkat',Auth::user()->id_unit_kerja)->where('jenis_document',$params2)->where('user_insert',Auth::user()->id)->where('tahun',session('tahun_penganggaran'))->exists();
         return $data;
+    }
+
+    function getBulanRomawi(){
+        $bulan = date ("m");
+        switch($bulan){
+            case '01':
+                $bulan_romawi = "I";
+            break;
+     
+            case '02':			
+                $bulan_romawi = "II";
+            break;
+     
+            case '03':
+                $bulan_romawi = "III";
+            break;
+     
+            case '04':
+                $bulan_romawi = "IV";
+            break;
+     
+            case '05':
+                $bulan_romawi = "V";
+            break;
+     
+            case '06':
+                $bulan_romawi = "VI";
+            break;
+     
+            case '07':
+                $bulan_romawi = "VII";
+            break;
+
+            case '08':
+                $bulan_romawi = "VIII";
+            break;
+
+            case '09':
+                $bulan_romawi = "IX";
+            break;
+
+            case '10':
+                $bulan_romawi = "X";
+            break;
+
+            case '11':
+                $bulan_romawi = "XI";
+            break;
+
+            case '12':
+                $bulan_romawi = "XII";
+            break;
+            
+            default:
+                $bulan_romawi = "Tidak di ketahui";		
+            break;
+        }
+       return $bulan_romawi;
+    }
+
+    public function create_nomor_konsederan($jenis_document, $jenis, $nama){
+        
+        $data = document::where('nama_documents',$nama)->where('jenis_document',$jenis_document)->where('tahun',session('tahun_penganggaran'))->get()->count();
+        $num = $data + 1;
+
+        $nomor_konsederan = '0'.$num.'/'.$this->getBulanRomawi().'/verifikasi.'.$jenis.'/Bappelitbangda/'.date('Y');
+        return $nomor_konsederan;
     }
 
     public function storeDocuments(Request $request){
@@ -214,6 +282,8 @@ class generalController extends Controller
         $data = array();
         $status_document = 0;
         $jenis_document = 0;
+        $nomor_konsederan = '';
+
 
         if ($type == 'type_a') {
             $status_document = 4;
@@ -235,14 +305,15 @@ class generalController extends Controller
             $jenis_document = 5;
         }elseif ($jenis == 'renstra'){
             $jenis_document = 3;
+            $nomor_konsederan = $this->create_nomor_konsederan($jenis_document,$jenis,$request->nama_documents);
         }elseif ($jenis == 'renja'){
             $jenis_document = 4;
+            $nomor_konsederan = $this->create_nomor_konsederan($jenis_document,$jenis,$request->nama_documents);
         }elseif ($jenis == 'sektoral') {
             $jenis_document = 6;
         }elseif ($jenis == 'skpd') {
             $jenis_document = 7;
         }
-
         
         $check_files = $this->check_files($request->nama_documents,$jenis_document);
 
@@ -281,6 +352,7 @@ class generalController extends Controller
             $data->id_perangkat = Auth::user()->id_unit_kerja;
             $data->user_insert = Auth::user()->id;
             $data->file_document = $filename;
+            $data->nomor_konsederan = $nomor_konsederan;
             $data->save();
 
             if ($type == 'type_b') {
