@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\DB;
-
+use Auth;
 class dokumenOpdController extends Controller
 {
     public function index(){
@@ -38,12 +38,14 @@ class dokumenOpdController extends Controller
         if ($type == 'Renstra') {
             $breadcumb = 'Dokumen Renstra';
             $current_breadcumb = 'Renstra';
-            return view('module.opd.dokumen.partials.renstra',compact('breadcumb','current_breadcumb'));
+            $role = Auth::user()->id_role;
+            return view('module.opd.dokumen.partials.renstra',compact('breadcumb','current_breadcumb','role'));
         }
         if ($type == 'Renja') {
             $breadcumb = 'Dokumen Renja';
             $current_breadcumb = 'Renja';
-            return view('module.opd.dokumen.partials.renja',compact('breadcumb','current_breadcumb'));
+            $role = Auth::user()->id_role;
+            return view('module.opd.dokumen.partials.renja',compact('breadcumb','current_breadcumb','role'));
         }
         if ($type == 'Sektoral') {
             $breadcumb = 'Dokumen Data Sektoral';
