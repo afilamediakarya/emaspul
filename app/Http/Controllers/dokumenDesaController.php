@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\DB;
-
+use Auth;
 class dokumenDesaController extends Controller
 {
     public function index(){
@@ -33,12 +33,14 @@ class dokumenDesaController extends Controller
         if ($type == 'RPJMDes') {
             $breadcumb = 'Dokumen Desa';
             $current_breadcumb = 'RPJMDes';
-            return view('module.desa.dokumen.partials.rpjmdes',compact('breadcumb','current_breadcumb'));
+            $role = Auth::user()->id_role;
+            return view('module.desa.dokumen.partials.rpjmdes',compact('breadcumb','current_breadcumb','role'));
         }
         if ($type == 'RKPDes') {
             $breadcumb = 'Dokumen Desa';
             $current_breadcumb = 'RKPDes';
-            return view('module.desa.dokumen.partials.rkpdes',compact('breadcumb','current_breadcumb'));
+            $role = Auth::user()->id_role;
+            return view('module.desa.dokumen.partials.rkpdes',compact('breadcumb','current_breadcumb','role'));
         }
         if ($type == 'SPGs') {
             $breadcumb = 'Dokumen SPGs Desa';
