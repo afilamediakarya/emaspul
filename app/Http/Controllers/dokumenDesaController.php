@@ -79,61 +79,88 @@ class dokumenDesaController extends Controller
 
         $spreadsheet->getProperties()->setCreator('AFILA')
             ->setLastModifiedBy('AFILA')
-            ->setTitle('EVALUASI RKPMDes ')
-            ->setSubject('EVALUASI RKPMDes ')
-            ->setDescription('EVALUASI RKPMDes ')
+            ->setTitle('EVALUASI RKPMDes '.$data->unit_kerja.'')
+            ->setSubject('EVALUASI RKPMDes '.$data->unit_kerja.'')
+            ->setDescription('EVALUASI RKPMDes '.$data->unit_kerja.'')
             ->setKeywords('pdf php')
             ->setCategory('RKPMDes');
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-        $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_FOLIO);
-        $sheet->getRowDimension(5)->setRowHeight(25);
-        $sheet->getRowDimension(1)->setRowHeight(17);
-        $sheet->getRowDimension(2)->setRowHeight(17);
-        $sheet->getRowDimension(3)->setRowHeight(17);
+        //$sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
         $spreadsheet->getDefaultStyle()->getFont()->setName('Times New Roman');
-        $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+        $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
         $spreadsheet->getActiveSheet()->getPageSetup()->setHorizontalCentered(true);
         $spreadsheet->getActiveSheet()->getPageSetup()->setVerticalCentered(false);
+        $sheet->getDefaultRowDimension()->setRowHeight(15);
 
         //Margin PDF
-        $spreadsheet->getActiveSheet()->getPageMargins()->setTop(0.3);
-        $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.3);
-        $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.5);
-        $spreadsheet->getActiveSheet()->getPageMargins()->setBottom(0.3);
+        
+        $spreadsheet->getActiveSheet()->getPageMargins()->setTop(0.5);
+        $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.8);
+        $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(1.2);
+        $spreadsheet->getActiveSheet()->getPageMargins()->setBottom(1.0);
+        $spreadsheet->getActiveSheet()->getStyle('A1:A4')->getAlignment()->setWrapText(true);
        
         // Header Text
-        $sheet->setCellValue('A1', 'FORMAT KONSEDERAN RPJMDES');
+        $cell = 1;
+        $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA ')->mergeCells('A'. $cell . ':F' . $cell);
+        $cell++;
+        $sheet->setCellValue('A'.$cell,'(RPJM DESA) '.strtoupper($data->unit_kerja),' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir)->mergeCells('A'. $cell . ':F' . $cell);
+        $cell++;
+        $sheet->setCellValue('A'.$cell,' ')->mergeCells('A'. $cell . ':F' . $cell);
+        $cell++;
+        $sheet->setCellValue('A'.$cell,'NO')->mergeCells('A'. $cell . ':A' . $cell+1);
+        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':C' . $cell+1);
+        $sheet->setCellValue('D'. $cell,'KESESUAIAN')->mergeCells('D'. $cell . ':E' . $cell);
+        $sheet->setCellValue('D'. $cell+1,'ADA');
+        $sheet->setCellValue('E'. $cell+1,'TIDAK ADA');
+        $sheet->setCellValue('F'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('F'. $cell . ':F' . $cell+1);
+        
+        $cell++;
 
-        $sheet->setCellValue('A3', 'Nama Perangkat Desa / Unit Kerja : ')->getColumnDimension('A')->setWidth(45);
-        $sheet->setCellValue('B3', $data->unit_kerja)->getColumnDimension('B')->setWidth(35);
-        $sheet->setCellValue('A4', 'Tahun Awal : ');
-        $sheet->setCellValue('B4', $data->periode_awal);
-        $sheet->setCellValue('A5', 'Tahun Akhir : ');
-        $sheet->setCellValue('B5', $data->periode_akhir);
-        $sheet->setCellValue('A6', 'Nama Kepala : ');
-        $sheet->setCellValue('B6', $data->nama_kepala);
-        $sheet->setCellValue('A7', 'Jabatan Kepala : ');
-        $sheet->setCellValue('B7', $data->jabatan_kepala);
+        $sheet->getColumnDimension('A')->setWidth(5);
+        $sheet->getColumnDimension('B')->setWidth(10);
+        $sheet->getColumnDimension('C')->setWidth(25);
+        $sheet->getColumnDimension('D')->setWidth(7);
+        $sheet->getColumnDimension('E')->setWidth(12);
+        $sheet->getColumnDimension('F')->setWidth(30);
 
-        $sheet->setCellValue('A9', 'No');
-        $sheet->setCellValue('B9','Indikator');
-        $sheet->setCellValue('C9', 'Kesesuaian')->getColumnDimension('C')->setWidth(15);
-        $sheet->setCellValue('D9','Tindak Lanjut')->getColumnDimension('D')->setWidth(25);;
-
-        $cell = 11;
-
+        $cell++;
         $i=0;
+        
 
         foreach ( $data->tabel as $row ){
             $sheet->setCellValue('A' . $cell, ++$i);
-            $sheet->setCellValue('B' . $cell, $row->indikator);
-            $sheet->setCellValue('C' . $cell, $row->verifikasi);
-            $sheet->setCellValue('D' . $cell, $row->tindak_lanjut);
+            $sheet->setCellValue('B' . $cell, $row->indikator)->mergeCells('B'. $cell . ':C' . $cell);
+            if ($row->verifikasi==1){
+                $sheet->setCellValue('D' . $cell, 'v');
+            }
+            else{
+                $sheet->setCellValue('E' . $cell, 'v');
+            }
+            $sheet->setCellValue('F' . $cell, $row->tindak_lanjut);
             $cell++;
         }
+
+        $border = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '0000000'],
+                ],
+            ],
+        ];
+
+        $sheet->getStyle('A4:F'. $cell )->applyFromArray($border);
+        $sheet->getStyle('A1:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('B6:B'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
+        $sheet->getStyle('F6:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
+
+        $sheet->getStyle('A1:F5')->getFont()->setBold(true);
         
-        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':D' . $cell);
+        $cell++;
+
+        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':F' . $cell);
             $spreadsheet->getActiveSheet()->getHeaderFooter()
                 ->setOddHeader('&C&H' . url()->current());
             $spreadsheet->getActiveSheet()->getHeaderFooter()
@@ -156,59 +183,88 @@ class dokumenDesaController extends Controller
 
         $spreadsheet->getProperties()->setCreator('AFILA')
             ->setLastModifiedBy('AFILA')
-            ->setTitle('EVALUASI RKPDes ')
-            ->setSubject('EVALUASI RKPDes ')
-            ->setDescription('EVALUASI RKPDes ')
+            ->setTitle('EVALUASI RKPDes '.$data->unit_kerja.'')
+            ->setSubject('EVALUASI RKPDes '.$data->unit_kerja.'')
+            ->setDescription('EVALUASI RKPDes '.$data->unit_kerja.'')
             ->setKeywords('pdf php')
             ->setCategory('RKPDes');
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-        $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_FOLIO);
-        $sheet->getRowDimension(5)->setRowHeight(25);
-        $sheet->getRowDimension(1)->setRowHeight(17);
-        $sheet->getRowDimension(2)->setRowHeight(17);
-        $sheet->getRowDimension(3)->setRowHeight(17);
+        //$sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
         $spreadsheet->getDefaultStyle()->getFont()->setName('Times New Roman');
-        $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+        $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
         $spreadsheet->getActiveSheet()->getPageSetup()->setHorizontalCentered(true);
         $spreadsheet->getActiveSheet()->getPageSetup()->setVerticalCentered(false);
+        $sheet->getDefaultRowDimension()->setRowHeight(15);
 
         //Margin PDF
-        $spreadsheet->getActiveSheet()->getPageMargins()->setTop(0.3);
-        $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.3);
-        $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.5);
-        $spreadsheet->getActiveSheet()->getPageMargins()->setBottom(0.3);
+        
+        $spreadsheet->getActiveSheet()->getPageMargins()->setTop(0.5);
+        $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.8);
+        $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(1.2);
+        $spreadsheet->getActiveSheet()->getPageMargins()->setBottom(1.0);
+        $spreadsheet->getActiveSheet()->getStyle('A1:A4')->getAlignment()->setWrapText(true);
        
         // Header Text
-        $sheet->setCellValue('A1', 'FORMAT KONSEDERAN RKPDes');
+        $cell = 1;
+        $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RENCANA KERJA PEMERINTAH DESA')->mergeCells('A'. $cell . ':F' . $cell);
+        $cell++;
+        $sheet->setCellValue('A'.$cell,'(RKPD DESA) '.strtoupper($data->unit_kerja).' TAHUN '.$data->tahun)->mergeCells('A'. $cell . ':F' . $cell);
+        $cell++;
+        $sheet->setCellValue('A'.$cell,' ')->mergeCells('A'. $cell . ':F' . $cell);
+        $cell++;
+        $sheet->setCellValue('A'.$cell,'NO')->mergeCells('A'. $cell . ':A' . $cell+1);
+        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':C' . $cell+1);
+        $sheet->setCellValue('D'. $cell,'KESESUAIAN')->mergeCells('D'. $cell . ':E' . $cell);
+        $sheet->setCellValue('D'. $cell+1,'ADA');
+        $sheet->setCellValue('E'. $cell+1,'TIDAK ADA');
+        $sheet->setCellValue('F'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('F'. $cell . ':F' . $cell+1);
+        
+        $cell++;
 
-        $sheet->setCellValue('A3', 'Nama Perangkat Desa / Unit Kerja : ')->getColumnDimension('A')->setWidth(45);
-        $sheet->setCellValue('B3', $data->unit_kerja)->getColumnDimension('B')->setWidth(35);
-        $sheet->setCellValue('A4', 'Tahun  : ');
-        $sheet->setCellValue('B4', $data->tahun);
-        $sheet->setCellValue('A6', 'Nama Kepala : ');
-        $sheet->setCellValue('B6', $data->nama_kepala);
-        $sheet->setCellValue('A7', 'Jabatan Kepala : ');
-        $sheet->setCellValue('B7', $data->jabatan_kepala);
+        $sheet->getColumnDimension('A')->setWidth(5);
+        $sheet->getColumnDimension('B')->setWidth(10);
+        $sheet->getColumnDimension('C')->setWidth(25);
+        $sheet->getColumnDimension('D')->setWidth(7);
+        $sheet->getColumnDimension('E')->setWidth(12);
+        $sheet->getColumnDimension('F')->setWidth(30);
 
-        $sheet->setCellValue('A9', 'No');
-        $sheet->setCellValue('B9','Indikator');
-        $sheet->setCellValue('C9', 'Kesesuaian')->getColumnDimension('C')->setWidth(15);
-        $sheet->setCellValue('D9','Tindak Lanjut')->getColumnDimension('D')->setWidth(25);;
-
-        $cell = 11;
-
+        $cell++;
         $i=0;
+        
 
         foreach ( $data->tabel as $row ){
             $sheet->setCellValue('A' . $cell, ++$i);
-            $sheet->setCellValue('B' . $cell, $row->indikator);
-            $sheet->setCellValue('C' . $cell, $row->verifikasi);
-            $sheet->setCellValue('D' . $cell, $row->tindak_lanjut);
+            $sheet->setCellValue('B' . $cell, $row->indikator)->mergeCells('B'. $cell . ':C' . $cell);
+            if ($row->verifikasi==1){
+                $sheet->setCellValue('D' . $cell, 'v');
+            }
+            else{
+                $sheet->setCellValue('E' . $cell, 'v');
+            }
+            $sheet->setCellValue('F' . $cell, $row->tindak_lanjut);
             $cell++;
         }
+
+        $border = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '0000000'],
+                ],
+            ],
+        ];
+
+        $sheet->getStyle('A4:F'. $cell )->applyFromArray($border);
+        $sheet->getStyle('A1:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('B6:B'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
+        $sheet->getStyle('F6:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
+
+        $sheet->getStyle('A1:F5')->getFont()->setBold(true);
         
-        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':D' . $cell);
+        $cell++;
+
+        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':F' . $cell);
             $spreadsheet->getActiveSheet()->getHeaderFooter()
                 ->setOddHeader('&C&H' . url()->current());
             $spreadsheet->getActiveSheet()->getHeaderFooter()
