@@ -162,7 +162,7 @@
 @section('script')
 <script>
      let control = new Control('type_2');
-     let element = ['nama_documents'];
+     let element = ['nama_documents','referensi_nama_dokumen'];
     $(document).on('click','#button-side-form', function () {
         $('#password_content').show();
         control.overlay_form('Tambah','Data Lainnya');

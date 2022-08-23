@@ -80,7 +80,7 @@
                     <input type="text" id="nama_documents" class="form-control form-control-solid" name="nama_documents" placeholder="Masukkan Nama Dokumen">
                     <small class="text-danger nama_documents_error"></small>
                 </div>
-                <input type="hidden" name="referensi_nama_dokumen" value="dokumen_skpd">
+                <input type="hidden" name="referensi_nama_dokumen" id="referensi_nama_dokumen" value="dokumen_skpd">
 
                 <div class="form-group row">
         <!--begin::Label-->
@@ -162,7 +162,7 @@
 @section('script')
 <script>
      let control = new Control('type_2');
-     let element = ['nama_documents'];
+     let element = ['nama_documents','referensi_nama_dokumen'];
     $(document).on('click','#button-side-form', function () {
         $('#password_content').show();
         control.overlay_form('Tambah','Data Lainnya');

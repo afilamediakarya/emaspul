@@ -45,6 +45,11 @@
           window.location.href = `/dokumen-desa/verifikasi?document=${params}&jenis=RKPDes`;
      })
 
+     $(document).on('click','.button-show', function (e) {
+        e.preventDefault();
+        window.open('/storage/files/dokumen_desa/rkpdes/'+$(this).attr('data-label'), '_blank');
+    })
+
     $(function () {
       
         let columns = [
