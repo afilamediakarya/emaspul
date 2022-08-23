@@ -24,7 +24,7 @@ class akunController extends Controller
             if ($value->id_role == 2) {
                $value->bidang = DB::table('unit_kerja')->select('id','nama_unit_kerja')->where('id',$value->id_unit_kerja)->first()->nama_unit_kerja;
             }else if($value->id_role == 3){
-                $value->bidang = DB::table('desa')->select('id','nama')->where('id',$value->id_unit_kerja)->first()->nama;
+                $value->bidang = DB::table('perangkat_desa')->select('id','nama_desa')->where('id',$value->id_unit_kerja)->first()->nama_desa;
             }else{
                 $value->bidang = DB::table('bidang_verifikasi')->select('id','nama_bidang')->where('id',$value->id_unit_kerja)->first()->nama_bidang;
             }
@@ -117,7 +117,7 @@ class akunController extends Controller
             'role' => 'required',
             'status' => 'required',
             'username' => 'required',
-            'password' => 'confirmed|min:6',
+            'password' => 'confirmed',
         ]);
       
         $data = User::where('id',$params)->first();
