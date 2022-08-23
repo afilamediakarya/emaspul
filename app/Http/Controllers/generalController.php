@@ -39,7 +39,7 @@ class generalController extends Controller
     }
 
     public function get_perangkat_desa(){
-        $data = DB::table('perangkat_desa')->select('id_desa as id','nama_desa as value')->get();
+        $data = DB::table('perangkat_desa')->select('id','nama_desa as value')->get();
         return $data;
     }
 
