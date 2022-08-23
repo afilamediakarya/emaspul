@@ -42,7 +42,7 @@
     // /storage/files/dokumen_daerah/rpjmdes/
     $(document).on('click','.button-show', function (e) {
         e.preventDefault();
-        window.open('/storage/files/dokumen_opd/renja/'+$(this).attr('data-label'), '_blank');
+        window.open('/storage/files/dokumen_skpd/renja/'+$(this).attr('data-label'), '_blank');
     })
 
     $(document).on('click', '.btn-verifikasi', function (e) {
