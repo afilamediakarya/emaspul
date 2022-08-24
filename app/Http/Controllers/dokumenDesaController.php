@@ -110,7 +110,7 @@ class dokumenDesaController extends Controller
         // }
 
         $data = DB::table('documents')->select('documents.id','documents.tahun','documents.periode_awal','documents.periode_akhir','documents.nomor_konsederan','perangkat_desa.nama_desa as unit_kerja','user.nama_lengkap as nama_verifikator','user.nip as nip_verifikator','user.nama_lengkap as nama_user')->join('perangkat_desa','documents.id_perangkat','=','perangkat_desa.id')->join('user','documents.id_verifikator','=','user.id')->where('documents.id',$document)->first();
-        // $data->tabel = DB::table('verifikasi_documents')->select('verifikasi_documents.id','verifikasi_documents.verifikasi','verifikasi_documents.tindak_lanjut','master_verifikasi.indikator')->join('master_verifikasi','verifikasi_documents.id_master_verifikasi','=','master_verifikasi.id')->where('id_documents',$document)->get();
+        $data->tabel = DB::table('verifikasi_documents')->select('verifikasi_documents.id','verifikasi_documents.verifikasi','verifikasi_documents.tindak_lanjut','master_verifikasi.indikator')->join('master_verifikasi','verifikasi_documents.id_master_verifikasi','=','master_verifikasi.id')->where('id_documents',$document)->get();
 
         $data->hari = $this->getHari();
         $data->tanggal = date('d');
@@ -118,6 +118,8 @@ class dokumenDesaController extends Controller
         $data->tahun = date('Y');
         $data->nama_user = Auth::user()->nama_lengkap;
         $data->nip_user = Auth::user()->nip;
+
+        return $data;
 
         return $this->{$fungsi}($data);
     }
