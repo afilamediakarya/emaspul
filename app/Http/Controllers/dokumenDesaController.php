@@ -100,7 +100,8 @@ class dokumenDesaController extends Controller
         $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(1.2);
         $spreadsheet->getActiveSheet()->getPageMargins()->setBottom(1.0);
         $spreadsheet->getActiveSheet()->getStyle('A1:A4')->getAlignment()->setWrapText(true);
-       
+        
+        
         // Header Text
         $cell = 1;
         $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA ')->mergeCells('A'. $cell . ':F' . $cell);
@@ -109,12 +110,12 @@ class dokumenDesaController extends Controller
         $cell++;
         $sheet->setCellValue('A'.$cell,' ')->mergeCells('A'. $cell . ':F' . $cell);
         $cell++;
-        $sheet->setCellValue('A'.$cell,'NO')->mergeCells('A'. $cell . ':A' . $cell+1);
-        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':C' . $cell+1);
+        $sheet->setCellValue('A'.$cell,'NO')->mergeCells('A'. $cell . ':A' . ($cell+1));
+        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':C' . ($cell+1));
         $sheet->setCellValue('D'. $cell,'KESESUAIAN')->mergeCells('D'. $cell . ':E' . $cell);
-        $sheet->setCellValue('D'. $cell+1,'ADA');
-        $sheet->setCellValue('E'. $cell+1,'TIDAK ADA');
-        $sheet->setCellValue('F'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('F'. $cell . ':F' . $cell+1);
+        $sheet->setCellValue('D'. ($cell+1),'ADA');
+        $sheet->setCellValue('E'. ($cell+1),'TIDAK ADA');
+        $sheet->setCellValue('F'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('F'. $cell . ':F' . ($cell+1));
         
         $cell++;
 
@@ -213,12 +214,12 @@ class dokumenDesaController extends Controller
         $cell++;
         $sheet->setCellValue('A'.$cell,' ')->mergeCells('A'. $cell . ':F' . $cell);
         $cell++;
-        $sheet->setCellValue('A'.$cell,'NO')->mergeCells('A'. $cell . ':A' . $cell+1);
-        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':C' . $cell+1);
+        $sheet->setCellValue('A'.$cell,'NO')->mergeCells('A'. $cell . ':A' . ($cell+1));
+        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':C' . ($cell+1));
         $sheet->setCellValue('D'. $cell,'KESESUAIAN')->mergeCells('D'. $cell . ':E' . $cell);
-        $sheet->setCellValue('D'. $cell+1,'ADA');
-        $sheet->setCellValue('E'. $cell+1,'TIDAK ADA');
-        $sheet->setCellValue('F'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('F'. $cell . ':F' . $cell+1);
+        $sheet->setCellValue('D'. ($cell+1),'ADA');
+        $sheet->setCellValue('E'. ($cell+1),'TIDAK ADA');
+        $sheet->setCellValue('F'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('F'. $cell . ':F' . ($cell+1));
         
         $cell++;
 

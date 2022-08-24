@@ -223,12 +223,12 @@ class dokumenOpdController extends Controller
         $cell++;
         $sheet->setCellValue('A'.$cell,' ')->mergeCells('A'. $cell . ':F' . $cell);
         $cell++;
-        $sheet->setCellValue('A'.$cell,'NO')->mergeCells('A'. $cell . ':A' . $cell+1);
-        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':C' . $cell+1);
+        $sheet->setCellValue('A'.$cell,'NO')->mergeCells('A'. $cell . ':A' . ($cell+1));
+        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':C' . ($cell+1));
         $sheet->setCellValue('D'. $cell,'KESESUAIAN')->mergeCells('D'. $cell . ':E' . $cell);
-        $sheet->setCellValue('D'. $cell+1,'ADA');
-        $sheet->setCellValue('E'. $cell+1,'TIDAK ADA');
-        $sheet->setCellValue('F'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('F'. $cell . ':F' . $cell+1);
+        $sheet->setCellValue('D'. ($cell+1),'ADA');
+        $sheet->setCellValue('E'. ($cell+1),'TIDAK ADA');
+        $sheet->setCellValue('F'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('F'. $cell . ':F' . ($cell+1));
         
         $cell++;
 
@@ -393,12 +393,12 @@ class dokumenOpdController extends Controller
         $cell++;
         $sheet->setCellValue('A'.$cell,' ')->mergeCells('A'. $cell . ':F' . $cell);
         $cell++;
-        $sheet->setCellValue('A'.$cell,'NO')->mergeCells('A'. $cell . ':A' . $cell+1);
-        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':C' . $cell+1);
+        $sheet->setCellValue('A'.$cell,'NO')->mergeCells('A'. $cell . ':A' . ($cell+1));
+        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':C' . ($cell+1));
         $sheet->setCellValue('D'. $cell,'KESESUAIAN')->mergeCells('D'. $cell . ':E' . $cell);
-        $sheet->setCellValue('D'. $cell+1,'ADA');
-        $sheet->setCellValue('E'. $cell+1,'TIDAK ADA');
-        $sheet->setCellValue('F'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('F'. $cell . ':F' . $cell+1);
+        $sheet->setCellValue('D'. ($cell+1),'ADA');
+        $sheet->setCellValue('E'. ($cell+1),'TIDAK ADA');
+        $sheet->setCellValue('F'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('F'. $cell . ':F' . ($cell+1));
         
         $cell++;
 
