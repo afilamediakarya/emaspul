@@ -57,19 +57,67 @@ class dokumenDesaController extends Controller
         return view('module.desa.dokumen.partials.verifikasi',compact('breadcumb','current_breadcumb','document','jenis'));
     }
 
+    function getHari(){
+        $hari = date ("D");
+        switch($hari){
+            case 'Sun':
+                $hari_ini = "Minggu";
+            break;
+     
+            case 'Mon':			
+                $hari_ini = "Senin";
+            break;
+     
+            case 'Tue':
+                $hari_ini = "Selasa";
+            break;
+     
+            case 'Wed':
+                $hari_ini = "Rabu";
+            break;
+     
+            case 'Thu':
+                $hari_ini = "Kamis";
+            break;
+     
+            case 'Fri':
+                $hari_ini = "Jumat";
+            break;
+     
+            case 'Sat':
+                $hari_ini = "Sabtu";
+            break;
+            
+            default:
+                $hari_ini = "Tidak di ketahui";		
+            break;
+        }
+       return $hari_ini;
+    }
+
     public function konsederan(){
         $jenis = request('jenis');
         $document = request('document');
         $fungsi = 'konsederan_'.$jenis;
         $data = array();
 
-        if ($jenis == 'rpjmdes') {
-            $data = DB::table('documents')->select('documents.id','documents.periode_awal','documents.periode_akhir','perangkat_desa.nama_desa as unit_kerja','perangkat_desa.nama_kepala','perangkat_desa.jabatan_kepala')->join('perangkat_desa','documents.id_perangkat','=','perangkat_desa.id')->where('documents.id',$document)->first();
-            $data->tabel = DB::table('verifikasi_documents')->select('verifikasi_documents.id','verifikasi_documents.verifikasi','verifikasi_documents.tindak_lanjut','master_verifikasi.indikator')->join('master_verifikasi','verifikasi_documents.id_master_verifikasi','=','master_verifikasi.id')->where('id_documents',$document)->get();
-        }else {
-            $data = DB::table('documents')->select('documents.id','documents.tahun','perangkat_desa.nama_desa as unit_kerja','perangkat_desa.nama_kepala','perangkat_desa.jabatan_kepala')->join('perangkat_desa','documents.id_perangkat','=','perangkat_desa.id')->where('documents.id',$document)->first();
-            $data->tabel = DB::table('verifikasi_documents')->select('verifikasi_documents.id','verifikasi_documents.verifikasi','verifikasi_documents.tindak_lanjut','master_verifikasi.indikator')->join('master_verifikasi','verifikasi_documents.id_master_verifikasi','=','master_verifikasi.id')->where('id_documents',$document)->get();
-        }
+        // if ($jenis == 'rpjmdes') {
+        //     $data = DB::table('documents')->select('documents.id','documents.periode_awal','documents.periode_akhir','perangkat_desa.nama_desa as unit_kerja','perangkat_desa.nama_kepala','perangkat_desa.jabatan_kepala')->join('perangkat_desa','documents.id_perangkat','=','perangkat_desa.id')->where('documents.id',$document)->first();
+        //     $data->tabel = DB::table('verifikasi_documents')->select('verifikasi_documents.id','verifikasi_documents.verifikasi','verifikasi_documents.tindak_lanjut','master_verifikasi.indikator')->join('master_verifikasi','verifikasi_documents.id_master_verifikasi','=','master_verifikasi.id')->where('id_documents',$document)->get();
+        // }else {
+        //     $data = DB::table('documents')->select('documents.id','documents.tahun','perangkat_desa.nama_desa as unit_kerja','perangkat_desa.nama_kepala','perangkat_desa.jabatan_kepala')->join('perangkat_desa','documents.id_perangkat','=','perangkat_desa.id')->where('documents.id',$document)->first();
+        //     $data->tabel = DB::table('verifikasi_documents')->select('verifikasi_documents.id','verifikasi_documents.verifikasi','verifikasi_documents.tindak_lanjut','master_verifikasi.indikator')->join('master_verifikasi','verifikasi_documents.id_master_verifikasi','=','master_verifikasi.id')->where('id_documents',$document)->get();
+        // }
+
+        $data = DB::table('documents')->select('documents.id','documents.tahun','documents.periode_awal','documents.periode_akhir','documents.nomor_konsederan','perangkat_desa.nama_desa as unit_kerja','user.nama_lengkap as nama_verifikator','user.nip as nip_verifikator','user.nama_lengkap as nama_user')->join('perangkat_desa','documents.id_perangkat','=','perangkat_desa.id')->join('user','documents.id_verifikator','=','user.id')->where('documents.id',$document)->first();
+        // $data->tabel = DB::table('verifikasi_documents')->select('verifikasi_documents.id','verifikasi_documents.verifikasi','verifikasi_documents.tindak_lanjut','master_verifikasi.indikator')->join('master_verifikasi','verifikasi_documents.id_master_verifikasi','=','master_verifikasi.id')->where('id_documents',$document)->get();
+
+        $data->hari = $this->getHari();
+        $data->tanggal = date('d');
+        $data->bulan = date('m');
+        $data->tahun = date('Y');
+        $data->nama_user = Auth::user()->nama_lengkap;
+        $data->nip_user = Auth::user()->nip;
 
         return $this->{$fungsi}($data);
     }
