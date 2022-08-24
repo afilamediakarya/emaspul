@@ -53,6 +53,16 @@ class generalController extends Controller
         return $data;
     }
 
+    public function get_satuan(){
+        $data = DB::table('satuan')->select('nama_satuan as id','nama_satuan as value')->get();
+        return $data;
+    }
+
+    public function pagu_desa(){
+       $data = DB::table('pagu_desa')->select('pagu_desa as id','pagu_desa as value')->where('id_perangkat_desa',Auth::user()->id_unit_kerja)->where('tahun',session('tahun_penganggaran'))->get();
+       return $data;
+    }
+
     public function get_master_verifikasi($params){
        
         $data = verifikasi_document::select('verifikasi_documents.id','verifikasi_documents.id_documents','verifikasi_documents.id_master_verifikasi','verifikasi_documents.tindak_lanjut','verifikasi_documents.verifikasi','documents.jenis_document','documents.nama_documents')->with('master_verifikasi')->join('documents','verifikasi_documents.id_documents','=','documents.id')->where('id_documents',$params)->get();

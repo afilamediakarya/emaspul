@@ -12,6 +12,8 @@ use App\Http\Controllers\rkpdController;
 use App\Http\Controllers\dokumenDesaController;
 use App\Http\Controllers\dokumenOpdController;
 use App\Http\Controllers\pengaturanController;
+use App\Http\Controllers\alokasiDesaController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +59,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/byParams/{params}', [akunController::class, 'byParams'])->name('admin.akun.byId');
             Route::post('/update/{params}', [akunController::class, 'update'])->name('admin.akun.update');
         });
-
         Route::prefix('jadwal')->group(function () {
             Route::get('/', [pengaturanController::class, 'index']);
             Route::post('/store', [pengaturanController::class, 'store']);
@@ -65,9 +66,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/byParams/{params}', [pengaturanController::class, 'byParams']);
             Route::post('/update/{params}', [pengaturanController::class, 'update']);
         });
-
-        
-           
+       
     });
     Route::group(['middleware' => ['check_auth:2']], function () {
         Route::get('/dashboard-admin-opd', [DashboardController::class, 'dashboard_admin_opd'])->name('dashboard.admin_opd');
@@ -88,6 +87,13 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::get('/daftar-alokasi-skpd', [dokumenDesaController::class, 'alokasi_skpd']);
                 Route::get('/data-alokasi-skpd', [dokumenDesaController::class, 'data_alokasi_desa']);
             });
+            Route::prefix('daftar-alokasi-desa')->group(function () {
+                Route::get('/', [alokasiDesaController::class, 'index']);
+                Route::get('/datatable-list', [alokasiDesaController::class, 'datatable_list']);
+                Route::post('/store', [alokasiDesaController::class, 'store']);
+                Route::post('/update/{params}', [alokasiDesaController::class, 'update']);
+                Route::get('/byParams/{params}', [alokasiDesaController::class, 'byParams']);
+            });
         }); 
     });
 
@@ -98,6 +104,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('get-data')->group(function () {
         Route::get('/desa', [generalController::class, 'get_desa'])->name('get_data.desa');
+        Route::get('/satuan', [generalController::class, 'get_satuan'])->name('get_data.satuan');
+        Route::get('/pagu-desa', [generalController::class, 'pagu_desa'])->name('get_data.pagu_desa');
         Route::get('/perangkat-desa', [generalController::class, 'get_perangkat_desa'])->name('get_data.perangkat_desa');
         Route::get('/bidang', [generalController::class, 'get_bidang'])->name('get_data.bidang');
         Route::get('/unit-kerja', [generalController::class, 'get_unit_kerja'])->name('get_data.unit_kerja');

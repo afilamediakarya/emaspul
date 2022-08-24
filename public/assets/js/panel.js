@@ -152,7 +152,7 @@ class Control {
                         else{
                             $("input[name='"+x+"']").val(y);
                             $("select[name='"+x+"']").val(y);  
-                            
+                            $("select[name='"+x+"']").trigger('change');  
                         }
                      
                     })
@@ -333,6 +333,7 @@ class Control {
     }
 
     push_select(url,element){
+        let value = '';
         $.ajax({
             url : url,
             method : 'GET',
@@ -341,7 +342,12 @@ class Control {
                 $(element).html('');
                 let html = '<option selected disabled>Pilih</option>';
                 $.each(res,function (x,y) {
-                    html += `<option value="${y.id}">${y.value}</option>`
+                    if (url == '/get-data/pagu-desa') {
+                        value = y.value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                    }else{
+                        value = y.value;
+                    }
+                    html += `<option value="${y.id}">${value}</option>`
                 })
                 $(element).html(html);
             },
