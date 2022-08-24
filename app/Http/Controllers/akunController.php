@@ -98,12 +98,12 @@ class akunController extends Controller
                 'type' => 'success',
                 'status' => true,
                 'data' => $data,
-            ],200);
+            ]);
         }else{
             return response()->json([
                 'type' => 'failed',
                 'status' => false,
-            ],400);
+            ]);
         }
     }
 

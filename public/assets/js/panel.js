@@ -141,6 +141,13 @@ class Control {
                         }else if(x == 'pagu_desa'){
                             $("input[name='"+x+"']").val(y);
                             $("input[name='"+x+"']").trigger('change');
+                        }else if(x == 'tahapans'){
+                            $('#tahapan').val(y.tahapan);
+                            $('#tahapan').trigger('change');
+                            setTimeout(function() { 
+                                $('#sub_tahapan').val(y.sub_tahapan);
+                                $('#sub_tahapan').trigger('change');
+                            }, 500);
                         }
                         else{
                             $("input[name='"+x+"']").val(y);

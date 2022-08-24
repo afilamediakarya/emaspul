@@ -211,6 +211,43 @@
                         </a>
                     </div>
                 </div>
+            </div>
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
+                        <span class="svg-icon svg-icon-2">
+                     
+                        <svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.7121 7.79544C15.0811 7.79544 15.4429 7.82634 15.7955 7.8858L15.8266 8.01455C16.2649 9.83178 18.1346 10.9121 19.9274 10.3849C20.3828 10.9719 20.7477 11.6374 21 12.3586C19.6666 13.6443 19.6666 15.7801 20.9998 17.0658C20.7477 17.7871 20.3828 18.4525 19.9274 19.0396C18.1346 18.5123 16.2649 19.5927 15.8266 21.41L15.7955 21.5386C15.4429 21.5982 15.0811 21.6291 14.7121 21.6291C14.3433 21.6291 13.9815 21.5982 13.6288 21.5386L13.5978 21.41C13.1595 19.5927 11.2898 18.5123 9.49695 19.0396C9.04148 18.4525 8.67666 17.7871 8.42443 17.0658C9.75775 15.7801 9.75775 13.6443 8.42443 12.3586C8.67664 11.6374 9.04148 10.9719 9.49694 10.3849C11.2898 10.9121 13.1595 9.83179 13.5978 8.01455L13.6288 7.8858C13.9815 7.82634 14.3433 7.79544 14.7121 7.79544ZM15.1226 0C17.6057 0 19.6185 2.01287 19.6185 4.49591V8.17333C18.8866 7.62332 18.0595 7.19334 17.1662 6.91258V4.90297H2.45231V15.1226C2.45231 16.2513 3.36725 17.1662 4.49591 17.1662H6.91264C7.19342 18.0595 7.6234 18.8867 8.17341 19.6185H4.49591C2.01287 19.6185 0 17.6056 0 15.1226V4.49591C0 2.01287 2.01287 0 4.49591 0H15.1226ZM14.7121 12.8258C13.7054 12.8258 12.8891 13.6703 12.8891 14.7122C12.8891 15.754 13.7054 16.5985 14.7121 16.5985C15.719 16.5985 16.5353 15.754 16.5353 14.7122C16.5353 13.6703 15.719 12.8258 14.7121 12.8258ZM9.80765 6.53605C10.2591 6.53605 10.6251 6.90203 10.6251 7.35349V7.63143C10.0283 7.97664 9.47928 8.3951 8.99021 8.87454V8.17093H5.72046V13.8948H6.57826C6.55157 14.1637 6.5379 14.4364 6.5379 14.7122C6.5379 14.988 6.55157 15.2607 6.57826 15.5297H4.90302C4.45157 15.5297 4.08559 15.1636 4.08559 14.7122V7.35349C4.08559 6.90203 4.45157 6.53605 4.90302 6.53605H9.80765Z" style="fill:white"/>
+                        </svg>
+
+
+                        </span>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Pengaturan</span>
+                    <span class="menu-arrow"></span>
+                </span>
+                <div class="menu-sub menu-sub-accordion menu-active-bg">
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ url('/jadwal') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Jadwal</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('admin.bidang_verifikator') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Pengaturan Akun</span>
+                        </a>
+                    </div>
+                  
+                </div>
             </div>	
             @endif
 

@@ -11,6 +11,7 @@ use App\Http\Controllers\rpjmdController;
 use App\Http\Controllers\rkpdController;
 use App\Http\Controllers\dokumenDesaController;
 use App\Http\Controllers\dokumenOpdController;
+use App\Http\Controllers\pengaturanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,16 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/byParams/{params}', [akunController::class, 'byParams'])->name('admin.akun.byId');
             Route::post('/update/{params}', [akunController::class, 'update'])->name('admin.akun.update');
         });
+
+        Route::prefix('jadwal')->group(function () {
+            Route::get('/', [pengaturanController::class, 'index']);
+            Route::post('/store', [pengaturanController::class, 'store']);
+            Route::get('/datatable-list', [pengaturanController::class, 'datatable_list']);
+            Route::get('/byParams/{params}', [pengaturanController::class, 'byParams']);
+            Route::post('/update/{params}', [pengaturanController::class, 'update']);
+        });
+
+        
            
     });
     Route::group(['middleware' => ['check_auth:2']], function () {
