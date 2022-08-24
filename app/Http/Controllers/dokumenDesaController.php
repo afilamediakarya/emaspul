@@ -119,8 +119,6 @@ class dokumenDesaController extends Controller
         $data->nama_user = Auth::user()->nama_lengkap;
         $data->nip_user = Auth::user()->nip;
 
-        return $data;
-
         return $this->{$fungsi}($data);
     }
 
