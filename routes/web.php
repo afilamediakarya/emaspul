@@ -73,6 +73,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::prefix('dokumen')->group(function () {
                 Route::get('/', [dokumenDesaController::class, 'index']);
             });
+            Route::prefix('referensi')->group(function () {
+                Route::get('/daftar-alokasi-skpd', [dokumenDesaController::class, 'alokasi_skpd']);
+                Route::get('/data-alokasi-skpd', [dokumenDesaController::class, 'data_alokasi_desa']);
+            });
         }); 
     });
 
