@@ -7,6 +7,7 @@ use DB;
 use App\Models\document;
 use App\Models\document_history;
 use App\Models\master_verifikasi;
+use App\Models\jadwal;
 use App\Models\verifikasi_document;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\InfoRequest;
@@ -66,6 +67,15 @@ class generalController extends Controller
     public function get_master_verifikasi($params){
        
         $data = verifikasi_document::select('verifikasi_documents.id','verifikasi_documents.id_documents','verifikasi_documents.id_master_verifikasi','verifikasi_documents.tindak_lanjut','verifikasi_documents.verifikasi','documents.jenis_document','documents.nama_documents')->with('master_verifikasi')->join('documents','verifikasi_documents.id_documents','=','documents.id')->where('id_documents',$params)->get();
+        return $data;
+    }
+
+    public function checkJadwal(){
+        $data = jadwal::where('tahapan', request('tahapan'))
+            ->where('sub_tahapan', request('sub_tahapan'))
+            ->whereDate('jadwal_mulai', '<=', now())
+            ->whereDate('jadwal_selesai', '>=', now())
+            ->exists();
         return $data;
     }
 

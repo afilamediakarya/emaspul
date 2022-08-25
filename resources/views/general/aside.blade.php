@@ -170,6 +170,19 @@
             @endif
           
             @if(Auth::user()->id_role == 1)
+            <div class="menu-item">
+                <a class="menu-link" href="{{ url('/kinerja-makro') }}">
+                    <span class="menu-icon">          
+                        <span class="svg-icon svg-icon-2">
+                        <svg width="17" height="22" viewBox="0 0 17 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0V22H17V11H7.28571V0H0ZM9.71429 0V8.25H17L9.71429 0ZM2.42857 5.5H4.85714V8.25H2.42857V5.5ZM2.42857 11H4.85714V13.75H2.42857V11ZM2.42857 16.5H12.1429V19.25H2.42857V16.5Z" style="fill:white"/>
+                        </svg>
+
+                        </span>
+                    </span>
+                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Kinerja Makro</span>
+                </a>
+            </div>
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">

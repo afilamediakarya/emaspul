@@ -13,7 +13,7 @@ use App\Http\Controllers\dokumenDesaController;
 use App\Http\Controllers\dokumenOpdController;
 use App\Http\Controllers\pengaturanController;
 use App\Http\Controllers\alokasiDesaController;
-
+use App\Http\Controllers\makroController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +66,14 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/byParams/{params}', [pengaturanController::class, 'byParams']);
             Route::post('/update/{params}', [pengaturanController::class, 'update']);
         });
+
+        Route::prefix('kinerja-makro')->group(function () {
+            Route::get('/', [makroController::class, 'index']);
+            Route::post('/store', [makroController::class, 'store']);
+            Route::get('/datatable-list', [makroController::class, 'datatable_list']);
+            Route::get('/byParams/{params}', [makroController::class, 'byParams']);
+            Route::post('/update/{params}', [makroController::class, 'update']);
+        });
        
     });
     Route::group(['middleware' => ['check_auth:2']], function () {
@@ -112,6 +120,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/master-verifikasi/{params}', [generalController::class, 'get_master_verifikasi'])->name('get_data.master_verifikasi');
         Route::get('/documentByVerifikasi', [generalController::class, 'documentByVerifikasi'])->name('get_data.documentByVerifikasi');
         Route::post('/master-verifikasi/', [generalController::class, 'master_verifikasi'])->name('get_data.master_verifikasi.store');
+        Route::get('/checkJadwal', [generalController::class, 'checkJadwal'])->name('get_data.checkJadwal');
     });  
 
     Route::prefix('general')->group(function () {
