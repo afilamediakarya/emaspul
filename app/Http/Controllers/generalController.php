@@ -93,7 +93,16 @@ class generalController extends Controller
         $data = array();
 
         if ($type == 'type_a') {
-            $data = document::select('id','nama_documents','nomor_perbub','tanggal_perbub','file_document')->where('jenis_document',$jenis)->where('id_perangkat',Auth::user()->id_unit_kerja)->latest()->get();
+
+            if (request('type_query') == 'query_2') {
+                $data = document::select('id','nama_documents','nomor_perbub','tanggal_perbub','file_document')->where('jenis_document',$jenis)->latest()->get();
+            }else{
+                $data = document::select('id','nama_documents','nomor_perbub','tanggal_perbub','file_document')->where('jenis_document',$jenis)->where('id_perangkat',Auth::user()->id_unit_kerja)->latest()->get();
+            }
+
+            
+        
+
         }else if($type == 'type_b'){
             // return Auth::user()->id_unit_kerja; 30
             $other_query = "";
@@ -118,7 +127,7 @@ class generalController extends Controller
                 }
             }
            
-        }     
+        }   
        
         return response()->json([
             'type' => 'success',

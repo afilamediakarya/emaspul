@@ -12,7 +12,8 @@ class rpjmdController extends Controller
     public function index(){
         $breadcumb = 'Dokumen Daerah';
         $current_breadcumb = 'RPJMD';
-        return view('module.admin.dokumen_daerah.rpjmd.index',compact('breadcumb','current_breadcumb'));
+        $role = Auth::user()->id_role;
+        return view('module.admin.dokumen_daerah.rpjmd.index',compact('breadcumb','current_breadcumb','role'));
     }
 
 }

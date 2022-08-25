@@ -13,12 +13,14 @@ class rkpdController extends Controller
     public function index(){
         $breadcumb = 'Dokumen Daerah';
         $current_breadcumb = 'RKPD';
-        return view('module.admin.dokumen_daerah.rkpd.index',compact('breadcumb','current_breadcumb'));
+        $role = Auth::user()->id_role;
+        return view('module.admin.dokumen_daerah.rkpd.index',compact('breadcumb','current_breadcumb','role'));
     }
 
     public function index_(){
         $breadcumb = 'Dokumen Daerah';
         $current_breadcumb = 'Lainnya';
-        return view('module.admin.dokumen_daerah.lainnya',compact('breadcumb','current_breadcumb'));
+        $role = Auth::user()->id_role;
+        return view('module.admin.dokumen_daerah.lainnya',compact('breadcumb','current_breadcumb','role'));
     }
 }

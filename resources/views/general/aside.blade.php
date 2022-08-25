@@ -20,6 +20,7 @@
             </div>
 
 
+            <!-- KHUSUS ADMIN DAN VERIFIKATOR -->
             @if(Auth::user()->id_role == 1 || Auth::user()->id_role == 4)
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
@@ -169,6 +170,7 @@
 
             @endif
           
+            <!-- KHUSUS ADMIN -->
             @if(Auth::user()->id_role == 1)
             <div class="menu-item">
                 <a class="menu-link" href="{{ url('/kinerja-makro') }}">
@@ -264,6 +266,7 @@
             </div>	
             @endif
 
+            <!-- KHUSUS OPD -->
             @if(Auth::user()->id_role == 2)
             <div class="menu-item">
                 <a class="menu-link" href="{{ url('/akun-opd/dokumen?type=Renstra') }}">
@@ -322,6 +325,7 @@
 
             @endif
 
+            <!-- KHUSUS DESA -->
             @if(Auth::user()->id_role == 3)
             <div class="menu-item">
                 <a class="menu-link" href="{{ url('/akun-desa/dokumen?type=RPJMDes') }}">
@@ -379,16 +383,18 @@
                     <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Daftar Alokasi Desa</span>
                 </a>
             </div>
+            @endif
 
+            @if(Auth::user()->id_role == 2 || Auth::user()->id_role == 3)
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
                         <span class="svg-icon svg-icon-2">
+        
                         <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1.11917 0C0.500599 0 0 0.602122 0 1.34614V3.73171V5.7708V13.132C0 13.876 0.500599 14.4724 1.11917 14.4724H7.02194V5.08921C7.02194 4.43946 7.43425 3.88224 7.97111 3.81691C8.05269 3.80698 8.08728 3.81691 8.075 3.81691H12.6839H13.0758C13.2042 3.81722 13.3343 3.87788 13.4253 3.9873L15.9186 6.9863C16.0097 7.09679 16.0596 7.24919 16.0603 7.40662V7.87805V14.4554C16.5933 14.3531 17 13.8025 17 13.132V3.73171C17 2.98769 16.4994 2.39582 15.8808 2.39125H6.89917V1.34614C6.89917 0.602122 6.40329 0 5.78472 0H1.11917ZM8.01833 4.40194C7.73026 4.43699 7.50833 4.7328 7.50833 5.08921V16.3127C7.50833 16.6929 7.75893 17 8.075 17H15.0072C15.3233 17 15.5739 16.6929 15.5739 16.3127V7.87805H13.4867C13.0592 7.87805 12.6839 7.50711 12.6839 7.00902V4.40194H8.075C8.05525 4.40194 8.03754 4.3996 8.01833 4.40194ZM13.0806 4.40194V7.00902C13.0806 7.2137 13.2454 7.40094 13.4867 7.40094H15.5739L13.0806 4.40194Z" style="fill:white"/>
                         </svg>
-
 
                         </span>
                         <!--end::Svg Icon-->
@@ -398,6 +404,31 @@
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                     <div class="menu-item">
+                        <a class="menu-link" href="{{route('rpjmd')}}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen RPJMD</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('rkpd') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen RKPD</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ route('lainnya') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Lainnya</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
                         <a class="menu-link" href="{{ url('/akun-desa/referensi/daftar-alokasi-skpd') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -405,10 +436,8 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Daftar Alokasi SKPD</span>
                         </a>
                     </div>
-                 
                 </div>
             </div>	
-
             @endif
 
           

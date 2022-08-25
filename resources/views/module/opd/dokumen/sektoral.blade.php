@@ -215,7 +215,7 @@
                 },
             }
         ];
-        control.initDatatable('/general/datatable-list?jenis=6&type=type_a',columns,columnDefs);
+        control.initDatatable('/general/datatable-list?jenis=6&type=type_atype_query=query_1',columns,columnDefs);
         control.form_upload();
        
 
