@@ -210,6 +210,12 @@ class dokumenDesaController extends Controller
         $sheet->getStyle('E23')->getFont()->setUnderline(true);
         $sheet->setCellValue('E23', $data->nama_user)->mergeCells('E23:F23');
         //$sheet->setCellValue('E24', $data->nip_kepala_unit_kerja)->mergeCells('E24:F24');
+        $sheet->setCellValue('A24', ' 
+        
+        
+        
+        
+        ')->mergeCells('A24:F24');
 
         $cell = 35;
         $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA')->mergeCells('A'. $cell . ':F' . $cell);
@@ -384,6 +390,13 @@ class dokumenDesaController extends Controller
         $sheet->getStyle('E23')->getFont()->setUnderline(true);
         $sheet->setCellValue('E23', $data->nama_user)->mergeCells('E23:F23');
         //$sheet->setCellValue('E24', $data->nip_kepala_unit_kerja)->mergeCells('E24:F24');
+
+        $sheet->setCellValue('A24', ' 
+        
+        
+        
+        
+        ')->mergeCells('A24:F24');
 
         $cell = 35;
         $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RENCANA KERJA PEMERINTAH DESA')->mergeCells('A'. $cell . ':F' . $cell);
