@@ -347,6 +347,7 @@
             }
         ];
         control.initDatatable('/general/datatable-list?jenis=4&type=type_c',columns,columnDefs);
+        control.checkJadwal('Dokumen Desa','Dokumen RKPDes');
         control.form_upload();
        
 

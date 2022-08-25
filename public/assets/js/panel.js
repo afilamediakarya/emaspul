@@ -371,6 +371,23 @@ class Control {
         });
     }
 
+    checkJadwal(tahapan,sub_tahapan){
+    
+        $.ajax({
+            url : `/get-data/checkJadwal?tahapan=${tahapan}&sub_tahapan=${sub_tahapan}`,
+            method : 'GET',
+            success : function (res) {
+                console.log(res);
+                if (res !== true) {
+                    $('.filter-btn').prop('disabled', true);
+                }
+            },
+            error : function (xhr) {
+                alert('gagal');
+            }
+        })
+    }
+
     verifikasi_render_row(params){
   
         $.ajax({
@@ -505,5 +522,7 @@ class Control {
             }
         });
     }
+
+ 
 
 }
