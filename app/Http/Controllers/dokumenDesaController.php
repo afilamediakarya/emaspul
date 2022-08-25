@@ -135,7 +135,7 @@ class dokumenDesaController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         //$sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
         $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
-        $spreadsheet->getDefaultStyle()->getFont()->setName('Times New Roman');
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Bookman Old Style');
         $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
         $spreadsheet->getActiveSheet()->getPageSetup()->setHorizontalCentered(true);
         $spreadsheet->getActiveSheet()->getPageSetup()->setVerticalCentered(false);
@@ -148,13 +148,73 @@ class dokumenDesaController extends Controller
         $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(1.2);
         $spreadsheet->getActiveSheet()->getPageMargins()->setBottom(1.0);
         $spreadsheet->getActiveSheet()->getStyle('A1:A4')->getAlignment()->setWrapText(true);
-        
-        
+
         // Header Text
-        $cell = 1;
-        $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA ')->mergeCells('A'. $cell . ':F' . $cell);
+        $sheet->setCellValue('A1', 'BERITA ACARA')->mergeCells('A1:F1');
+        $sheet->setCellValue('A2', 'HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA (RPJMDes)')->mergeCells('A2:F2');
+        $sheet->setCellValue('A3', 'DESA '.strtoupper($data->unit_kerja))->mergeCells('A3:F3');
+        $sheet->setCellValue('A4', 'KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir)->mergeCells('A4:F4');
+        $border = [
+            'borders' => [
+                'top' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '0000000'],
+                ],
+            ],
+        ];
+
+        $sheet->getStyle('A5:F5' )->applyFromArray($border);
+
+        $sheet->setCellValue('A5', "NOMOR : ".strtoupper($data->nomor_konsederan))->mergeCells('A5:F5');
+        $sheet->setCellValue('A6', " ")->mergeCells('A6:F6');
+        $sheet->setCellValue('A7', '            Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Dokumen RPJM Desa '.$data->unit_kerja.' Kabupaten Enrekang Periode '.$data->periode_awal.' - '.$data->periode_akhir.', sebagai berikut : 
+            ')->mergeCells('A7:F7');
+        
+        $sheet->setCellValue('A8', "Setelah dilakukan verifikasi RPJM Desa maka disepakati : ")->mergeCells('A8:F8');
+        
+        $sheet->setCellValue('A9', " ")->mergeCells('A9:F9');
+
+        $sheet->setCellValue('A10', "KESATU")->mergeCells('A10:B10');
+        $sheet->setCellValue('C10', "Pedoman penyusunan RPJM Desa agar disesuaikan dengan Ketentuan Peraturan Menteri Dalam Negeri Nomor 114 Tahun 2014 tentang Pedoman Pembangunan Desa, meliputi :
+1.	Rencana Pembangunan Jangka Menengah Desa yang selanjutnya disingkat (RPJM Desa) adalah dokumen perencanaan untuk periode 6 (enam) tahun yang memuat arah kebijakan pembangunan Desa, arah kebijakan keuangan Desa, kebijakan umum, dan daftar program pembangunan desa
+2.	RPJM Desa mengacu pada RPJM kabupaten/kota, yang memuat Visi dan Misi Kepala Desa, rencana penyelenggaraan Pemerintahan Desa, Pelaksanaan Pembangunan, Pembinaan Kemasyarakatan, Pemberdayaan Masyarakat, dan arah kebijakan Pembangunan Desa
+")->mergeCells('C10:F10');
+
+        $sheet->setCellValue('A11', "KEDUA")->mergeCells('A11:B11');
+        $sheet->setCellValue('C11', "Melakukan penyempurnaan RPJM Desa Periode ".$data->periode_awal.' - '.$data->periode_akhir." Berdasarkan  hasil verifikasi, meliputi :
+1.	Penyempurnaan RPJM Desa sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini;
+2.	Melakukan Upload Dokumen perbaikan atas hasil verifikasi RPJM Desa ".$data->unit_kerja." Periode ".$data->periode_awal.' - '.$data->periode_akhir." melalui portal https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF paling lambat tanggal………..
+")->mergeCells('C11:F11');
+       
+        $sheet->setCellValue('A13', ' ')->mergeCells('A13:F13');
+        $sheet->setCellValue('A14', '           Demikian berita acara ini dibuat dan dipergunakan sebagaimana mestinya.')->mergeCells('A14:F14');
+
+        $sheet->setCellValue('A15', ' ')->mergeCells('A15:F15');
+
+        $sheet->setCellValue('A16', 'Verifikator RPJM Desa')->mergeCells('A16:D16');
+        $sheet->setCellValue('A17', 'Kabupaten Enrekang')->mergeCells('A17:D17');
+        $sheet->setCellValue('A18', ' ')->mergeCells('A18:F18');
+        $sheet->setCellValue('A19', ' ')->mergeCells('A19:F19');
+        $sheet->setCellValue('A20', ' ')->mergeCells('A20:F20');
+        $sheet->setCellValue('A21', ' ')->mergeCells('A21:F21');
+        
+        $sheet->getStyle('A23')->getFont()->setUnderline(true);
+        $sheet->setCellValue('A23', $data->nama_verifikator)->mergeCells('A23:D23');
+        $sheet->setCellValue('A24', $data->nip_verifikator)->mergeCells('A24:D24');
+
+
+
+        $sheet->setCellValue('E16', 'Tim Penyusun RPJM')->mergeCells('E16:F16');
+        $sheet->setCellValue('E17', 'Desa '.$data->unit_kerja.' Kabupaten Enrekang')->mergeCells('E17:F17');
+        
+        $sheet->getStyle('E23')->getFont()->setUnderline(true);
+        $sheet->setCellValue('E23', $data->nama_user)->mergeCells('E23:F23');
+        //$sheet->setCellValue('E24', $data->nip_kepala_unit_kerja)->mergeCells('E24:F24');
+
+        $cell = 35;
+        $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA')->mergeCells('A'. $cell . ':F' . $cell);
         $cell++;
-        $sheet->setCellValue('A'.$cell,'(RPJM DESA) '.strtoupper($data->unit_kerja),' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir)->mergeCells('A'. $cell . ':F' . $cell);
+        $sheet->setCellValue('A'.$cell,'(RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir)->mergeCells('A'. $cell . ':F' . $cell);
         $cell++;
         $sheet->setCellValue('A'.$cell,' ')->mergeCells('A'. $cell . ':F' . $cell);
         $cell++;
@@ -200,12 +260,16 @@ class dokumenDesaController extends Controller
             ],
         ];
 
-        $sheet->getStyle('A4:F'. $cell )->applyFromArray($border);
-        $sheet->getStyle('A1:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
-        $sheet->getStyle('B6:B'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
-        $sheet->getStyle('F6:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
+        $sheet->getStyle('A38:F'. $cell )->applyFromArray($border);
+        $sheet->getStyle('A35:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('B40:B'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
+        $sheet->getStyle('F40:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
 
-        $sheet->getStyle('A1:F5')->getFont()->setBold(true);
+        $sheet->getStyle('A1:F6')->getFont()->setBold(true);
+        $sheet->getStyle('A35:F38')->getFont()->setBold(true);
+        $sheet->getStyle('A1:F6')->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('A7:F12')->getAlignment()->setVertical('top')->setHorizontal('justify');
+        $sheet->getStyle('A16:F24')->getAlignment()->setVertical('top')->setHorizontal('center');
         
         $cell++;
 
@@ -240,11 +304,12 @@ class dokumenDesaController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         //$sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
         $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
-        $spreadsheet->getDefaultStyle()->getFont()->setName('Times New Roman');
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Bookman Old Style');
         $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
         $spreadsheet->getActiveSheet()->getPageSetup()->setHorizontalCentered(true);
         $spreadsheet->getActiveSheet()->getPageSetup()->setVerticalCentered(false);
-        $sheet->getDefaultRowDimension()->setRowHeight(15);
+        $spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(100);
+        
 
         //Margin PDF
         
@@ -255,7 +320,72 @@ class dokumenDesaController extends Controller
         $spreadsheet->getActiveSheet()->getStyle('A1:A4')->getAlignment()->setWrapText(true);
        
         // Header Text
-        $cell = 1;
+        $sheet->setCellValue('A1', 'BERITA ACARA')->mergeCells('A1:F1');
+        $sheet->setCellValue('A2', 'HASIL VERIFIKASI RANCANGAN RENCANA KERJA PEMERINTAH DESA 
+        (RKP Desa)')->mergeCells('A2:F2');
+        $sheet->setCellValue('A3', 'DESA '.strtoupper($data->unit_kerja))->mergeCells('A3:F3');
+        $sheet->setCellValue('A4', 'KABUPATEN ENREKANG TAHUN '.$data->tahun)->mergeCells('A4:F4');
+        $border = [
+            'borders' => [
+                'top' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '0000000'],
+                ],
+            ],
+        ];
+
+        $sheet->getStyle('A5:F5' )->applyFromArray($border);
+
+        $sheet->setCellValue('A5', "NOMOR : ".strtoupper($data->nomor_konsederan))->mergeCells('A5:F5');
+        $sheet->setCellValue('A6', " ")->mergeCells('A6:F6');
+        $sheet->setCellValue('A7', '            Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Dokumen RKP Desa '.$data->unit_kerja.' Kabupaten Enrekang Tahun '.$data->tahun.', sebagai berikut : 
+            ')->mergeCells('A7:F7');
+        
+        $sheet->setCellValue('A8', "Setelah dilakukan verifikasi RKP Desa maka disepakati : ")->mergeCells('A8:F8');
+        
+        $sheet->setCellValue('A9', " ")->mergeCells('A9:F9');
+
+        $sheet->setCellValue('A10', "KESATU")->mergeCells('A10:B10');
+        $sheet->setCellValue('C10', "Pedoman penyusunan RKP Desa agar disesuaikan dengan Ketentuan Peraturan Menteri Dalam Negeri Nomor 114 Tahun 2014 tentang Pedoman Pembangunan Desa, meliputi :        
+1.	Evaluasi pelaksanaan RKP Desa tahun sebelumnya ;
+2.	Prioritas program, kegiatan, dan anggaran Desa yang dikelola oleh Desa ;
+3.	Prioritas program, kegiatan, dan anggaran Desa yang dikelola melalui kerja sama antar-Desa dan pihak ketiga ;
+4.	Rencana program, kegiatan, dan anggaran Desa yang dikelola oleh Desa sebagai kewenangan penugasan dari Pemerintah, pemerintah daerah provinsi, dan pemerintah daerah kabupaten/kota; dan
+5.	Pelaksana kegiatan Desa yang terdiri atas unsur perangkat Desa dan/atau unsur masyarakat Desa.
+")->mergeCells('C10:F10');
+
+        $sheet->setCellValue('A11', "KEDUA")->mergeCells('A11:B11');
+        $sheet->setCellValue('C11', "Melakukan penyempurnaan RKP Desa Tahun ".$data->tahun." Berdasarkan  hasil verifikasi, meliputi :  
+1.	Penyempurnaan RKP Desa sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini; 
+2.	Melakukan Upload Dokumen perbaikan atas hasil verifikasi RKP Desa ".$data->unit_kerja." Tahun ".$data->tahun." melalui portal https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF paling lambat tanggal………..
+")->mergeCells('C11:F11');
+       
+        $sheet->setCellValue('A13', ' ')->mergeCells('A13:F13');
+        $sheet->setCellValue('A14', '           Demikian berita acara ini dibuat dan dipergunakan sebagaimana mestinya.')->mergeCells('A14:F14');
+
+        $sheet->setCellValue('A15', ' ')->mergeCells('A15:F15');
+
+        $sheet->setCellValue('A16', 'Verifikator RKP Desa')->mergeCells('A16:D16');
+        $sheet->setCellValue('A17', 'Kabupaten Enrekang')->mergeCells('A17:D17');
+        $sheet->setCellValue('A18', ' ')->mergeCells('A18:F18');
+        $sheet->setCellValue('A19', ' ')->mergeCells('A19:F19');
+        $sheet->setCellValue('A20', ' ')->mergeCells('A20:F20');
+        $sheet->setCellValue('A21', ' ')->mergeCells('A21:F21');
+        
+        $sheet->getStyle('A23')->getFont()->setUnderline(true);
+        $sheet->setCellValue('A23', $data->nama_verifikator)->mergeCells('A23:D23');
+        $sheet->setCellValue('A24', $data->nip_verifikator)->mergeCells('A24:D24');
+
+
+
+        $sheet->setCellValue('E16', 'Tim Penyusun RKP')->mergeCells('E16:F16');
+        $sheet->setCellValue('E17', 'Desa '.$data->unit_kerja.' Kabupaten Enrekang')->mergeCells('E17:F17');
+        
+        $sheet->getStyle('E23')->getFont()->setUnderline(true);
+        $sheet->setCellValue('E23', $data->nama_user)->mergeCells('E23:F23');
+        //$sheet->setCellValue('E24', $data->nip_kepala_unit_kerja)->mergeCells('E24:F24');
+
+        $cell = 35;
         $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RENCANA KERJA PEMERINTAH DESA')->mergeCells('A'. $cell . ':F' . $cell);
         $cell++;
         $sheet->setCellValue('A'.$cell,'(RKPD DESA) '.strtoupper($data->unit_kerja).' TAHUN '.$data->tahun)->mergeCells('A'. $cell . ':F' . $cell);
@@ -304,16 +434,20 @@ class dokumenDesaController extends Controller
             ],
         ];
 
-        $sheet->getStyle('A4:F'. $cell )->applyFromArray($border);
-        $sheet->getStyle('A1:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
-        $sheet->getStyle('B6:B'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
-        $sheet->getStyle('F6:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
+        $sheet->getStyle('A38:F'. $cell )->applyFromArray($border);
+        $sheet->getStyle('A35:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('B40:B'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
+        $sheet->getStyle('F40:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
 
-        $sheet->getStyle('A1:F5')->getFont()->setBold(true);
+        $sheet->getStyle('A1:F6')->getFont()->setBold(true);
+        $sheet->getStyle('A35:F38')->getFont()->setBold(true);
+        $sheet->getStyle('A1:F6')->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('A7:F12')->getAlignment()->setVertical('top')->setHorizontal('justify');
+        $sheet->getStyle('A16:F24')->getAlignment()->setVertical('top')->setHorizontal('center');
         
         $cell++;
 
-        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':F' . $cell);
+        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':F' . $cell);        
             $spreadsheet->getActiveSheet()->getHeaderFooter()
                 ->setOddHeader('&C&H' . url()->current());
             $spreadsheet->getActiveSheet()->getHeaderFooter()
