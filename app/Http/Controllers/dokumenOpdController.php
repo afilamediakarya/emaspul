@@ -216,6 +216,12 @@ class dokumenOpdController extends Controller
         $sheet->getStyle('E23')->getFont()->setUnderline(true);
         $sheet->setCellValue('E23', $data->nama_kepala_unit_kerja)->mergeCells('E23:F23');
         $sheet->setCellValue('E24', $data->nip_kepala_unit_kerja)->mergeCells('E24:F24');
+        $sheet->setCellValue('A25', ' 
+        
+        
+        
+        
+        ')->mergeCells('A25:F25');
 
         
         $cell = 35;
@@ -385,6 +391,12 @@ class dokumenOpdController extends Controller
         $sheet->getStyle('E23')->getFont()->setUnderline(true);
         $sheet->setCellValue('E23', $data->nama_kepala_unit_kerja)->mergeCells('E23:F23');
         $sheet->setCellValue('E24', $data->nip_kepala_unit_kerja)->mergeCells('E24:F24');
+        $sheet->setCellValue('A25', ' 
+        
+        
+        
+        
+        ')->mergeCells('A25:F25');
 
 
 
