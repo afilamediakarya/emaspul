@@ -279,7 +279,7 @@
         e.preventDefault();
         
        let url = `/get-data/documentByVerifikasi?jenis=${$(this).attr('data-jenis')}&document=${$(this).attr('data-id')}`;
-        control.modal_content('Detail Renstra', url,`/dokumen-skpd/konsederan?document=${$(this).attr('data-id')}&jenis=renja`);
+        control.modal_content('Detail Renja', url,`/dokumen-skpd/konsederan?document=${$(this).attr('data-id')}&jenis=renja`);
     })
 
     $(function () {
@@ -347,7 +347,7 @@
             }
         ];
         control.initDatatable('/general/datatable-list?jenis=4&type=type_c',columns,columnDefs);
-        control.checkJadwal('Dokumen Desa','Dokumen RKPDes');
+        control.checkJadwal('Dokumen SKPD','Dokumen Renja');
         control.form_upload();
        
 
