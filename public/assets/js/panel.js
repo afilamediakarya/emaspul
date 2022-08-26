@@ -102,7 +102,7 @@ class Control {
         })
     }
 
-    overlay_form(type,module, url = null){
+    overlay_form(type,module, url = null, role = null){
    
        $('.title_side_form').html(`${type} ${module}`);
        if (type == 'Tambah') {
@@ -153,6 +153,14 @@ class Control {
                             $("input[name='"+x+"']").val(y);
                             $("select[name='"+x+"']").val(y);  
                             $("select[name='"+x+"']").trigger('change');  
+                        }
+
+                        if (role == 'makro') {
+                           $.each(res.data['data_makro'], function (key,val) {
+                                $(`#id_data_makro${key}`).val(val.id);
+                                $(`#target${key}`).val(val.target);
+                                $(`#realisasi${key}`).val(val.realisasi);
+                           }) 
                         }
                      
                     })

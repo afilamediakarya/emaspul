@@ -138,4 +138,57 @@ class makroController extends Controller
         ]);
         
     }
+
+    public function byParams($params){
+        $data = indikator_makro::select('id','indikator_makro','periode_akhir','periode_awal')->where('id',$params)->first();
+        $data->data_makro = data_makro::where('id_indikator_makro',$data->id)->get();
+        $data->periode = $data->periode_awal . ' - ' . $data->periode_akhir;
+        // $data->roles = ['id_role'=>$data->id_role, 'perangkat_bidang'=>$data->id_unit_kerja];
+       
+        if ($data) {
+            return response()->json([
+                'type' => 'success',
+                'status' => true,
+                'data' => $data,
+            ]);
+        }else{
+            return response()->json([
+                'type' => 'failed',
+                'status' => false,
+                'data' => $data,
+            ]);
+        }
+    }
+
+    public function update(Request $request, $params){
+        $validated = $request->validate([
+            'indikator_makro' => 'required',
+            'periode' => 'required',
+        ]);
+
+        $data = indikator_makro::where('id',$params)->first();
+        $data->indikator_makro = $request->indikator_makro;
+        $data->periode_awal = $request->periode_awal;
+        $data->periode_akhir = $request->periode_akhir;
+        $data->user_update = Auth::user()->id;
+        $data->save();
+        if ($data) {
+            foreach ($request->target as $key => $value) {    
+                $makro = data_makro::where('id',$request->id_data_makro[$key])->first();
+                $makro->id_indikator_makro = $data->id;
+                $makro->target = $value;
+                $makro->realisasi = $request->realisasi[$key];
+                $makro->tahun = $request->tahun[$key];
+                $makro->user_update = Auth::user()->id;
+                $makro->save();
+            }
+        }
+
+        return response()->json([
+            'type' => 'success',
+            'status' => true,
+            'data' => $data
+        ]);
+        
+    }
 }

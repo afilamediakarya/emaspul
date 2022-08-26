@@ -25,6 +25,7 @@
                             <th>Target {{$tahun + $i}}</th>
                             <th>Realisasi {{$tahun + $i}}</th>
                             @endfor
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,6 +87,8 @@
                     <input type="text" class="form-control form-control-solid" name="indikator_makro" placeholder="Masukkan Indikator">
                     <small class="text-danger indikator_makro_error"></small>
                 </div>
+
+                <input type="hidden" name="id">
 
                 <div class="mb-10">
                     <label class="form-label">Pilih Periode</label>
@@ -149,15 +152,16 @@
             html += `<div class="row">
                     <div class="col-lg-4 mb-10">
                         <label class="form-label">Tahun</label>
-                        <input type="text" class="form-control form-control-solid" value="${ parseInt(data[0]) + index}" name="tahun[${index}]" readonly>
+                        <input type="hidden" id="id_data_makro${index}" name="id_data_makro[${index}]" readonly>
+                        <input type="text" class="form-control form-control-solid" id="tahun${index}" value="${ parseInt(data[0]) + index}" name="tahun[${index}]" readonly>
                     </div>
                     <div class="col-lg-4 mb-10">
                         <label class="form-label">Target</label>
-                        <input type="text" class="form-control form-control-solid" value="0" name="target[${index}]">
+                        <input type="text" class="form-control form-control-solid" id="target${index}" value="0" name="target[${index}]">
                     </div>
                     <div class="col-lg-4 mb-10">
                         <label class="form-label">Realisasi</label>
-                        <input type="text" class="form-control form-control-solid" value="0" name="realisasi[${index}]">
+                        <input type="text" class="form-control form-control-solid" id="realisasi${index}" value="0" name="realisasi[${index}]">
                     </div>
             </div>`;
         }
@@ -168,8 +172,8 @@
     $(document).on('click','.button-update', function (e) {
         e.preventDefault();
         $('#password_content').hide();
-        let url = '/akun/byParams/'+$(this).attr('data-id');
-        control.overlay_form('Update','Akun', url);
+        let url = '/kinerja-makro/byParams/'+$(this).attr('data-id');
+        control.overlay_form('Update','Kinerja Makro', url,'makro');
     })
 
 
@@ -191,6 +195,8 @@
                 data:'child1'
             },{
                 data:'child1'
+            },{
+                data: 'id',
             }
         ];
         let columnDefs = [
@@ -217,6 +223,17 @@
                 render : function (data) {
                     return data.realisasi
                 }
+            },{
+                targets: -1,
+                title: 'Aksi',
+                orderable: false,
+                render: function(data, type, full, meta) {
+                   
+                        return `
+                        <a href="javascript:;" type="button" data-id="${data}" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" class="btn btn_green button-update btn-sm"> <svg style="position: relative;bottom: 2px;" width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 0.515625C10.0938 0.515625 9.74479 0.661458 9.45312 0.953125L4.39062 6L4.01562 7.90625L3.85938 8.64062L4.59375 8.48438L6.5 8.10938L11.5469 3.04688C11.8385 2.75521 11.9844 2.40625 11.9844 2C11.9844 1.59375 11.8385 1.24479 11.5469 0.953125C11.2552 0.661458 10.9062 0.515625 10.5 0.515625ZM10.5 1.48438C10.6146 1.48438 10.7292 1.54167 10.8438 1.65625C10.9583 1.77083 11.0156 1.88542 11.0156 2C11.0156 2.11458 10.9583 2.22917 10.8438 2.34375L6 7.1875L5.14062 7.35938L5.3125 6.5L10.1562 1.65625C10.2708 1.54167 10.3854 1.48438 10.5 1.48438ZM0 2.5V12.5H10V5.90625L9 6.90625V11.5H1V3.5H5.59375L6.59375 2.5H0Z" fill="white"/></svg> Edit</a>
+                        `;
+                    
+                },
             }
         ];
         control.initDatatable('/kinerja-makro/datatable-list?type=datatable',columns,columnDefs);
