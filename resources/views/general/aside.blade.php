@@ -321,6 +321,19 @@
                     <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Lainnya</span>
                 </a>
             </div>
+
+            <div class="menu-item">
+                <a class="menu-link" href="{{ url('/akun-opd/dokumen/indikator-kinerja-kunci') }}">
+                    <span class="menu-icon">          
+                        <span class="svg-icon svg-icon-2">
+                        <svg width="17" height="21" viewBox="0 0 17 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16.2273 0H3.28409C3.17784 0 3.09091 0.084375 3.09091 0.1875V1.5C3.09091 1.60312 3.17784 1.6875 3.28409 1.6875H15.2614V17.8125C15.2614 17.9156 15.3483 18 15.4545 18H16.8068C16.9131 18 17 17.9156 17 17.8125V0.75C17 0.335156 16.6547 0 16.2273 0ZM13.1364 3H0.772727C0.345312 3 0 3.33516 0 3.75V16.1883C0 16.3875 0.0821021 16.5773 0.226988 16.718L4.41179 20.7797C4.46491 20.8312 4.52528 20.8734 4.59048 20.9086V20.9531H4.6919C4.77642 20.9836 4.86577 21 4.95753 21H13.1364C13.5638 21 13.9091 20.6648 13.9091 20.25V3.75C13.9091 3.33516 13.5638 3 13.1364 3ZM5.3608 19.5H5.35597L1.73864 15.9891V15.9844H5.3608V19.5Z" style="fill:white"/>
+                        </svg>
+                        </span>
+                    </span>
+                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Data IKK</span>
+                </a>
+            </div>
             
 
             @endif

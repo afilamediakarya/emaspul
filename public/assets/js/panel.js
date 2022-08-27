@@ -370,6 +370,7 @@ class Control {
         this.table.dataTable().fnDestroy();
         this.table.DataTable({
             responsive: true,
+            searching: true,
             pageLength: 10,
             order: [[0, 'asc']],
             processing:true,

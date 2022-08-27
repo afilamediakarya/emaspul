@@ -81,6 +81,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('akun-opd')->group(function () {
             Route::prefix('dokumen')->group(function () {
                 Route::get('/', [dokumenOpdController::class, 'index']);
+                Route::get('/indikator-kinerja-kunci', [dokumenOpdController::class, 'ikk_view']);
+                Route::get('/export_ikk', [dokumenOpdController::class, 'export_ikk']);
             });
         }); 
     });
