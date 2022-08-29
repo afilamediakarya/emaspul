@@ -15,7 +15,6 @@ class makroController extends Controller
         $breadcumb = 'Dokumen Kinerja Makro';
         $current_breadcumb = '';
         $tahun = session('tahun_penganggaran') - 1;
-        $tes = [];
         return view('module.admin.kinerja_makro',compact('breadcumb','current_breadcumb','tahun'));
     }
 

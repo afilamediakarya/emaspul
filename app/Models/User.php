@@ -45,4 +45,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function UnitKerja(){
+        return $this->belongsTo(unitKerja::class,'id_unit_kerja');
+    }
 }
