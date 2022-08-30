@@ -3,13 +3,13 @@
 	<!--begin::Head-->
 	<head><base href="../../../">
 		<meta charset="utf-8" />
-		<title>Metronic Bootstrap 5 Theme | Keenthemes</title>
+		<title>Langit Maspul | Bapelitbangda Enrekang</title>
 		<meta name="description" content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
 		<meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular 11, VueJs, React, Laravel, admin themes, web design, figma, web development, ree admin themes, bootstrap admin, bootstrap dashboard" />
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 		<link rel="canonical" href="Https://preview.keenthemes.com/metronic8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+		<link rel="shortcut icon" href="assets/media/logo/favicon.ico" />
 		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<!--end::Fonts-->
@@ -87,7 +87,7 @@
 									</div>
 									<!--end::Wrapper-->
 									<!--begin::Input-->
-									<input class="form-control form-control-lg form-control-solid" type="password" name="password" autocomplete="off" />
+									<input class="form-control form-control-lg form-control-solid" id="password" type="password" name="password" autocomplete="off" />
 									<small class="text-danger password_error"></small>
 									<!--end::Input-->
 								</div>
@@ -130,6 +130,14 @@
             $(document).on('click','#kt_sign_in_submit', function () {
                 control.submitForm('/login');
             })
+
+			var input = document.getElementById("password");
+			input.addEventListener("keypress", function(event) {
+			if (event.key === "Enter") {
+				event.preventDefault();
+				document.getElementById("kt_sign_in_submit").click();
+			}
+			});
         </script>
 	</body>
 	<!--end::Body-->

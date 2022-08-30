@@ -6,6 +6,10 @@ class Control {
         this.formData = new FormData();
     }
 
+    searchTable(data){
+        this.table.DataTable().search( data ).draw();
+    }
+
     modal_content(title,url,url_konsederan){
         $('.modal-title').html(title);
 
@@ -138,7 +142,7 @@ class Control {
                                 $("#tidak_aktif").attr('checked', 'checked');
                             }
                     
-                        }else if(x == 'pagu_desa'){
+                        }else if(x == 'pagu_desa' || x == 'pagu'){
                             $("input[name='"+x+"']").val(y);
                             $("input[name='"+x+"']").trigger('change');
                         }else if(x == 'tahapans'){
@@ -370,7 +374,6 @@ class Control {
         this.table.dataTable().fnDestroy();
         this.table.DataTable({
             responsive: true,
-            searching: true,
             pageLength: 10,
             order: [[0, 'asc']],
             processing:true,
@@ -387,8 +390,9 @@ class Control {
             method : 'GET',
             success : function (res) {
                 console.log(res);
-                if (res !== true) {
+                if (res.status !== true) {
                     $('.filter-btn').prop('disabled', true);
+                    $("#jadwals").html(`Jadwal Input : ${res.jadwal['jadwal_mulai']} sd ${res.jadwal['jadwal_selesai']}`)
                 }
             },
             error : function (xhr) {
@@ -473,11 +477,31 @@ class Control {
             url: "https://keenthemes.com/scripts/void.php", // Set the url for your upload script location
             parallelUploads: 20,
             previewTemplate: previewTemplate,
-            maxFilesize: 1, // Max filesize in MB
+            maxFilesize: 5, // Max filesize in MB
+            maxFiles: 1,
+            init: function() {
+                this.on('addedfile', function(file) {
+                  if (this.files.length > 1) {
+                    this.removeFile(this.files[0]);
+                  }
+                });
+              },
+            // accept: function(file, done) {
+            //     alert("uploaded");
+            //     done();
+            // },
+            // init: function() {
+            //     this.on("maxfilesexceeded", function(file){
+            //         alert("No more files please!");
+            //     });
+            // },
             autoQueue: false, // Make sure the files aren't queued until manually added
             previewsContainer: id + " .dropzone-items", // Define the container to display the previews
             clickable: id + " .dropzone-select" // Define the element that should be used as click trigger to select files.
         });
+
+        myDropzone.hiddenFileInput.removeAttribute("multiple");
+
 
         myDropzone.on("addedfile", function(file) {
             formData.append('file',file);

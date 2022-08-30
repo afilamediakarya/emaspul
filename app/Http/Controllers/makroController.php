@@ -15,7 +15,8 @@ class makroController extends Controller
         $breadcumb = 'Dokumen Kinerja Makro';
         $current_breadcumb = '';
         $tahun = session('tahun_penganggaran') - 1;
-        return view('module.admin.kinerja_makro',compact('breadcumb','current_breadcumb','tahun'));
+        $role = Auth::user()->id_role;
+        return view('module.admin.kinerja_makro',compact('breadcumb','current_breadcumb','tahun','role'));
     }
 
     public function datatable_list(){

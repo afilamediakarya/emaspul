@@ -105,16 +105,21 @@ class dokumenOpdController extends Controller
         $fungsi = 'konsederan_'.$jenis;
         $data = array();
        
-        $data = DB::table('documents')->select('documents.id','documents.tahun','documents.periode_awal','documents.periode_akhir','documents.nomor_konsederan','unit_kerja.nama_unit_kerja as unit_kerja','user.nama_lengkap as nama_verifikator','user.nip as nip_verifikator')->join('unit_kerja','documents.id_perangkat','=','unit_kerja.id')->join('user', 'documents.id_verifikator','=','user.id')->where('documents.id',$document)->first();
+        $data = DB::table('documents')->select('documents.id','documents.tahun','documents.periode_awal','documents.periode_akhir','documents.nomor_konsederan','documents.user_insert','unit_kerja.nama_unit_kerja as unit_kerja','user.nama_lengkap as nama_verifikator','user.nip as nip_verifikator')->join('unit_kerja','documents.id_perangkat','=','unit_kerja.id')->join('user', 'documents.id_verifikator','=','user.id')->where('documents.id',$document)->first();
+
+
 
         $data->tabel = DB::table('verifikasi_documents')->select('verifikasi_documents.id','verifikasi_documents.verifikasi','verifikasi_documents.tindak_lanjut','master_verifikasi.indikator')->join('master_verifikasi','verifikasi_documents.id_master_verifikasi','=','master_verifikasi.id')->where('id_documents',$document)->get();
+
+        $user = DB::table('user')->where('id',$data->user_insert)->first();        
+
 
         $data->hari = $this->getHari();
         $data->tanggal = date('d');
         $data->bulan = date('m');
         $data->tahun = date('Y');
-        $data->nama_user = Auth::user()->nama_lengkap;
-        $data->nip_user = Auth::user()->nip;
+        $data->nama_user = $user->nama_lengkap;
+        $data->nip_user = $user->nip;
         
         return $this->{$fungsi}($data);
     }
@@ -214,8 +219,8 @@ class dokumenOpdController extends Controller
         $sheet->setCellValue('E17', $data->unit_kerja.' Kabupaten Enrekang')->mergeCells('E17:F17');
         
         $sheet->getStyle('E23')->getFont()->setUnderline(true);
-        $sheet->setCellValue('E23', $data->nama_kepala_unit_kerja)->mergeCells('E23:F23');
-        $sheet->setCellValue('E24', $data->nip_kepala_unit_kerja)->mergeCells('E24:F24');
+        $sheet->setCellValue('E23', $data->nama_user)->mergeCells('E23:F23');
+        $sheet->setCellValue('E24', $data->nip_user)->mergeCells('E24:F24');
         $sheet->setCellValue('A25', ' 
         
         
@@ -388,8 +393,8 @@ class dokumenOpdController extends Controller
         $sheet->setCellValue('E17', $data->unit_kerja.' Kabupaten Enrekang')->mergeCells('E17:F17');
         
         $sheet->getStyle('E23')->getFont()->setUnderline(true);
-        $sheet->setCellValue('E23', $data->nama_kepala_unit_kerja)->mergeCells('E23:F23');
-        $sheet->setCellValue('E24', $data->nip_kepala_unit_kerja)->mergeCells('E24:F24');
+        $sheet->setCellValue('E23', $data->nama_user)->mergeCells('E23:F23');
+        $sheet->setCellValue('E24', $data->nip_user)->mergeCells('E24:F24');
         $sheet->setCellValue('A25', ' 
     
         ')->mergeCells('A25:F25');

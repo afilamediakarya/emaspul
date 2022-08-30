@@ -105,10 +105,10 @@
     background: #034c9e;
 }
 
-.menu-item:hover{
+/* .menu-item:hover{
     transition: color .2s ease,background-color .2s ease;
-    background-color: #282EAD;
-}
+    background: #282EAD;
+} */
 
 .widget_red{
     background: #F1416C;

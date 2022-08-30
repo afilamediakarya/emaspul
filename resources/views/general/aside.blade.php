@@ -3,9 +3,9 @@
     <!--begin::Aside Menu-->
     <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
         <!--begin::Menu-->
-        <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
+        <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true" style="margin-top:2rem">
             <div class="menu-item">
-                <a class="menu-link active_custom" href="{{ route('dashboard.admin') }}">
+                <a class="menu-link active_custom" onmouseover="enHovers(this)" href="{{ route('dashboard.admin') }}">
                     <span class="menu-icon">
                
                         <span class="svg-icon svg-icon-2">
@@ -168,10 +168,6 @@
                 </div>
             </div>	
 
-            @endif
-          
-            <!-- KHUSUS ADMIN -->
-            @if(Auth::user()->id_role == 1)
             <div class="menu-item">
                 <a class="menu-link" href="{{ url('/kinerja-makro') }}">
                     <span class="menu-icon">          
@@ -185,6 +181,12 @@
                     <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Kinerja Makro</span>
                 </a>
             </div>
+
+            @endif
+          
+            <!-- KHUSUS ADMIN -->
+            @if(Auth::user()->id_role == 1)
+          
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
@@ -201,7 +203,7 @@
                     <span class="menu-arrow"></span>
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <div class="menu-item">
+                    <div class="menu-item menu-items">
                         <a class="menu-link" href="{{ route('admin.perangkat_desa') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -442,7 +444,7 @@
                     </div>
 
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ url('/akun-desa/referensi/daftar-alokasi-skpd') }}">
+                        <a class="menu-link" href="{{ url('/alokasi-skpd/daftar-alokasi-skpd') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -462,12 +464,26 @@
 
 @section('script')
 <script>
+     
     $(document).ready(function(){
-        $(".menu-link").mousemove(function(){
-            $(this).css("background", "#282EAD");
-            }, function(){
-            $(this).css("background", "none");
-        });
+       
+        // function enHovers(x) {
+        //     alert('dsfsdf');
+        // }
+
+      
+
+        // $(document).on('mouseenter','.menu-links',function(){
+        //     alert('atas');
+            // $(this).css("background-color", "#282EAD");
+            // }, function(){
+            //     alert('keluar');
+            // $(this).css("background-color", "none");
+        // });
+
+        // $(".menu-link").hover(function() {
+        //  $(this).css("background-color","red")
+        // });
 });
 </script>
 @endsection

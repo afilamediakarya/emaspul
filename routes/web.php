@@ -67,13 +67,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/update/{params}', [pengaturanController::class, 'update']);
         });
 
-        Route::prefix('kinerja-makro')->group(function () {
-            Route::get('/', [makroController::class, 'index']);
-            Route::post('/store', [makroController::class, 'store']);
-            Route::get('/datatable-list', [makroController::class, 'datatable_list']);
-            Route::get('/byParams/{params}', [makroController::class, 'byParams']);
-            Route::post('/update/{params}', [makroController::class, 'update']);
-        });
+       
        
     });
     Route::group(['middleware' => ['check_auth:2']], function () {
@@ -95,10 +89,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::prefix('dokumen')->group(function () {
                 Route::get('/', [dokumenDesaController::class, 'index']);
             });
-            Route::prefix('referensi')->group(function () {
-                Route::get('/daftar-alokasi-skpd', [dokumenDesaController::class, 'alokasi_skpd']);
-                Route::get('/data-alokasi-skpd', [dokumenDesaController::class, 'data_alokasi_desa']);
-            });
+          
             Route::prefix('daftar-alokasi-desa')->group(function () {
                 Route::get('/', [alokasiDesaController::class, 'index']);
                 Route::get('/datatable-list', [alokasiDesaController::class, 'datatable_list']);
@@ -154,6 +145,19 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/konsederan', [dokumenOpdController::class, 'konsederan']);
         // Route::get('/rkpd', [rkpdController::class, 'index'])->name('rkpd');
         // Route::get('/lainnya', [rkpdController::class, 'index_'])->name('lainnya'); 
+    });
+
+    Route::prefix('alokasi-skpd')->group(function () {
+        Route::get('/daftar-alokasi-skpd', [dokumenDesaController::class, 'alokasi_skpd']);
+        Route::get('/data-alokasi-skpd', [dokumenDesaController::class, 'data_alokasi_desa']);
+    });
+
+    Route::prefix('kinerja-makro')->group(function () {
+        Route::get('/', [makroController::class, 'index']);
+        Route::post('/store', [makroController::class, 'store']);
+        Route::get('/datatable-list', [makroController::class, 'datatable_list']);
+        Route::get('/byParams/{params}', [makroController::class, 'byParams']);
+        Route::post('/update/{params}', [makroController::class, 'update']);
     });
 });
 

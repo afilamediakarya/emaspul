@@ -134,7 +134,17 @@ License: For each use you must have a valid license purchased only from above li
 								<div class="d-flex align-items-stretch flex-shrink-0">
 									<div class="d-flex align-items-center mr-5">
 	
-									<div class="input-group input-group-solid">
+									<div class="row g-3 align-items-center">
+										<div class="col-auto">
+											<label for="year_" class="col-form-label">Tahun Penganggaran</label>
+										</div>
+										<div class="col-auto">
+											<input type="text" id="year_" value="{{Session::get('tahun_penganggaran')}}" class="form-control form-control-solid datepicker">
+										</div>
+										
+									</div>
+
+									<!-- <div class="input-group input-group-solid">
 											<input type="text" class="form-control" disabled="" aria-label="Text input with dropdown button" value="Tahun Penganggaran">
 											<div class="input-group-append">
 											<div class="dropdown">
@@ -153,7 +163,7 @@ License: For each use you must have a valid license purchased only from above li
 											</div>	
 												
 											</div>
-										</div>
+										</div> -->
 									</div>
 									<div class="d-flex align-items-stretch flex-shrink-0">
 									
@@ -161,7 +171,7 @@ License: For each use you must have a valid license purchased only from above li
 										<div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 											<!--begin::Menu wrapper-->
 											<div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end" data-kt-menu-flip="bottom">
-												<img src="assets/media/avatars/150-2.jpg" alt="metronic" />
+												<img src="{{ asset('assets/media/avatars/blank.png') }}" alt="metronic" />
 											</div>
 											<!--begin::Menu-->
 											<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold py-4 fs-6 w-275px" data-kt-menu="true">
@@ -170,14 +180,14 @@ License: For each use you must have a valid license purchased only from above li
 													<div class="menu-content d-flex align-items-center px-3">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-50px me-5">
-															<img alt="Logo" src="assets/media/avatars/150-2.jpg" />
+															<img alt="Logo" src="{{ asset('assets/media/avatars/blank.png') }}" />
 														</div>
 														<!--end::Avatar-->
 														<!--begin::Username-->
 														<div class="d-flex flex-column">
-															<div class="fw-bolder d-flex align-items-center fs-5">Max Smith
-															<span class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pro</span></div>
-															<a href="#" class="fw-bold text-muted text-hover-primary fs-7">max@kt.com</a>
+															<div class="fw-bolder d-flex align-items-center fs-5"> {{Auth::user()->nama_lengkap}}
+															</div>
+															<a href="#" class="fw-bold text-muted text-hover-primary fs-7"> {{Auth::user()->jabatan}} </a>
 														</div>
 														<!--end::Username-->
 													</div>
@@ -297,6 +307,27 @@ License: For each use you must have a valid license purchased only from above li
 		<script src="{{ asset('assets/js/custom/modals/upgrade-plan.js') }}"></script>
 		<script src="{{ asset('assets/js/panel.js') }}"></script>
 		<script>
+
+		$(function () {
+			$(".datepicker").datepicker({
+            format: "yyyy",
+            viewMode: "years", 
+            minViewMode: "years",
+            autoclose:true
+        }); 
+		})	
+
+		$(".menu-link").hover(function(){
+            $(this).css("background-color", "#282EAD");
+        },
+        function(){
+			$(this).css("background", "none");
+        }); 
+
+
+		$(document).on('change', '#year_', function () {
+			window.location.href = '/set-tahun-penganggaran?tahun='+$(this).val();
+		})
 
 			// let control = new Control('/logout','');
 			$(document).on('click','#sign-out', function () {

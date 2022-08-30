@@ -100,7 +100,7 @@ class alokasiDesaController extends Controller
         $data->nama_paket = $request->nama_paket;
         $data->volume = $request->volume;
         $data->satuan = $request->satuan;
-        $data->pagu = $request->pagu;
+        $data->pagu = str_replace(',', '', $request->pagu);
         $data->lokasi = $request->lokasi;
         $data->tahun = session('tahun_penganggaran');
         $data->save();
@@ -151,7 +151,7 @@ class alokasiDesaController extends Controller
         $data->nama_paket = $request->nama_paket;
         $data->volume = $request->volume;
         $data->satuan = $request->satuan;
-        $data->pagu = $request->pagu;
+        $data->pagu = str_replace(',', '', $request->pagu);
         $data->lokasi = $request->lokasi;
         $data->tahun = session('tahun_penganggaran');
         $data->save();

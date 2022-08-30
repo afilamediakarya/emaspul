@@ -3,7 +3,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endsection
 @section('button')
-<button class="btn btn_general btn-sm filter-btn" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" id="button-side-form"><i class="fa fa-plus-circle" style="color:#ffffff" aria-hidden="true"></i> Tambah Dokumen Renstra</button>
+<div class="toolbar" id="kt_toolbar">
+	<div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+        <div class="page-title d-flex align-items-center me-3">
+            <button class="btn btn_general btn-sm filter-btn" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" id="button-side-form"><i class="fa fa-plus-circle" style="color:#ffffff" aria-hidden="true"></i> Tambah Dokumen Renstra</button>
+        </div>
+							
+        <div class="d-flex align-items-center py-1">
+            <span class="badge badge-warning" id="jadwals"></span>					
+        </div>
+    </div>
+</div>
+
 @endsection
 @section('content')
 <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -24,7 +35,7 @@
                 </svg>
             </span>
          
-            <input type="text" class="form-control form-control-solid w-250px ps-15" placeholder="Search">
+            <input type="text" id="search_" class="form-control form-control-solid w-250px ps-15" placeholder="Search">
         </div>
             <div class="container">
             <div class="py-5">
@@ -187,7 +198,7 @@
             <!--end::Dropzone-->
 
             <!--begin::Hint-->
-            <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+            <span class="form-text text-muted">Max file size is 5MB and max number of files is 1.</span>
             <!--end::Hint-->
         </div>
         <!--end::Col-->
@@ -316,6 +327,11 @@
         
        let url = `/get-data/documentByVerifikasi?jenis=${$(this).attr('data-jenis')}&document=${$(this).attr('data-id')}`;
         control.modal_content('Detail Renstra', url, `/dokumen-skpd/konsederan?document=${$(this).attr('data-id')}&jenis=renstra`);
+    })
+
+    $(document).on('keyup', '#search_', function (e) {
+        e.preventDefault();
+        control.searchTable(this.value);
     })
 
     $(function () {

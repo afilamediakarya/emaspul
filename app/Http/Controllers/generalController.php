@@ -71,12 +71,23 @@ class generalController extends Controller
     }
 
     public function checkJadwal(){
+        $result = [];
         $data = jadwal::where('tahapan', request('tahapan'))
             ->where('sub_tahapan', request('sub_tahapan'))
             ->whereDate('jadwal_mulai', '<=', now())
             ->whereDate('jadwal_selesai', '>=', now())
             ->exists();
-        return $data;
+
+            $jadwal = jadwal::select('jadwal_mulai','jadwal_selesai')
+            ->where('sub_tahapan', request('sub_tahapan'))
+            // ->where('tahun', request('tahun_penganggaran'))
+            ->first();
+
+        
+        return $result = [
+            'status' => $data,
+            'jadwal' => $jadwal
+        ];
     }
 
     public function setTahunAnggaran(){
@@ -95,9 +106,9 @@ class generalController extends Controller
         if ($type == 'type_a') {
 
             if (request('type_query') == 'query_2') {
-                $data = document::select('id','nama_documents','nomor_perbub','tanggal_perbub','file_document')->where('jenis_document',$jenis)->latest()->get();
+                $data = document::select('id','nama_documents','nomor_perbub','tanggal_perbub','file_document')->where('jenis_document',$jenis)->where('tahun',session('tahun_penganggaran'))->latest()->get();
             }else{
-                $data = document::select('id','nama_documents','nomor_perbub','tanggal_perbub','file_document')->where('jenis_document',$jenis)->where('id_perangkat',Auth::user()->id_unit_kerja)->latest()->get();
+                $data = document::select('id','nama_documents','nomor_perbub','tanggal_perbub','file_document')->where('jenis_document',$jenis)->where('id_perangkat',Auth::user()->id_unit_kerja)->where('tahun',session('tahun_penganggaran'))->latest()->get();
             }
 
             
@@ -110,20 +121,20 @@ class generalController extends Controller
                 $other_query = "AND documents.id_perangkat =".Auth::user()->id_unit_kerja;
             }
 
-            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." ".$other_query);
+            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." ".$other_query." AND tahun=".session('tahun_penganggaran'));
         }else{
             $other_query = '';
         
             if (Auth::user()->id_role == 2) {
                 $other_query = "AND documents.user_insert =".Auth::user()->id;
-                $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." ".$other_query);
+                $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." ".$other_query." AND tahun=".session('tahun_penganggaran'));
             }elseif (Auth::user()->id_role == 1) {
-                $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis);
+                $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." AND tahun=".session('tahun_penganggaran'));
             }else{
                 if ($jenis == 3 || $jenis == 4) {
-                    $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat where documents.jenis_document = ".$jenis." AND unit_bidang_verifikasi.id_bidang=".Auth::user()->id_unit_kerja);
+                    $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat where documents.jenis_document = ".$jenis." AND unit_bidang_verifikasi.id_bidang=".Auth::user()->id_unit_kerja." AND documents.tahun=".session('tahun_penganggaran'));
                 }else{
-                        $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat where documents.jenis_document = ".$jenis." AND unit_bidang_verifikasi.id_bidang=".Auth::user()->id_unit_kerja);
+                        $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat where documents.jenis_document = ".$jenis." AND unit_bidang_verifikasi.id_bidang=".Auth::user()->id_unit_kerja)." AND documents.tahun=".session('tahun_penganggaran');
                 }
             }
            
