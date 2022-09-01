@@ -10,7 +10,7 @@
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
                     <h1>Jumlah SKPD</h1>
-                    <h2>44 <span>Users</span></h2>
+                    <h2 id="jml_skpd"></h2>
                     </div>
                     <div class="ms-auto p-2 bd-highlight">
                         <svg width="36" height="48" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +28,7 @@
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
                     <h1>Jumlah Dokumen</h1>
-                    <h2>44 <span>Users</span></h2>
+                    <h2 id="jml_dokumen"></h2>
                     </div>
                     <div class="ms-auto p-2 bd-highlight">
                     <svg width="48" height="43" viewBox="0 0 48 43" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +46,7 @@
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
                     <h1>Jumlah Verifikator</h1>
-                    <h2>44 <span>Users</span></h2>
+                    <h2 id="jml_verifikator"></h2>
                     </div>
                     <div class="ms-auto p-2 bd-highlight">
                         
@@ -174,25 +174,20 @@
         control.modal_content('Detail RPJMDes', url,`/dokumen-desa/konsederan?document=${$(this).attr('data-id')}&jenis=rpjmdes`);
     })
     $(function () {
-        // $.ajax({
-        //     url : '/get-data/dashboard',
-        //     method : 'GET',
-        //     success : function (res) {
-        //         console.log(res);
-        //         let total_pagu_paket = 0;
-        //         $.each(res,function (x,y) {
-        //             if (res.total_pagu_paket !== null) {
-        //                 total_pagu_paket = y.total_pagu_paket.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        //             }
-        //             $('#jml_paket').html(y.jumlah_paket+' <span>Paket</span>');
-        //             $('#jml_pagu').html('Rp. '+total_pagu_paket);
-        //         })
+        $.ajax({
+            url : '/get-data/dashboard',
+            method : 'GET',
+            success : function (res) {
                 
-        //     },
-        //     error : function (xhr) {
-        //         alert('gagal');
-        //     }
-        // });
+                $('#jml_skpd').html(res.jml_skpd+' <span>SKpd</span>');
+                $('#jml_dokumen').html(res.jml_dokumen+' <span>Dokumen</span>');
+                $('#jml_verifikator').html(res.jml_verifikator+' <span>Users</span>')
+                
+            },
+            error : function (xhr) {
+                alert('gagal');
+            }
+        });
 
 
         let columns = [
