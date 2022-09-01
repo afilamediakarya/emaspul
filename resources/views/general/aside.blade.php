@@ -380,7 +380,7 @@
 
                         </span>
                     </span>
-                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen SDGs Desa</span>
+                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Data  Desa / SDGs</span>
                 </a>
             </div>
 
