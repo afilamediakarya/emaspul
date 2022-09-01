@@ -179,7 +179,7 @@
             <!--end::Dropzone-->
 
             <!--begin::Hint-->
-            <span class="form-text text-muted">Max file size is 5MB and max number of files is 1.</span>
+            <span class="form-text text-muted">Max file size is 25MB and max number of files is 1.</span>
             <!--end::Hint-->
         </div>
         <!--end::Col-->
@@ -246,6 +246,13 @@
         control.searchTable(this.value);
     })
 
+
+
+    function formatDate(date) {
+        let data = date.split("-")
+     return [data[2], data[1], data[0]].join('/');
+    }
+
     $(function () {
       
         let columns = [
@@ -265,6 +272,12 @@
             }
         ];
         let columnDefs = [
+            {
+                targets: 3,
+                render: function(data) {
+                    return formatDate(data);
+                }
+            },
             {
                 targets: -1,
                 title: 'Aksi',

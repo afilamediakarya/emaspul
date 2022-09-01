@@ -477,7 +477,7 @@ class Control {
             url: "https://keenthemes.com/scripts/void.php", // Set the url for your upload script location
             parallelUploads: 20,
             previewTemplate: previewTemplate,
-            maxFilesize: 5, // Max filesize in MB
+            maxFilesize: 25, // Max filesize in MB
             maxFiles: 1,
             init: function() {
                 this.on('addedfile', function(file) {
