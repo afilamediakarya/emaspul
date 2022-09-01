@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use DB;
 class DashboardController extends Controller
 {
     public function __construct()
@@ -36,5 +38,18 @@ class DashboardController extends Controller
         $current_breadcumb = '-';
         session(['tahun_penganggaran' => request('tahun', date('Y'))]);
         return view('module.dashboard.verifikator',compact('breadcumb','current_breadcumb'));
+    }
+
+    public function get_dashboard(){
+      
+        $current = Auth::user()->id_role;
+        $data = array();
+        if ($current == '3') {
+            $data = DB::select("select COUNT(*) AS jumlah_paket, SUM(pagu) AS total_pagu_paket from alokasi_desa where tahun=".session('tahun_penganggaran')." and id_perangkat_desa=".Auth::user()->id_unit_kerja);
+        }else if($current == '4'){
+            
+        } 
+
+        return response()->json($data);
     }
 }

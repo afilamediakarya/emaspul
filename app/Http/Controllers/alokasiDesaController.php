@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\alokasi_desa;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Auth;
 class alokasiDesaController extends Controller
 {
     public function index(){
@@ -16,7 +17,7 @@ class alokasiDesaController extends Controller
 
     public function datatable_list(){
         $jenis = request('jenis');
-        $data = alokasi_desa::latest()->get();
+        $data = alokasi_desa::where('tahun',session('tahun_penganggaran'))->where('id_perangkat_desa',Auth::user()->id_unit_kerja)->latest()->get();
 
         if ($jenis == 'datatable') {
             return response()->json([
@@ -102,7 +103,9 @@ class alokasiDesaController extends Controller
         $data->satuan = $request->satuan;
         $data->pagu = str_replace(',', '', $request->pagu);
         $data->lokasi = $request->lokasi;
+        $data->id_perangkat_desa = Auth::user()->id_unit_kerja;
         $data->tahun = session('tahun_penganggaran');
+        $data->user_insert = Auth::user()->id;
         $data->save();
 
         if ($data) {
@@ -154,6 +157,7 @@ class alokasiDesaController extends Controller
         $data->pagu = str_replace(',', '', $request->pagu);
         $data->lokasi = $request->lokasi;
         $data->tahun = session('tahun_penganggaran');
+        $data->user_update = Auth::user()->id;
         $data->save();
 
         if ($data) {

@@ -116,6 +116,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/documentByVerifikasi', [generalController::class, 'documentByVerifikasi'])->name('get_data.documentByVerifikasi');
         Route::post('/master-verifikasi/', [generalController::class, 'master_verifikasi'])->name('get_data.master_verifikasi.store');
         Route::get('/checkJadwal', [generalController::class, 'checkJadwal'])->name('get_data.checkJadwal');
+        Route::get('/dashboard', [DashboardController::class, 'get_dashboard']);
     });  
 
     Route::prefix('general')->group(function () {

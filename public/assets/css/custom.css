@@ -142,9 +142,16 @@
     font-family: 'Nunito Sans', sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 36px;
     color: #FFFFFF;
     margin-top: 4rem;
+}
+
+.fz_36{
+    font-size: 36px;
+}
+
+.fz_32{
+    font-size: 32px;
 }
 
 .widget_dashboard h2 span{

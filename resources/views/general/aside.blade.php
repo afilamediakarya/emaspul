@@ -5,7 +5,7 @@
         <!--begin::Menu-->
         <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true" style="margin-top:2rem">
             <div class="menu-item">
-                <a class="menu-link active_custom" onmouseover="enHovers(this)" href="{{ route('dashboard.admin') }}">
+                <a class="menu-link active_custom" href="{{ route('dashboard.admin') }}">
                     <span class="menu-icon">
                
                         <span class="svg-icon svg-icon-2">
