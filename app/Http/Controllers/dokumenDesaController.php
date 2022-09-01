@@ -487,12 +487,11 @@ class dokumenDesaController extends Controller
         $perangkat_desa = DB::table('user')->select('perangkat_desa.id_desa')->join('perangkat_desa','user.id_unit_kerja','perangkat_desa.id')->where('user.id',Auth::user()->id)->first();
 
         $result = [];
-       // Data yang diperlukan id_desa, 
        $data = DB::table('unit_kerja')->select('id','nama_unit_kerja')->whereRaw("id<>''")->get();
        $tahun = session('tahun_penganggaran');
        $type = request('type');
 
-       foreach($data as $unit_kerja_list){
+        foreach($data as $unit_kerja_list){
             $unit_kerja_list->Dpa=DB::table('dpa')
             ->join('sub_kegiatan', 'dpa.id_sub_kegiatan', '=', 'sub_kegiatan.id')
             ->join('pegawai_penanggung_jawab', 'dpa.id_pegawai_penanggung_jawab', '=', 'pegawai_penanggung_jawab.id')

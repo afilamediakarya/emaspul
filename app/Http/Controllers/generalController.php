@@ -156,12 +156,14 @@ class generalController extends Controller
                         $value->unit_kerja = DB::table('unit_kerja')->select('unit_kerja.nama_unit_kerja')->join('user','user.id_unit_kerja','=','unit_kerja.id')->where('user.id',$value->user_insert)->first()->nama_unit_kerja;
                     }else{
                         $value->unit_kerja = DB::table('perangkat_desa')->select('perangkat_desa.nama_desa')->join('user','user.id_unit_kerja','=','perangkat_desa.id')->where('user.id',$value->user_insert)->first()->nama_desa;
-                        // SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`
+                        
                     }
                 }
 
             }else if(Auth::user()->id_role == 3){
                 $data = DB::select("SELECT documents.id,documents.nama_documents, documents.status_document, documents.jenis_document, (SELECT user.nama_lengkap FROM user WHERE user.id = documents.id_verifikator) AS verifikator FROM documents WHERE (id_perangkat = ".Auth::user()->id_unit_kerja.") AND (jenis_document <= ".$document_type.")");
+            }else if(Auth::user()->id_role == 2){
+                $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,documents.user_insert, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents WHERE documents.jenis_document <= 4  AND documents.user_insert=".Auth::user()->id." AND documents.tahun=".session('tahun_penganggaran'));
             }
 
              
