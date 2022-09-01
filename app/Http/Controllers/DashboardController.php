@@ -137,7 +137,16 @@ class DashboardController extends Controller
             $data['jml_dokumen'] = DB::table('documents')->select('documents.id')->where('user_insert',Auth::user()->id)->where('documents.tahun',session('tahun_penganggaran'))->get()->count();
             $data['jml_paket'] = count($counts);
             $data['total_pagu'] = 'Rp. '.number_format($total_pagu);
-        } 
+        }else{
+
+            $document = DB::select("SELECT COUNT(*) AS jml_documents, (SELECT COUNT(*) FROM documents WHERE status_document=4 AND jenis_document <= 4 AND tahun=".session('tahun_penganggaran').") AS jml_terverifikasi FROM documents WHERE tahun=".session('tahun_penganggaran'));
+
+            // return $document;
+
+            $data['jml_skpd'] = DB::table('unit_kerja')->select('id')->get()->count();
+            $data['jml_document'] = $document[0]->jml_documents;
+            $data['jml_terverifikasi'] = $document[0]->jml_terverifikasi;
+        }
 
         return response()->json($data);
     }
