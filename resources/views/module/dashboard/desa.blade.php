@@ -48,7 +48,7 @@
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
                     <h1>Total ADD</h1>
-                    <h2 class="fz_36">44 <span>Users</span></h2>
+                    <h2 id="total_add" class="fz_36">44 <span>Users</span></h2>
                     </div>
                     <div class="ms-auto p-2 bd-highlight">
                         
@@ -188,7 +188,9 @@
                     }
                     $('#jml_paket').html(y.jumlah_paket+' <span>Paket</span>');
                     $('#jml_pagu').html('Rp. '+total_pagu_paket);
+                        $('#total_add').html('Rp. '+y.total_add.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 })
+            
                 
             },
             error : function (xhr) {
