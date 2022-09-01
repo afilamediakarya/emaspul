@@ -106,9 +106,6 @@ class dokumenOpdController extends Controller
         $data = array();
        
         $data = DB::table('documents')->select('documents.id','documents.tahun','documents.periode_awal','documents.periode_akhir','documents.nomor_konsederan','documents.user_insert','unit_kerja.nama_unit_kerja as unit_kerja','user.nama_lengkap as nama_verifikator','user.nip as nip_verifikator')->join('unit_kerja','documents.id_perangkat','=','unit_kerja.id')->join('user', 'documents.id_verifikator','=','user.id')->where('documents.id',$document)->first();
-
-
-
         $data->tabel = DB::table('verifikasi_documents')->select('verifikasi_documents.id','verifikasi_documents.verifikasi','verifikasi_documents.tindak_lanjut','master_verifikasi.indikator')->join('master_verifikasi','verifikasi_documents.id_master_verifikasi','=','master_verifikasi.id')->where('id_documents',$document)->get();
 
         $user = DB::table('user')->where('id',$data->user_insert)->first();        
@@ -137,12 +134,12 @@ class dokumenOpdController extends Controller
             ->setCategory('Renstra');
         $sheet = $spreadsheet->getActiveSheet();
         //$sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-        $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
-        $spreadsheet->getDefaultStyle()->getFont()->setName('Times New Roman');
+        $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_FOLIO);
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Bookman Old Style');
         $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
         $spreadsheet->getActiveSheet()->getPageSetup()->setHorizontalCentered(true);
         $spreadsheet->getActiveSheet()->getPageSetup()->setVerticalCentered(false);
-        $sheet->getDefaultRowDimension()->setRowHeight(15);
+        $sheet->getDefaultRowDimension()->setRowHeight(20);
 
         //Margin PDF
         
@@ -153,10 +150,10 @@ class dokumenOpdController extends Controller
         $spreadsheet->getActiveSheet()->getStyle('A1:A4')->getAlignment()->setWrapText(true);
        
         // Header Text
-        $sheet->setCellValue('A1', 'BERITA ACARA')->mergeCells('A1:F1');
-        $sheet->setCellValue('A2', 'HASIL VERIFIKASI RANCANGAN AWAL RENCANA STRATEGIS (RENSTRA)')->mergeCells('A2:F2');
-        $sheet->setCellValue('A3', ''.strtoupper($data->unit_kerja))->mergeCells('A3:F3');
-        $sheet->setCellValue('A4', 'KABUPATEN ENREKANG PERIODE '.$data->periode_awal.'-'.$data->periode_akhir)->mergeCells('A4:F4');
+        $sheet->setCellValue('A1', 'BERITA ACARA')->mergeCells('A1:G1');
+        $sheet->setCellValue('A2', 'HASIL VERIFIKASI RANCANGAN AWAL RENCANA STRATEGIS (RENSTRA)')->mergeCells('A2:G2');
+        $sheet->setCellValue('A3', ''.strtoupper($data->unit_kerja))->mergeCells('A3:G3');
+        $sheet->setCellValue('A4', 'KABUPATEN ENREKANG PERIODE '.$data->periode_awal.'-'.$data->periode_akhir)->mergeCells('A4:G4');
         $border = [
             'borders' => [
                 'top' => [
@@ -166,91 +163,101 @@ class dokumenOpdController extends Controller
             ],
         ];
 
-        $sheet->getStyle('A5:F5' )->applyFromArray($border);
+        $sheet->getStyle('A5:G5' )->applyFromArray($border);
         
 
         
-        $sheet->setCellValue('A5', "NOMOR : ".strtoupper($data->nomor_konsederan))->mergeCells('A5:F5');
-        $sheet->setCellValue('A6', " ")->mergeCells('A6:F6');
-        $sheet->setCellValue('A7', '            Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Rancangan awal Renstra PD '.$data->unit_kerja.' Kabupaten Enrekang periode '.$data->periode_awal.'-'.$data->periode_akhir.', sebagai berikut : 
-              ')->mergeCells('A7:F7');
+        $sheet->setCellValue('A5', "NOMOR : ".strtoupper($data->nomor_konsederan))->mergeCells('A5:G5');
+        $sheet->setCellValue('A6', " ")->mergeCells('A6:G6');
+        $sheet->setCellValue('A7', '        Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Rancangan awal Renstra PD '.$data->unit_kerja.' Kabupaten Enrekang periode '.$data->periode_awal.'-'.$data->periode_akhir.', sebagai berikut : 
+              ')->mergeCells('A7:G7');
         
-        $sheet->setCellValue('A8', "Setelah dilakukan verifikasi rancangan awal Renstra maka disepakati : ")->mergeCells('A8:F8');
+        $sheet->setCellValue('A8', "           Setelah dilakukan verifikasi rancangan awal Renstra maka disepakati : ")->mergeCells('A8:G8');
+        $sheet->setCellValue('A9', " ")->mergeCells('A9:G9');
+        $sheet->setCellValue('A10', "KESATU")->mergeCells('A10:B11');
+        $sheet->setCellValue('C10', "Sistematika penulisan Renstra agar disesuaikan dengan ketentuan Peraturan Menteri Dalam Negeri Republik Indonesia Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi Pembangunan Daerah, Tata Cara Evaluasi Rancangan Peraturan Daerah tentang RPJPD dan RPJMD, serta Tata Cara Perubahan RPJPD, RPJMD, dan Rencana Kerja Pemerintah Daerah, paling sedikit memuat :")->mergeCells('C10:G10');
+        $sheet->setCellValue('C11', "1.
+2.
+3.
+4.
+5.
+6.
+7.");   
+        $sheet->setCellValue('D11', "Pendahuluan;
+Gambaran Pelayanan Perangkat Daerah;
+Permasalahan dan Isu Isu Strategis Perangkat Daerah
+Tujuan dan Sasaran Perangkat Daerah;
+Rencana Program dan Kegiatan serta  Pendanaan;
+Kinerja Penyelenggaran Bidang Urusan; dan
+Penutup.")->mergeCells('D11:G11');
+        $sheet->setCellValue('A12', " ")->mergeCells('A12:G12');
+        $sheet->setCellValue('A13', "KEDUA")->mergeCells('A13:B13');
+        $sheet->setCellValue('C13', "Melakukan penyempurnaan rancangan Renstra Tahun periode ".$data->periode_awal.'-'.$data->periode_akhir." Berdasarkan  hasil verifikasi, meliputi :")->mergeCells('C13:G13');
+        $sheet->setCellValue('C14', "1. "); 
+        $sheet->setCellValue('D14', "Penyempurnaan rancangan Renstra sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini;")->mergeCells('D14:G14');
+        $sheet->setCellValue('C15', "2. "); 
+        $sheet->setCellValue('D15', "Penyempurnaan matrik Rumusan Rencana Program dan Kegiatan Perangkat Daerah periode ".$data->periode_awal.'-'.$data->periode_akhir." melalui portal https://emonev.enrekangkab.go.id/")->mergeCells('D15:G15');
         
-        $sheet->setCellValue('A9', " ")->mergeCells('A9:F9');
+        $sheet->setCellValue('A16', " ")->mergeCells('A16:G16');
+        $sheet->setCellValue('A17', "KETIGA")->mergeCells('A17:B17');
+        $sheet->setCellValue('C17', "Melakukan Upload Dokumen perbaikan hasil verifikasi Rancangan Akhir Renstra periode ".$data->periode_awal.'-'.$data->periode_akhir." melalui portal https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF.")->mergeCells('C17:G17');
 
-        $sheet->setCellValue('A10', "KESATU")->mergeCells('A10:B10');
-        $sheet->setCellValue('C10', "Sistematika penulisan Renstra agar disesuaikan dengan ketentuan Peraturan Menteri Dalam Negeri Republik Indonesia Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi Pembangunan Daerah, Tata Cara Evaluasi Rancangan Peraturan Daerah tentang RPJPD dan RPJMD, serta Tata Cara Perubahan RPJPD, RPJMD, dan Rencana Kerja Pemerintah Daerah, paling sedikit memuat :
-            1.	Pendahuluan;
-            2.	Gambaran Pelayanan Perangkat Daerah;
-            3.	Permasalahan dan Isu Isu Strategis Perangkat Daerah
-            4.	Tujuan dan Sasaran Perangkat Daerah;
-            5.	Rencana Program dan Kegiatan serta  Pendanaan;
-            6.	Kinerja Penyelenggaran Bidang Urusan; dan
-            7.	Penutup.")->mergeCells('C10:F10');
+        $sheet->setCellValue('A18', ' ')->mergeCells('A18:G18');
+        $sheet->setCellValue('A19', '           Demikian berita acara ini dibuat dan dipergunakan sebagaimana mestinya.')->mergeCells('A19:G19');
 
-        $sheet->setCellValue('A11', "KEDUA")->mergeCells('A11:B11');
-        $sheet->setCellValue('C11', "Melakukan penyempurnaan rancangan Renstra Tahun periode ".$data->periode_awal.'-'.$data->periode_akhir." Berdasarkan  hasil verifikasi, meliputi :  
-        1.	Penyempurnaan rancangan Renstra sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini; 
-        2.	Penyempurnaan matrik Rumusan Rencana Program dan Kegiatan Perangkat Daerah periode ".$data->periode_awal.'-'.$data->periode_akhir." melalui portal https://emonev.enrekangkab.go.id/")->mergeCells('C11:F11');
+        $sheet->setCellValue('A20', ' ')->mergeCells('A20:G20');
+
+        $sheet->setCellValue('A21', 'Verifikator Renstra PD')->mergeCells('A21:E21');
+        $sheet->setCellValue('A22', ' Kabupaten Enrekang')->mergeCells('A22:E22');
+        $sheet->setCellValue('A23', ' ')->mergeCells('A23:F23');
+        $sheet->setCellValue('A24', ' ')->mergeCells('A24:F24');
+        $sheet->setCellValue('A25', ' ')->mergeCells('A25:F25');
+        $sheet->setCellValue('A26', ' ')->mergeCells('A26:F26');
         
-        $sheet->setCellValue('A12', "KETIGA")->mergeCells('A12:B12');
-        $sheet->setCellValue('C12', "Melakukan Upload Dokumen perbaikan hasil verifikasi Rancangan Akhir Renstra periode ".$data->periode_awal.'-'.$data->periode_akhir." melalui portal https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF paling lambat tanggal")->mergeCells('C12:F12');
+        $sheet->getStyle('A27')->getFont()->setUnderline(true);
+        $sheet->setCellValue('A27', $data->nama_verifikator)->mergeCells('A27:E27');
+        $sheet->setCellValue('A28', $data->nip_verifikator)->mergeCells('A28:E28');
 
-        $sheet->setCellValue('A13', ' ')->mergeCells('A13:F13');
-        $sheet->setCellValue('A14', '           Demikian berita acara ini dibuat dan dipergunakan sebagaimana mestinya.')->mergeCells('A14:F14');
 
-        $sheet->setCellValue('A15', ' ')->mergeCells('A15:F15');
 
-        $sheet->setCellValue('A16', 'Verifikator Renstra PD')->mergeCells('A16:D16');
-        $sheet->setCellValue('A17', ' Kabupaten Enrekang')->mergeCells('A17:D17');
-        $sheet->setCellValue('A18', ' ')->mergeCells('A18:F18');
-        $sheet->setCellValue('A19', ' ')->mergeCells('A19:F19');
-        $sheet->setCellValue('A20', ' ')->mergeCells('A20:F20');
-        $sheet->setCellValue('A21', ' ')->mergeCells('A21:F21');
+        $sheet->setCellValue('F21', 'Tim Penyusun  Renstra')->mergeCells('F21:G21');
+        $sheet->setCellValue('F22', $data->unit_kerja.' Kabupaten Enrekang')->mergeCells('F22:G22');
         
-        $sheet->getStyle('A23')->getFont()->setUnderline(true);
-        $sheet->setCellValue('A23', $data->nama_verifikator)->mergeCells('A23:D23');
-        $sheet->setCellValue('A24', $data->nip_verifikator)->mergeCells('A24:D24');
-
-
-
-        $sheet->setCellValue('E16', 'Tim Penyusun  Renstra')->mergeCells('E16:F16');
-        $sheet->setCellValue('E17', $data->unit_kerja.' Kabupaten Enrekang')->mergeCells('E17:F17');
+        $sheet->getStyle('F27')->getFont()->setUnderline(true);
+        $sheet->setCellValue('F27', $data->nama_user)->mergeCells('F27:G27');
+        $sheet->setCellValue('F28', $data->nip_user)->mergeCells('F28:G28');
+        $sheet->setCellValue('A29', ' 
         
-        $sheet->getStyle('E23')->getFont()->setUnderline(true);
-        $sheet->setCellValue('E23', $data->nama_user)->mergeCells('E23:F23');
-        $sheet->setCellValue('E24', $data->nip_user)->mergeCells('E24:F24');
-        $sheet->setCellValue('A25', ' 
+
+
         
         
-        
-        
-        ')->mergeCells('A25:F25');
-
+        ')->mergeCells('A29:G29');
+       
         
         $cell = 35;
-        $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RANCANGAN RENCANA STRATEGIS  SATUAN KERJA')->mergeCells('A'. $cell . ':F' . $cell);
+        $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RANCANGAN RENCANA STRATEGIS  SATUAN KERJA')->mergeCells('A'. $cell . ':G' . $cell);
         $cell++;
-        $sheet->setCellValue('A'.$cell,'PERANGKAT DAERAH (RENSTRA - SKPD) PERIODE '.$data->periode_awal.'-'.$data->periode_akhir)->mergeCells('A'. $cell . ':F' . $cell);
+        $sheet->setCellValue('A'.$cell,'PERANGKAT DAERAH (RENSTRA - SKPD) PERIODE '.$data->periode_awal.'-'.$data->periode_akhir)->mergeCells('A'. $cell . ':G' . $cell);
         $cell++;
         $sheet->setCellValue('A'.$cell,' ')->mergeCells('A'. $cell . ':F' . $cell);
         $cell++;
         $sheet->setCellValue('A'.$cell,'NO')->mergeCells('A'. $cell . ':A' . ($cell+1));
-        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':C' . ($cell+1));
-        $sheet->setCellValue('D'. $cell,'KESESUAIAN')->mergeCells('D'. $cell . ':E' . $cell);
-        $sheet->setCellValue('D'. ($cell+1),'ADA');
-        $sheet->setCellValue('E'. ($cell+1),'TIDAK ADA');
-        $sheet->setCellValue('F'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('F'. $cell . ':F' . ($cell+1));
+        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':D' . ($cell+1));
+        $sheet->setCellValue('E'. $cell,'KESESUAIAN')->mergeCells('E'. $cell . ':F' . $cell);
+        $sheet->setCellValue('E'. ($cell+1),'YA');
+        $sheet->setCellValue('F'. ($cell+1),'TIDAK');
+        $sheet->setCellValue('G'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('G'. $cell . ':G' . ($cell+1));
         
         $cell++;
 
         $sheet->getColumnDimension('A')->setWidth(5);
         $sheet->getColumnDimension('B')->setWidth(10);
-        $sheet->getColumnDimension('C')->setWidth(25);
-        $sheet->getColumnDimension('D')->setWidth(7);
-        $sheet->getColumnDimension('E')->setWidth(12);
-        $sheet->getColumnDimension('F')->setWidth(30);
+        $sheet->getColumnDimension('C')->setWidth(5);
+        $sheet->getColumnDimension('D')->setWidth(20);
+        $sheet->getColumnDimension('E')->setWidth(7);
+        $sheet->getColumnDimension('F')->setWidth(12);
+        $sheet->getColumnDimension('G')->setWidth(30);
 
         $cell++;
         $i=0;
@@ -258,14 +265,14 @@ class dokumenOpdController extends Controller
 
         foreach ( $data->tabel as $row ){
             $sheet->setCellValue('A' . $cell, ++$i);
-            $sheet->setCellValue('B' . $cell, $row->indikator)->mergeCells('B'. $cell . ':C' . $cell);
+            $sheet->setCellValue('B' . $cell, $row->indikator)->mergeCells('B'. $cell . ':D' . $cell);
             if ($row->verifikasi==1){
-                $sheet->setCellValue('D' . $cell, 'v');
-            }
-            else{
                 $sheet->setCellValue('E' . $cell, 'v');
             }
-            $sheet->setCellValue('F' . $cell, $row->tindak_lanjut);
+            else{
+                $sheet->setCellValue('F' . $cell, 'v');
+            }
+            $sheet->setCellValue('G' . $cell, $row->tindak_lanjut);
             $cell++;
         }
 
@@ -278,19 +285,19 @@ class dokumenOpdController extends Controller
             ],
         ];
 
-        $sheet->getStyle('A38:F'. $cell )->applyFromArray($border);
-        $sheet->getStyle('A35:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('A38:G'. $cell )->applyFromArray($border);
+        $sheet->getStyle('A35:G'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
         $sheet->getStyle('B40:B'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
-        $sheet->getStyle('F40:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
+        $sheet->getStyle('G40:G'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
 
-        $sheet->getStyle('A1:F6')->getFont()->setBold(true);
-        $sheet->getStyle('A1:F6')->getAlignment()->setVertical('center')->setHorizontal('center');
-        $sheet->getStyle('A7:F12')->getAlignment()->setVertical('top')->setHorizontal('justify');
-        $sheet->getStyle('A16:F24')->getAlignment()->setVertical('top')->setHorizontal('center');
+        $sheet->getStyle('A1:G6')->getFont()->setBold(true);
+        $sheet->getStyle('A1:G6')->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('A7:G20')->getAlignment()->setVertical('top')->setHorizontal('justify');
+        $sheet->getStyle('A21:G28')->getAlignment()->setVertical('top')->setHorizontal('center');
         
         $cell++;
 
-        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':D' . $cell);
+        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':G' . $cell);
             $spreadsheet->getActiveSheet()->getHeaderFooter()
                 ->setOddHeader('&C&H' . url()->current());
             $spreadsheet->getActiveSheet()->getHeaderFooter()
@@ -310,31 +317,33 @@ class dokumenOpdController extends Controller
 
         $spreadsheet->getProperties()->setCreator('AFILA')
             ->setLastModifiedBy('AFILA')
-            ->setTitle('EVALUASI Renja '.$data->unit_kerja.'')
-            ->setSubject('EVALUASI Renja '.$data->unit_kerja.'')
-            ->setDescription('EVALUASI Renja '.$data->unit_kerja.'')
+            ->setTitle('Konsederan Renja '.$data->unit_kerja.'')
+            ->setSubject('Konsederan Renja '.$data->unit_kerja.'')
+            ->setDescription('Konsederan Renja '.$data->unit_kerja.'')
             ->setKeywords('pdf php')
             ->setCategory('Renja');
         $sheet = $spreadsheet->getActiveSheet();
         //$sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-        $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
-        $spreadsheet->getDefaultStyle()->getFont()->setName('Times New Roman');
+        $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_FOLIO);
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Bookman Old Style');
         $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
         $spreadsheet->getActiveSheet()->getPageSetup()->setHorizontalCentered(true);
         $spreadsheet->getActiveSheet()->getPageSetup()->setVerticalCentered(false);
-        $sheet->getDefaultRowDimension()->setRowHeight(15);
+        $sheet->getDefaultRowDimension()->setRowHeight(20);
 
         //Margin PDF
+        
         $spreadsheet->getActiveSheet()->getPageMargins()->setTop(0.5);
         $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.8);
         $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(1.2);
         $spreadsheet->getActiveSheet()->getPageMargins()->setBottom(1.0);
+        $spreadsheet->getActiveSheet()->getStyle('A1:A4')->getAlignment()->setWrapText(true);
        
         // Header Text
-        $sheet->setCellValue('A1', 'BERITA ACARA')->mergeCells('A1:F1');
-        $sheet->setCellValue('A2', 'HASIL VERIFIKASI RANCANGAN AWAL RENCANA KERJA (RENJA)')->mergeCells('A2:F2');
-        $sheet->setCellValue('A3', ''.strtoupper($data->unit_kerja))->mergeCells('A3:F3');
-        $sheet->setCellValue('A4', 'KABUPATEN ENREKANG TAHUN '.$data->tahun)->mergeCells('A4:F4');
+        $sheet->setCellValue('A1', 'BERITA ACARA')->mergeCells('A1:G1');
+        $sheet->setCellValue('A2', 'HASIL VERIFIKASI RANCANGAN AWAL RENCANA KERJA (RENJA)')->mergeCells('A2:G2');
+        $sheet->setCellValue('A3', ''.strtoupper($data->unit_kerja))->mergeCells('A3:G3');
+        $sheet->setCellValue('A4', 'KABUPATEN ENREKANG TAHUN '.$data->tahun)->mergeCells('A4:G4');
         $border = [
             'borders' => [
                 'top' => [
@@ -344,85 +353,99 @@ class dokumenOpdController extends Controller
             ],
         ];
 
-        $sheet->getStyle('A5:F5' )->applyFromArray($border);
-
-        $sheet->setCellValue('A5', "NOMOR : ".strtoupper($data->nomor_konsederan))->mergeCells('A5:F5');
-        $sheet->setCellValue('A6', " ")->mergeCells('A6:F6');
-        $sheet->setCellValue('A7', '            Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Rancangan awal Renja  '.$data->unit_kerja.' Kabupaten Enrekang tahun '.$data->tahun.', sebagai berikut : 
-              ')->mergeCells('A7:F7');
+        $sheet->getStyle('A5:G5' )->applyFromArray($border);
         
-        $sheet->setCellValue('A8', "Setelah dilakukan verifikasi rancangan awal Renja maka disepakati : ")->mergeCells('A8:F8');
+
         
-        $sheet->setCellValue('A9', " ")->mergeCells('A9:F9');
-
-        $sheet->setCellValue('A10', "KESATU")->mergeCells('A10:B10');
-        $sheet->setCellValue('C10', "Sistematika penulisan Renja agar disesuaikan dengan ketentuan Peraturan Menteri Dalam Negeri Republik Indonesia Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi Pembangunan Daerah, Tata Cara Evaluasi Rancangan Peraturan Daerah tentang RPJPD dan RPJMD, serta Tata Cara Perubahan RPJPD, RPJMD, dan Rencana Kerja Pemerintah Daerah, paling sedikit memuat :
-        1.	Pendahuluan;
-        2.	Hasil Evaluasi Renja Perangkat Daerah tahun lalu;
-        3.	Tujuan dan Sasaran Perangkat Daerah;
-        4.	Rencana Kerja dan Pendanaan Perangkat Daerah; dan
-        5.	Penutup.")->mergeCells('C10:F10');
-
-        $sheet->setCellValue('A11', "KEDUA")->mergeCells('A11:B11');
-        $sheet->setCellValue('C11', "Melakukan penyempurnaan rancangan Renja Tahun ".$data->tahun." Berdasarkan  hasil verifikasi, meliputi :  
-        1.	Penyempurnaan rancangan Renja sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini; 
-        2.	Penyempurnaan matrik Rumusan RRencana Program dan Kegiatan Perangkat Daerah Tahun ".$data->tahun." dan Prakiraan Maju Tahun ".($data->tahun+1)." melalui portal https://enrekangkab.sipd.kemendagri.go.id/")->mergeCells('C11:F11');
+        $sheet->setCellValue('A5', "NOMOR : ".strtoupper($data->nomor_konsederan))->mergeCells('A5:G5');
+        $sheet->setCellValue('A6', " ")->mergeCells('A6:G6');
+        $sheet->setCellValue('A7', '           Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Rancangan awal Renja  '.$data->unit_kerja.' Kabupaten Enrekang tahun '.($data->tahun+1).', sebagai berikut :
+              ')->mergeCells('A7:G7');
         
-        $sheet->setCellValue('A12', "KETIGA")->mergeCells('A12:B12');
-        $sheet->setCellValue('C12', "Melakukan Upload Dokumen perbaikan hasil verifikasi Rancangan Akhir Renja Tahun ".$data->tahun." melalui portal https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF paling lambat tanggal")->mergeCells('C12:F12');
-
-        $sheet->setCellValue('A13', ' ')->mergeCells('A13:F13');
-        $sheet->setCellValue('A14', '           Demikian berita acara ini dibuat dan dipergunakan sebagaimana mestinya.')->mergeCells('A14:F14');
-
-        $sheet->setCellValue('A15', ' ')->mergeCells('A15:F15');
-
-        $sheet->setCellValue('A16', 'Koordinator Tim Verifikasi')->mergeCells('A16:D16');
-        $sheet->setCellValue('A17', ' Kepala Bidang Monev,Litbang dan Perencanaan Makro')->mergeCells('A17:D17');
-        $sheet->setCellValue('A18', ' ')->mergeCells('A18:F18');
-        $sheet->setCellValue('A19', ' ')->mergeCells('A19:F19');
-        $sheet->setCellValue('A20', ' ')->mergeCells('A20:F20');
-        $sheet->setCellValue('A21', ' ')->mergeCells('A21:F21');
+        $sheet->setCellValue('A8', "           Setelah dilakukan verifikasi rancangan awal Renja maka disepakati : ")->mergeCells('A8:G8');
+        $sheet->setCellValue('A9', " ")->mergeCells('A9:G9');
+        $sheet->setCellValue('A10', "KESATU")->mergeCells('A10:B11');
+        $sheet->setCellValue('C10', "Sistematika penulisan Renja agar disesuaikan dengan ketentuan Peraturan Menteri Dalam Negeri Republik Indonesia Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi Pembangunan Daerah, Tata Cara Evaluasi Rancangan Peraturan Daerah tentang RPJPD dan RPJMD, serta Tata Cara Perubahan RPJPD, RPJMD, dan Rencana Kerja Pemerintah Daerah, paling sedikit memuat :")->mergeCells('C10:G10');
+        $sheet->setCellValue('C11', "1.
+2.
+3.
+4.
+5.");   
+        $sheet->setCellValue('D11', "Pendahuluan;
+Hasil Evaluasi Renja Perangkat Daerah tahun lalu;
+Tujuan dan Sasaran Perangkat Daerah;
+Rencana Kerja dan Pendanaan Perangkat Daerah; dan
+Penutup.")->mergeCells('D11:G11');
+        $sheet->setCellValue('A12', " ")->mergeCells('A12:G12');
+        $sheet->setCellValue('A13', "KEDUA")->mergeCells('A13:B13');
+        $sheet->setCellValue('C13', "Melakukan penyempurnaan rancangan Renja Tahun ".($data->tahun+1)." Berdasarkan  hasil verifikasi, meliputi :")->mergeCells('C13:G13');
+        $sheet->setCellValue('C14', "1. "); 
+        $sheet->setCellValue('D14', "Penyempurnaan rancangan Renja sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini;")->mergeCells('D14:G14');
+        $sheet->setCellValue('C15', "2. "); 
+        $sheet->setCellValue('D15', "Penyempurnaan matrik Rumusan Rencana Program dan Kegiatan Perangkat Daerah Tahun ".($data->tahun+1)." dan Prakiraan Maju Tahun ".($data->tahun+2)." melalui portal https://enrekangkab.sipd.kemendagri.go.id/")->mergeCells('D15:G15');
         
-        $sheet->getStyle('A23')->getFont()->setUnderline(true);
-        $sheet->setCellValue('A23', $data->nama_verifikator)->mergeCells('A23:D23');
-        $sheet->setCellValue('A24', $data->nip_verifikator)->mergeCells('A24:D24');
+        $sheet->setCellValue('A16', " ")->mergeCells('A16:G16');
+        $sheet->setCellValue('A17', "KETIGA")->mergeCells('A17:B17');
+        $sheet->setCellValue('C17', "Melakukan Upload Dokumen perbaikan hasil verifikasi Rancangan Akhir Renja Tahun ".($data->tahun+1)." melalui portal https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF.")->mergeCells('C17:G17');
 
+        $sheet->setCellValue('A18', ' ')->mergeCells('A18:G18');
+        $sheet->setCellValue('A19', '           Demikian berita acara ini dibuat dan dipergunakan sebagaimana mestinya.')->mergeCells('A19:G19');
 
+        $sheet->setCellValue('A20', ' ')->mergeCells('A20:G20');
 
-        $sheet->setCellValue('E16', 'Tim Penyusun Renstra')->mergeCells('E16:F16');
-        $sheet->setCellValue('E17', $data->unit_kerja.' Kabupaten Enrekang')->mergeCells('E17:F17');
+        $sheet->setCellValue('A21', 'Verifikator Renja PD')->mergeCells('A21:E21');
+        $sheet->setCellValue('A22', ' Kabupaten Enrekang')->mergeCells('A22:E22');
+        $sheet->setCellValue('A23', ' ')->mergeCells('A23:G23');
+        $sheet->setCellValue('A24', ' ')->mergeCells('A24:G24');
+        $sheet->setCellValue('A25', ' ')->mergeCells('A25:G25');
+        $sheet->setCellValue('A26', ' ')->mergeCells('A26:G26');
         
-        $sheet->getStyle('E23')->getFont()->setUnderline(true);
-        $sheet->setCellValue('E23', $data->nama_user)->mergeCells('E23:F23');
-        $sheet->setCellValue('E24', $data->nip_user)->mergeCells('E24:F24');
-        $sheet->setCellValue('A25', ' 
-    
-        ')->mergeCells('A25:F25');
+        $sheet->getStyle('A27')->getFont()->setUnderline(true);
+        $sheet->setCellValue('A27', $data->nama_verifikator)->mergeCells('A27:E27');
+        $sheet->setCellValue('A28', $data->nip_verifikator)->mergeCells('A28:E28');
+
+
+
+        $sheet->setCellValue('F21', 'Tim Penyusun  Renja')->mergeCells('F21:G21');
+        $sheet->setCellValue('F22', $data->unit_kerja.' Kabupaten Enrekang')->mergeCells('F22:G22');
+        
+        $sheet->getStyle('F27')->getFont()->setUnderline(true);
+        $sheet->setCellValue('F27', $data->nama_user)->mergeCells('F27:G27');
+        $sheet->setCellValue('F28', $data->nip_user)->mergeCells('F28:G28');
+        $sheet->setCellValue('A29', ' 
+        
+
+
+
+        
+        ')->mergeCells('A29:G29');
+        
 
 
 
         $cell = 35;
-        $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RANCANGAN RENCANA KERJA  SATUAN KERJA')->mergeCells('A'. $cell . ':F' . $cell);
+        $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RANCANGAN RENCANA KERJA  SATUAN KERJA')->mergeCells('A'. $cell . ':G' . $cell);
         $cell++;
-        $sheet->setCellValue('A'.$cell,'PERANGKAT DAERAH (RENJA - SKPD) TAHUN '.$data->tahun)->mergeCells('A'. $cell . ':F' . $cell);
+        $sheet->setCellValue('A'.$cell,'PERANGKAT DAERAH (RENJA - SKPD) TAHUN '.($data->tahun+1))->mergeCells('A'. $cell . ':G' . $cell);
         $cell++;
         $sheet->setCellValue('A'.$cell,' ')->mergeCells('A'. $cell . ':F' . $cell);
         $cell++;
         $sheet->setCellValue('A'.$cell,'NO')->mergeCells('A'. $cell . ':A' . ($cell+1));
-        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':C' . ($cell+1));
-        $sheet->setCellValue('D'. $cell,'KESESUAIAN')->mergeCells('D'. $cell . ':E' . $cell);
-        $sheet->setCellValue('D'. ($cell+1),'ADA');
-        $sheet->setCellValue('E'. ($cell+1),'TIDAK ADA');
-        $sheet->setCellValue('F'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('F'. $cell . ':F' . ($cell+1));
+        $sheet->setCellValue('B'. $cell,'INDIKATOR')->mergeCells('B'. $cell . ':D' . ($cell+1));
+        $sheet->setCellValue('E'. $cell,'KESESUAIAN')->mergeCells('E'. $cell . ':F' . $cell);
+        $sheet->setCellValue('E'. ($cell+1),'YA');
+        $sheet->setCellValue('F'. ($cell+1),'TIDAK');
+        $sheet->setCellValue('G'. $cell,'TINDAK LANJUT PENYEMPURNAAN')->mergeCells('G'. $cell . ':G' . ($cell+1));
         
         $cell++;
 
         $sheet->getColumnDimension('A')->setWidth(5);
         $sheet->getColumnDimension('B')->setWidth(10);
-        $sheet->getColumnDimension('C')->setWidth(25);
-        $sheet->getColumnDimension('D')->setWidth(7);
-        $sheet->getColumnDimension('E')->setWidth(12);
-        $sheet->getColumnDimension('F')->setWidth(30);
+        $sheet->getColumnDimension('C')->setWidth(5);
+        $sheet->getColumnDimension('D')->setWidth(20);
+        $sheet->getColumnDimension('E')->setWidth(7);
+        $sheet->getColumnDimension('F')->setWidth(12);
+        $sheet->getColumnDimension('G')->setWidth(30);
 
         $cell++;
         $i=0;
@@ -430,14 +453,14 @@ class dokumenOpdController extends Controller
 
         foreach ( $data->tabel as $row ){
             $sheet->setCellValue('A' . $cell, ++$i);
-            $sheet->setCellValue('B' . $cell, $row->indikator)->mergeCells('B'. $cell . ':C' . $cell);
+            $sheet->setCellValue('B' . $cell, $row->indikator)->mergeCells('B'. $cell . ':D' . $cell);
             if ($row->verifikasi==1){
-                $sheet->setCellValue('D' . $cell, 'v');
-            }
-            else{
                 $sheet->setCellValue('E' . $cell, 'v');
             }
-            $sheet->setCellValue('F' . $cell, $row->tindak_lanjut);
+            else{
+                $sheet->setCellValue('F' . $cell, 'v');
+            }
+            $sheet->setCellValue('G' . $cell, $row->tindak_lanjut);
             $cell++;
         }
 
@@ -450,19 +473,19 @@ class dokumenOpdController extends Controller
             ],
         ];
 
-        $sheet->getStyle('A38:F'. $cell )->applyFromArray($border);
-        $sheet->getStyle('A35:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('A38:G'. $cell )->applyFromArray($border);
+        $sheet->getStyle('A35:G'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
         $sheet->getStyle('B40:B'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
-        $sheet->getStyle('F40:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
+        $sheet->getStyle('G40:G'. $cell )->getAlignment()->setVertical('center')->setHorizontal('left');
 
-        $sheet->getStyle('A1:F6')->getFont()->setBold(true);
-        $sheet->getStyle('A1:F6')->getAlignment()->setVertical('center')->setHorizontal('center');
-        $sheet->getStyle('A7:F12')->getAlignment()->setVertical('top')->setHorizontal('justify');
-        $sheet->getStyle('A16:F24')->getAlignment()->setVertical('top')->setHorizontal('center');
+        $sheet->getStyle('A1:G6')->getFont()->setBold(true);
+        $sheet->getStyle('A1:G6')->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('A7:G20')->getAlignment()->setVertical('top')->setHorizontal('justify');
+        $sheet->getStyle('A21:G28')->getAlignment()->setVertical('top')->setHorizontal('center');
         
         $cell++;
 
-        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':D' . $cell);
+        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':G' . $cell);
             
         
             $spreadsheet->getActiveSheet()->getHeaderFooter()
