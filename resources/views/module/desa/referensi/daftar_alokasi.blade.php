@@ -29,7 +29,7 @@
 
             <div class="container">
             <div class="py-5">
-                <table id="kt_table_data" class="table table-row-dashed table-row-gray-300 gy-7">
+                <table id="kt_table_data" class="table table-row-dashed table-row-gray-300 gy-7" style="width:100%">
                     <thead>
                         <tr class="fw-bolder fs-6 text-gray-800">
                             <th>No</th>
@@ -88,20 +88,29 @@
 
         ];
         let columnDefs = [
-            {
-                targets: 1,
-                width : '10rem'
-            },
-            {
-                targets: 2,
-                width : '15rem'
-            },
+            // {
+            //     targets: 1,
+            //     width : '30rem'
+            // },
+            // {
+            //     targets: 2,
+            //     width : '80rem'
+            // },
+            // {
+            //     targets: 5,
+            //     width : '80rem'
+            // },
+            
             {
                 targets: 4,
                 render: function(data, type, full, meta) {
                     return 'Rp. '+data;
                 }
-            },
+            }
+            // ,{
+            //     targets: -1,
+            //     width : '5px'
+            // }
         ];
         control.initDatatable('/alokasi-skpd/data-alokasi-skpd?type=datatable',columns,columnDefs);
       
