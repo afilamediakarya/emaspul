@@ -58,7 +58,7 @@
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen SPGs Desa</span>
+                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Data Desa/SDGs</span>
                         </a>
                     </div>
                     <!-- <div class="menu-item">
@@ -137,7 +137,7 @@
                         </span>
                    
                     </span>
-                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen daerah</span>
+                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Daerah</span>
                     <span class="menu-arrow"></span>
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
@@ -380,7 +380,7 @@
 
                         </span>
                     </span>
-                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Data  Desa / SDGs</span>
+                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Data Desa/SDGs</span>
                 </a>
             </div>
 
