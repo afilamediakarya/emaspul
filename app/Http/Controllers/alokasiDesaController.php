@@ -45,45 +45,69 @@ class alokasiDesaController extends Controller
 
         $spreadsheet->getProperties()->setCreator('AFILA')
             ->setLastModifiedBy('AFILA')
-            ->setTitle('Alokasi Desa')
-            ->setSubject('Alokasi Desa')
-            ->setDescription('Alokasi Desa')
+            ->setTitle('Alokasi Dana Desa')
+            ->setSubject('Alokasi Dana Desa')
+            ->setDescription('Alokasi Dana Desa')
             ->setKeywords('pdf php')
-            ->setCategory('Alokasi Desa');
+            ->setCategory('Alokasi Dana Desa');
         $sheet = $spreadsheet->getActiveSheet();
         //$sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-        $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
-        $spreadsheet->getDefaultStyle()->getFont()->setName('Times New Roman');
+        $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_FOLIO);
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Bookman Old Style');
         $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
         $spreadsheet->getActiveSheet()->getPageSetup()->setHorizontalCentered(true);
         $spreadsheet->getActiveSheet()->getPageSetup()->setVerticalCentered(false);
-        $sheet->getDefaultRowDimension()->setRowHeight(15);
+        $sheet->getDefaultRowDimension()->setRowHeight(20);
 
         //Margin PDF
         
         $spreadsheet->getActiveSheet()->getPageMargins()->setTop(0.5);
-        $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.8);
-        $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(1.2);
-        $spreadsheet->getActiveSheet()->getPageMargins()->setBottom(1.0);
+        $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.5);
+        $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.5);
+        $spreadsheet->getActiveSheet()->getPageMargins()->setBottom(0.5);
         $spreadsheet->getActiveSheet()->getStyle('A1:A4')->getAlignment()->setWrapText(true);
 
-        $sheet->setCellValue('A1','Nama Paket');
-        $sheet->setCellValue('B1','Volume');
-        $sheet->setCellValue('C1','Pagu');
-        $sheet->setCellValue('D1','Lokasi');
+        $sheet->setCellValue('A1', 'ALOKASI DANA DESA')->mergeCells('A1:E1');
+        $sheet->setCellValue('A2', ' ')->mergeCells('A2:E2');
+       
+        
+        $sheet->setCellValue('A4','NO')->getColumnDimension('A')->setWidth(5);
+        $sheet->setCellValue('B4','NAMA KEGIATAN')->getColumnDimension('B')->setWidth(40);
+        $sheet->setCellValue('C4','VOLUME')->getColumnDimension('C')->setWidth(15);
+        $sheet->setCellValue('D4','PAGU')->getColumnDimension('D')->setWidth(20);
+        $sheet->setCellValue('E4','LOKASI')->getColumnDimension('E')->setWidth(20);
+        
+        $sheet->getStyle('A4:E4')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('C6E0B4');
+        
 
-        $cell = 2;
-
+        $cell = 5;
         foreach ($data as $key => $value) {
-            $sheet->setCellValue('A' . $cell, $value->nama_paket);
-            $sheet->setCellValue('B' . $cell, $value->volume. ' ' .$value->satuan);
-            $sheet->setCellValue('C' . $cell, 'Rp. '.number_format($value->pagu));
-            $sheet->setCellValue('D' . $cell, $value->lokasi);
+            $sheet->setCellValue('A' . $cell, $key+1);
+            $sheet->setCellValue('B' . $cell, $value->nama_paket);
+            $sheet->setCellValue('C' . $cell, $value->volume. ' ' .$value->satuan);
+            $sheet->setCellValue('D' . $cell, number_format($value->pagu));
+            $sheet->setCellValue('E' . $cell, $value->lokasi);
+            $cell++;
         }
 
-        $cell++;
+        $border = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '0000000'],
+                ],
+            ],
+        ];
 
-        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':D' . $cell);
+        $sheet->getStyle('A4:E'. $cell )->applyFromArray($border);
+        $sheet->getStyle('A1:E4')->getFont()->setBold(true);
+        $sheet->getStyle('A1:E'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('B5:B'. $cell )->getAlignment()->setVertical('top')->setHorizontal('left');
+        $sheet->getStyle('D5:D'. $cell )->getAlignment()->setVertical('top')->setHorizontal('right');
+        
+
+        $sheet->setCellValue('A' . ++$cell, '');
+        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':E' . $cell);
             $spreadsheet->getActiveSheet()->getHeaderFooter()
                 ->setOddHeader('&C&H' . url()->current());
             $spreadsheet->getActiveSheet()->getHeaderFooter()
