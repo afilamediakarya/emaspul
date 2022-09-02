@@ -42,8 +42,8 @@ class dokumenDesaController extends Controller
             $role = Auth::user()->id_role;
             return view('module.desa.dokumen.partials.rkpdes',compact('breadcumb','current_breadcumb','role'));
         }
-        if ($type == 'SPGs') {
-            $breadcumb = 'Dokumen SPGs Desa';
+        if ($type == 'SDGs') {
+            $breadcumb = 'Dokumen SDGs Desa';
             $current_breadcumb = '';
             return view('module.desa.dokumen.partials.spgs',compact('breadcumb','current_breadcumb'));
         }

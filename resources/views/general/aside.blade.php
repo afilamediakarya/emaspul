@@ -54,7 +54,7 @@
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ url('dokumen-desa?type=SPGs') }}">
+                        <a class="menu-link" href="{{ url('dokumen-desa?type=SDGs') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
