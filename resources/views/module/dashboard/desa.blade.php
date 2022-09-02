@@ -183,7 +183,7 @@
                 console.log(res);
                 let total_pagu_paket = 0;
                 $.each(res,function (x,y) {
-                    if (res.total_pagu_paket !== null) {
+                    if (y.total_pagu_paket !== null) {
                         total_pagu_paket = y.total_pagu_paket.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     }
                     $('#jml_paket').html(y.jumlah_paket+' <span>Paket</span>');
