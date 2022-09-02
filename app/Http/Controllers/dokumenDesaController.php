@@ -504,6 +504,7 @@ class dokumenDesaController extends Controller
     public function alokasi_skpd(){
         $breadcumb = 'Data Referensi';
         $current_breadcumb = 'Daftar Alokasi SKPD';
+
         return view('module.desa.referensi.daftar_alokasi',compact('breadcumb','current_breadcumb'));
     } 
 
@@ -511,10 +512,19 @@ class dokumenDesaController extends Controller
         
         $perangkat_desa = DB::table('user')->select('perangkat_desa.id_desa')->join('perangkat_desa','user.id_unit_kerja','perangkat_desa.id')->where('user.id',Auth::user()->id)->first();
 
-        
+
+        $where_unit_kerja="";
+        $where_paket = "";
+        if (Auth::user()->id_role == 2) {
+            $where_unit_kerja = " AND id=".Auth::user()->id_unit_kerja;
+        }else if (Auth::user()->id_role == 3) {
+            $where_paket = "AND desa.id=".$perangkat_desa->id_desa;
+        }
+
+     
 
         $result = [];
-       $data = DB::table('unit_kerja')->select('id','nama_unit_kerja')->whereRaw("id<>''")->get();
+       $data = DB::table('unit_kerja')->select('id','nama_unit_kerja')->whereRaw("id<>'' $where_unit_kerja")->get();
        $tahun = session('tahun_penganggaran');
        $type = request('type');
 
@@ -536,7 +546,7 @@ class dokumenDesaController extends Controller
                         ->join('desa','paket_dak_lokasi.id_desa','=','desa.id')
                         ->join('kecamatan','desa.id_kecamatan','=','kecamatan.id')
                         ->select('desa.nama as nama_desa','kecamatan.nama as nama_kecamatan')
-                        ->whereRaw("id_paket_dak='$paket->id' AND desa.id=".$perangkat_desa->id_desa)
+                        ->whereRaw("id_paket_dak='$paket->id' '$where_paket'")
                         ->get();
                     $paket->Desa='';
                     $paket->Kecamatan='';
