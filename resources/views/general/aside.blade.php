@@ -400,7 +400,7 @@
             </div>
             @endif
 
-            @if(Auth::user()->id_role == 2 || Auth::user()->id_role == 3)
+            @if(Auth::user()->id_role == 2 || Auth::user()->id_role == 3 || Auth::user()->id_role == 1)
             <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                 <span class="menu-link">
                     <span class="menu-icon">
@@ -418,6 +418,8 @@
                     <span class="menu-arrow"></span>
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
+                   
+                    @if(Auth::user()->id_role == 2 || Auth::user()->id_role == 3)
                     <div class="menu-item">
                         <a class="menu-link" href="{{route('rpjmd')}}">
                             <span class="menu-bullet">
@@ -442,6 +444,7 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Lainnya</span>
                         </a>
                     </div>
+                    @endif
 
                     <div class="menu-item">
                         <a class="menu-link" href="{{ url('/alokasi-skpd/daftar-alokasi-skpd') }}">
@@ -451,6 +454,18 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Daftar Alokasi SKPD</span>
                         </a>
                     </div>
+
+                    @if(Auth::user()->id_role == 1)
+                    <div class="menu-item">
+                        <a class="menu-link" href="{{ url('/alokasi-skpd/daftar-alokasi-skpd') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Daftar Alokasi Desa</span>
+                        </a>
+                    </div>
+                    @endif
+
                 </div>
             </div>	
             @endif
