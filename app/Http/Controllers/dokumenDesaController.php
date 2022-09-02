@@ -551,9 +551,8 @@ class dokumenDesaController extends Controller
                     $paket->Desa='';
                     $paket->Kecamatan='';
                     foreach($paket->Lokasi as $lokasi){
-                        $paket->Desa.=$lokasi->nama_desa;
-                        $paket->Kecamatan.=$lokasi->nama_kecamatan;
-
+                        $paket->Desa.=$lokasi->nama_desa.' ';
+                        $paket->Kecamatan.=$lokasi->nama_kecamatan.' ';
                     }
                 }
             }
