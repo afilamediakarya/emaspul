@@ -230,6 +230,10 @@ Penutup.")->mergeCells('D11:G11');
         
 
 
+
+
+
+        
         
         
         ')->mergeCells('A29:G29');
@@ -417,11 +421,19 @@ Penutup.")->mergeCells('D11:G11');
 
 
 
+
+
+
+
+
         
         ')->mergeCells('A29:G29');
         
 
-
+        $spreadsheet->createSheet();
+        // Zero based, so set the second tab as active sheet
+        $spreadsheet->setActiveSheetIndex(1);
+        $spreadsheet->getActiveSheet()->setTitle('Second tab');
 
         $cell = 35;
         $sheet->setCellValue('A'.$cell,'FORMULIR VERIFIKASI RANCANGAN RENCANA KERJA  SATUAN KERJA')->mergeCells('A'. $cell . ':G' . $cell);
