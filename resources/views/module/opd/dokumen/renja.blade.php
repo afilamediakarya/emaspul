@@ -112,13 +112,13 @@
                 </div>
                 <input type="hidden" name="referensi_nama_dokumen" id="referensi_nama_dokumen" value="dokumen_skpd">
                 <div class="mb-10">
-                    <label class="form-label">Nomor Perbub</label>
+                    <label class="form-label">Nomor Peraturan</label>
                     <input type="text" class="form-control form-control-solid" id="nomor_perbub" name="nomor_perbub" placeholder="Masukkan Nomor Perbub">
                     <small class="text-danger nomor_perbub_error"></small>
                 </div>
 
                 <div class="mb-10">
-                    <label class="form-label">Tanggal Perbub</label>
+                    <label class="form-label">Tanggal Peraturan</label>
                     <input type="date" class="form-control form-control-solid" id="tanggal_perbub" name="tanggal_perbub">
                     <small class="text-danger tanggal_perbub_error"></small>
                 </div>
@@ -237,11 +237,11 @@
                    </div>
                    <div class="row">
                         <div class="col-lg-6">
-                            <span class="fz-12">Nomor Perbub</span>
+                            <span class="fz-12">Nomor</span>
                             <p class="fz-16 content_detail_4"></p>
                         </div>
                         <div class="col-lg-6">
-                            <span class="fz-12">Tanggal Perbub</span>
+                            <span class="fz-12">Tanggal</span>
                             <p class="fz-16 content_detail_5"></p>
                         </div>
                    </div>
