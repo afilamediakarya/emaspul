@@ -1,9 +1,13 @@
 @extends('general.layout')
 @section('button')
+
+@if($role == 3)
 <button class="btn btn_general btn-sm " data-kt-drawer-show="true" data-kt-drawer-target="#side_form" id="button-side-form"><i class="fa fa-plus-circle" style="color:#ffffff" aria-hidden="true"></i> Tambah Alokasi Desa</button> <a style="margin-left: 1rem;
-" href="/akun-desa/daftar-alokasi-desa/datatable-list?jenis=export" target="_blank" role="button" class="btn btn-danger btn-sm ">  <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+" href="/daftar-alokasi-desa/datatable-list?jenis=export" target="_blank" role="button" class="btn btn-danger btn-sm ">  <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.2667 5.82386H10.6476C10.5795 5.82386 10.5238 5.87957 10.5238 5.94767V6.56671C10.5238 6.63481 10.5795 6.69052 10.6476 6.69052H11.2667C11.3348 6.69052 11.3905 6.63481 11.3905 6.56671V5.94767C11.3905 5.87957 11.3348 5.82386 11.2667 5.82386ZM11.7619 4.21433H9.90476V0.93338C9.90476 0.865285 9.84905 0.80957 9.78095 0.80957H3.21905C3.15095 0.80957 3.09524 0.865285 3.09524 0.93338V4.21433H1.2381C0.554048 4.21433 0 4.76838 0 5.45243V10.5286C0 10.8025 0.22131 11.0239 0.495238 11.0239H3.09524V13.0667C3.09524 13.1348 3.15095 13.1905 3.21905 13.1905H9.78095C9.84905 13.1905 9.90476 13.1348 9.90476 13.0667V11.0239H12.5048C12.7787 11.0239 13 10.8025 13 10.5286V5.45243C13 4.76838 12.446 4.21433 11.7619 4.21433ZM4.14762 1.86195H8.85238V4.21433H4.14762V1.86195ZM8.85238 12.1381H4.14762V7.86671H8.85238V12.1381ZM11.9476 9.97147H9.90476V6.81433H3.09524V9.97147H1.05238V5.45243C1.05238 5.35028 1.13595 5.26671 1.2381 5.26671H11.7619C11.864 5.26671 11.9476 5.35028 11.9476 5.45243V9.97147Z" fill="white"/>
                 </svg> Cetak</a>
+@endif
+
 @endsection
 @section('content')
 <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -34,6 +38,7 @@
                     <thead>
                         <tr class="fw-bolder fs-6 text-gray-800">
                             <th>No</th>
+                            <th>Nama Desa</th>
                             <th>Nama Paket</th>
                             <th>Volume</th>
                             <th>Pagu</th>
@@ -161,6 +166,7 @@
 <script src="{{ asset('assets/js/number-thousand-separator/easy-number-separator.js') }}"></script>
 <script>
      let control = new Control('type_2');
+     let role = {!! json_encode($role) !!};
     $(document).on('click','#button-side-form', function () {
         $('#password_content').show();
         control.overlay_form('Tambah','Daftar Alokasi Desa');
@@ -170,10 +176,10 @@
         e.preventDefault();
         let type = $(this).attr('data-type');
         if (type == 'add') {
-            control.submitForm('/akun-desa/daftar-alokasi-desa/store','Tambah','Daftar Alokasi Desa');
+            control.submitForm('/daftar-alokasi-desa/store','Tambah','Daftar Alokasi Desa');
         }else{
             let id = $("input[name='id']").val();
-            control.submitForm('/akun-desa/daftar-alokasi-desa/update/'+id,'Update','Daftar Alokasi Desa');
+            control.submitForm('/daftar-alokasi-desa/update/'+id,'Update','Daftar Alokasi Desa');
         }
     });
 
@@ -181,7 +187,7 @@
     $(document).on('click','.button-update', function (e) {
         e.preventDefault();
         $('#password_content').hide();
-        let url = '/akun-desa/daftar-alokasi-desa/byParams/'+$(this).attr('data-id');
+        let url = '/daftar-alokasi-desa/byParams/'+$(this).attr('data-id');
         control.overlay_form('Update','Daftar Alokasi Desa', url);
     })
 
@@ -191,6 +197,11 @@
     })
 
     $(function () {
+
+        let visible_desa = false;
+        if (role == 1) {
+            visible_desa = true;
+        }
       
         let columns = [
             { 
@@ -199,7 +210,9 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                 }  
             },{
-                data:'nama_paket'
+                data:null
+            },{
+                data: 'nama_paket'
             },{
                 data:null
             },{
@@ -212,13 +225,25 @@
         ];
         let columnDefs = [
             {
-                targets: 2,
+                targets: 1,
+                visible : visible_desa,
+                render : function (data) {
+                    if (data.nama) {
+                        return data.nama;
+                    }else{
+                        return '-';
+                    }
+                 
+                }
+            },
+            {
+                targets: 3,
                 render : function (data) {
                     return `${data.volume} ${data.satuan}`;
                 }
             },
             {
-                targets: 3,
+                targets: 4,
                 render : function (data) {
                     return `Rp. ${data.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`
                 }
@@ -236,7 +261,7 @@
                 },
             }
         ];
-        control.initDatatable('/akun-desa/daftar-alokasi-desa/datatable-list?jenis=datatable',columns,columnDefs);
+        control.initDatatable('/daftar-alokasi-desa/datatable-list?jenis=datatable',columns,columnDefs);
         control.push_select('/get-data/satuan','#select_');
         control.push_select('/get-data/pagu-desa','#select_pagu');
         

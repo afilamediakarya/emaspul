@@ -90,13 +90,7 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::get('/', [dokumenDesaController::class, 'index']);
             });
           
-            Route::prefix('daftar-alokasi-desa')->group(function () {
-                Route::get('/', [alokasiDesaController::class, 'index']);
-                Route::get('/datatable-list', [alokasiDesaController::class, 'datatable_list']);
-                Route::post('/store', [alokasiDesaController::class, 'store']);
-                Route::post('/update/{params}', [alokasiDesaController::class, 'update']);
-                Route::get('/byParams/{params}', [alokasiDesaController::class, 'byParams']);
-            });
+            
         }); 
     });
 
@@ -139,6 +133,15 @@ Route::group(['middleware' => ['auth']], function () {
         // Route::get('/rkpd', [rkpdController::class, 'index'])->name('rkpd');
         // Route::get('/lainnya', [rkpdController::class, 'index_'])->name('lainnya'); 
     });
+
+    Route::prefix('daftar-alokasi-desa')->group(function () {
+        Route::get('/', [alokasiDesaController::class, 'index']);
+        Route::get('/datatable-list', [alokasiDesaController::class, 'datatable_list']);
+        Route::post('/store', [alokasiDesaController::class, 'store']);
+        Route::post('/update/{params}', [alokasiDesaController::class, 'update']);
+        Route::get('/byParams/{params}', [alokasiDesaController::class, 'byParams']);
+    });
+
 
     Route::prefix('dokumen-skpd')->group(function () {
         Route::get('/', [dokumenOpdController::class, 'index_verifikator']);

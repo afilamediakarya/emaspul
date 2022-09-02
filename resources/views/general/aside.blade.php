@@ -385,7 +385,7 @@
             </div>
 
             <div class="menu-item">
-                <a class="menu-link" href="{{ url('/akun-desa/daftar-alokasi-desa') }}">
+                <a class="menu-link" href="{{ url('/daftar-alokasi-desa') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
                         <svg width="17" height="23" viewBox="0 0 17 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -457,7 +457,7 @@
 
                     @if(Auth::user()->id_role == 1)
                     <div class="menu-item">
-                        <a class="menu-link" href="{{ url('/alokasi-skpd/daftar-alokasi-skpd') }}">
+                        <a class="menu-link" href="{{ url('/daftar-alokasi-desa') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
