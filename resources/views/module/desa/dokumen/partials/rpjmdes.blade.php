@@ -309,7 +309,7 @@
     $(document).on('click', '.btn-verifikasi', function (e) {
             e.preventDefault();
             let params = $(this).attr('data-id');
-          window.location.href = `/dokumen-desa/verifikasi?document=${params}&jenis=RPJMDes`;
+          window.location.href = `/verifikasi?document=${params}&jenis=RPJMDes`;
      })
 
      $(document).on('click','.button-detail', function (e) {

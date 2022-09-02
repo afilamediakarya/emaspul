@@ -73,6 +73,17 @@
         control.searchTable(this.value);
     })
 
+    $(document).on('change', '.true_check', function (e) {
+        e.preventDefault();
+        let index = $(this).attr('data-index');
+        $(`#tindak_lanjut_${index}`).val('');
+    })
+
+
+    // $(document).on('change','.true_check' function () {
+    //     alert('sfsdf');
+    // })
+
     $(function () {
         control.verifikasi_render_row(params);
        

@@ -125,7 +125,7 @@
     $(document).on('click', '.btn-verifikasi', function (e) {
             e.preventDefault();
             let params = $(this).attr('data-id');
-          window.location.href = `/dokumen-desa/verifikasi?document=${params}&jenis=RKPDes`;
+          window.location.href = `/verifikasi?document=${params}&jenis=RKPDes`;
      })
 
      $(document).on('click','.button-show', function (e) {

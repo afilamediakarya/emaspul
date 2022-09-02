@@ -34,6 +34,14 @@ class generalController extends Controller
         }
     }
 
+    public function verifikasi(){
+        $document = request('document');
+        $jenis = request('jenis');
+        $breadcumb = 'Dokumen '.$jenis;
+        $current_breadcumb = 'Verifikasi';
+        return view('module.admin.verifikasi',compact('breadcumb','current_breadcumb','document','jenis'));
+    }
+
     public function get_desa(){
         $data = DB::table('desa')->select('id','nama as value')->get();
         return $data;
@@ -250,7 +258,7 @@ class generalController extends Controller
     }
 
     public function master_verifikasi(Request $request){
-        // return $request;
+   
         $jenis = request('jenis');
         // return $jenis;
         $data = array();
@@ -264,13 +272,12 @@ class generalController extends Controller
         }
 
 
+
         if (in_array("0", $request->status) == true && in_array("1", $request->status) == true){
             $status_document = 3;
         }
         else if(in_array("1", $request->status) == true && in_array("0", $request->status) == false){
             $status_document = 4;
-        }else{
-            $status_document = 1;
         }	
         
 
@@ -496,7 +503,7 @@ class generalController extends Controller
         if ($type == 'type_a') {
             $status_document = 4;
         }else{
-            $status_document = 1;
+            $status_document = 2;
         }
 
         if ($jenis == 'rpjmd') {

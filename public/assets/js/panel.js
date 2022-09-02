@@ -434,7 +434,7 @@ class Control {
                         <div class="mb-10 mt-5">
                                 <div class="radio-inline">
                                         <div class="form-check form-check-custom form-check-solid">
-                                            <input class="form-check-input" value="1" type="radio" ${checked_true} name="status[${x}]" id="flexRadioDefault${x}">
+                                            <input class="form-check-input true_check" value="1" data-index="${x}" type="radio" ${checked_true} name="status[${x}]" id="flexRadioDefault${x}">
                                             <label class="form-check-label" for="flexRadioDefault${x}">
                                                 Sesuai
                                             </label>
@@ -449,7 +449,7 @@ class Control {
                                 </div>    
                         </td>
                         <td>
-                            <textarea class="form-control form-control-solid" name="tindak_lanjut[${x}]" rows="3">${tindak_lanjut}</textarea>
+                            <textarea class="form-control form-control-solid" id="tindak_lanjut_${x}" name="tindak_lanjut[${x}]" rows="3">${tindak_lanjut}</textarea>
                         </td>
                     </tr>`;
                 })

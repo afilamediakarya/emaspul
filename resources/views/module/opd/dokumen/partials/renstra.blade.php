@@ -132,7 +132,7 @@
     $(document).on('click', '.btn-verifikasi', function (e) {
             e.preventDefault();
             let params = $(this).attr('data-id');
-          window.location.href = `/dokumen-desa/verifikasi?document=${params}&jenis=Renstra`;
+          window.location.href = `/verifikasi?document=${params}&jenis=Renstra`;
      })
 
      $(document).on('click','.button-detail', function (e) {

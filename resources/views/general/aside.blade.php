@@ -58,7 +58,7 @@
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Data Desa/SDGs</span>
+                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;resources/views/module/desa">Data Desa/SDGs</span>
                         </a>
                     </div>
                     <!-- <div class="menu-item">

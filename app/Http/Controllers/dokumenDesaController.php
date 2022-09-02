@@ -49,14 +49,6 @@ class dokumenDesaController extends Controller
         }
     }
 
-    public function verifikasi(){
-        $document = request('document');
-        $jenis = request('jenis');
-        $breadcumb = 'Dokumen Desa';
-        $current_breadcumb = 'Verifikasi';
-        return view('module.desa.dokumen.partials.verifikasi',compact('breadcumb','current_breadcumb','document','jenis'));
-    }
-
     function getHari(){
         $hari = date ("D");
         switch($hari){

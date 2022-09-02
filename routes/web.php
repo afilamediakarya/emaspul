@@ -128,11 +128,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('dokumen-desa')->group(function () {
         Route::get('/', [dokumenDesaController::class, 'index_verifikator']);
-        Route::get('/verifikasi', [dokumenDesaController::class, 'verifikasi']);
         Route::get('/konsederan', [dokumenDesaController::class, 'konsederan']);
         // Route::get('/rkpd', [rkpdController::class, 'index'])->name('rkpd');
         // Route::get('/lainnya', [rkpdController::class, 'index_'])->name('lainnya'); 
     });
+
+    Route::get('/verifikasi', [generalController::class, 'verifikasi']);
 
     Route::prefix('daftar-alokasi-desa')->group(function () {
         Route::get('/', [alokasiDesaController::class, 'index']);
