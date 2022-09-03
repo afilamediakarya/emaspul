@@ -38,27 +38,31 @@ Route::get('/', [generalController::class, 'index'])->name('index');
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['check_auth:1']], function () {
         Route::get('/dashboard-admin', [DashboardController::class, 'dashboard_admin'])->name('dashboard.admin');
-        Route::prefix('perangkat-desa')->group(function () {
-            Route::get('/', [perangkatDesaController::class, 'index'])->name('admin.perangkat_desa');
-            Route::post('/store', [perangkatDesaController::class, 'store'])->name('admin.perangkat_desa.store');
-            Route::get('/byParams/{params}', [perangkatDesaController::class, 'byParams'])->name('admin.perangkat_desa.byId');
-            Route::post('/update/{params}', [perangkatDesaController::class, 'update'])->name('admin.perangkat_desa.update');
-            Route::post('/delete/{params}', [perangkatDesaController::class, 'delete'])->name('admin.perangkat_desa.delete');
-            Route::get('/datatable-list', [perangkatDesaController::class, 'datatable_list'])->name('admin.perangkat_desa.list');
+        
+        Route::prefix('master')->group(function(){
+            Route::prefix('perangkat-desa')->group(function () {
+                Route::get('/', [perangkatDesaController::class, 'index'])->name('admin.perangkat_desa');
+                Route::post('/store', [perangkatDesaController::class, 'store'])->name('admin.perangkat_desa.store');
+                Route::get('/byParams/{params}', [perangkatDesaController::class, 'byParams'])->name('admin.perangkat_desa.byId');
+                Route::post('/update/{params}', [perangkatDesaController::class, 'update'])->name('admin.perangkat_desa.update');
+                Route::post('/delete/{params}', [perangkatDesaController::class, 'delete'])->name('admin.perangkat_desa.delete');
+                Route::get('/datatable-list', [perangkatDesaController::class, 'datatable_list'])->name('admin.perangkat_desa.list');
+            });
+            Route::prefix('bidang-verifikator')->group(function () {
+                Route::get('/', [bidangVerifikatorController::class, 'index'])->name('admin.bidang_verifikator');
+                Route::post('/store', [bidangVerifikatorController::class, 'store'])->name('admin.bidang_verifikator.store');
+                Route::get('/datatable-list', [bidangVerifikatorController::class, 'datatable_list'])->name('admin.bidang_verifikator.list');
+                Route::get('/byParams/{params}', [bidangVerifikatorController::class, 'byParams'])->name('admin.bidang_verifikator.byId');
+            });
+            Route::prefix('akun')->group(function () {
+                Route::get('/', [akunController::class, 'index'])->name('admin.akun');
+                Route::post('/store', [akunController::class, 'store'])->name('admin.akun.store');
+                Route::get('/datatable-list', [akunController::class, 'datatable_list'])->name('admin.akun.list');
+                Route::get('/byParams/{params}', [akunController::class, 'byParams'])->name('admin.akun.byId');
+                Route::post('/update/{params}', [akunController::class, 'update'])->name('admin.akun.update');
+            });
         });
-        Route::prefix('bidang-verifikator')->group(function () {
-            Route::get('/', [bidangVerifikatorController::class, 'index'])->name('admin.bidang_verifikator');
-            Route::post('/store', [bidangVerifikatorController::class, 'store'])->name('admin.bidang_verifikator.store');
-            Route::get('/datatable-list', [bidangVerifikatorController::class, 'datatable_list'])->name('admin.bidang_verifikator.list');
-            Route::get('/byParams/{params}', [bidangVerifikatorController::class, 'byParams'])->name('admin.bidang_verifikator.byId');
-        });
-        Route::prefix('akun')->group(function () {
-            Route::get('/', [akunController::class, 'index'])->name('admin.akun');
-            Route::post('/store', [akunController::class, 'store'])->name('admin.akun.store');
-            Route::get('/datatable-list', [akunController::class, 'datatable_list'])->name('admin.akun.list');
-            Route::get('/byParams/{params}', [akunController::class, 'byParams'])->name('admin.akun.byId');
-            Route::post('/update/{params}', [akunController::class, 'update'])->name('admin.akun.update');
-        });
+
         Route::prefix('jadwal')->group(function () {
             Route::get('/', [pengaturanController::class, 'index']);
             Route::post('/store', [pengaturanController::class, 'store']);

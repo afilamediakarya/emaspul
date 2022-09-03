@@ -31,8 +31,6 @@ class alokasiDesaController extends Controller
             $data = DB::select("SELECT alokasi_desa.id, alokasi_desa.nama_paket, alokasi_desa.volume,alokasi_desa.satuan, alokasi_desa.pagu, alokasi_desa.sumber_dana, alokasi_desa.lokasi,alokasi_desa.sumber_dana, desa.nama FROM alokasi_desa INNER JOIN perangkat_desa ON alokasi_desa.id_perangkat_desa = perangkat_desa.id INNER JOIN desa ON perangkat_desa.id_desa = desa.id WHERE alokasi_desa.tahun=".$tahun);
         }
 
-        
-
         if ($jenis == 'datatable') {
             return response()->json([
                 'type' => 'success',

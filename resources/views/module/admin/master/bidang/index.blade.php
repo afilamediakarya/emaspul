@@ -205,19 +205,19 @@
         var data = $($(this)).serialize();
         let type = $(this).attr('data-type');
         if (type == 'add') {
-            control.submitForm('/bidang-verifikator/store','Tambah','Bidang Verifikator');
+            control.submitForm('/master/bidang-verifikator/store','Tambah','Bidang Verifikator');
        
 
             console.log(data);
         }else{
             let id = $("input[name='id']").val();
-            // control.submitForm('/perangkat-desa/update/'+id,'Update','Perangkat Desa');
+            // control.submitForm('/master/perangkat-desa/update/'+id,'Update','Perangkat Desa');
         }
     });
 
     $(document).on('click','.button-update', function (e) {
         e.preventDefault();
-        let url = '/bidang-verifikator/byParams/'+$(this).attr('data-id');
+        let url = '/master/bidang-verifikator/byParams/'+$(this).attr('data-id');
         control.overlay_form('Update','Perangkat Desa', url);
     })
 
@@ -269,7 +269,7 @@
                 },
             }
         ];
-        control.initDatatable('/bidang-verifikator/datatable-list',columns,columnDefs);
+        control.initDatatable('/master/bidang-verifikator/datatable-list',columns,columnDefs);
 
         $('.repeater').repeater({
             initEmpty: true,

@@ -1,11 +1,13 @@
-
+@php
+    $path = URL::full();
+@endphp
 <div class="aside-menu aside-menu-custom flex-column-fluid">
     <!--begin::Aside Menu-->
     <div class="hover-scroll-overlay-y my-5 my-lg-5" id="kt_aside_menu_wrapper" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer" data-kt-scroll-wrappers="#kt_aside_menu" data-kt-scroll-offset="0">
         <!--begin::Menu-->
         <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true" style="margin-top:2rem">
             <div class="menu-item">
-                <a class="menu-link active_custom" href="{{ route('dashboard.admin') }}">
+                <a class="menu-link {{ ( str_contains($path, 'dashboard') !== false ? 'active_custom' : '') }}" href="{{ route('dashboard.admin') }}">
                     <span class="menu-icon">
                
                         <span class="svg-icon svg-icon-2">
@@ -22,8 +24,8 @@
 
             <!-- KHUSUS ADMIN DAN VERIFIKATOR -->
             @if(Auth::user()->id_role == 1 || Auth::user()->id_role == 4)
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ( str_contains($path, 'dokumen-desa') !== false ? 'show' : '') }}">
+                <span class="menu-link" {{ ( str_contains($path, 'dokumen-desa') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -33,19 +35,19 @@
                         </span>
                         <!--end::Svg Icon-->
                     </span>
-                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Desa</span>
+                    <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Desa  </span>
                     <span class="menu-arrow"></span>
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'RPJMDes') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{url('dokumen-desa?type=RPJMDes')}}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
-                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen RPJMDES</span>
+                            <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen RPJMDES </span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'RKPDes') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ url('dokumen-desa?type=RKPDes') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -53,7 +55,7 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen RKPDES</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item"  {{ ( str_contains($path, 'SDGs') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ url('dokumen-desa?type=SDGs') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -72,8 +74,8 @@
                 </div>
             </div>	
 
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ( str_contains($path, 'dokumen-skpd') !== false ? 'show' : '') }}">
+                <span class="menu-link"  {{ ( str_contains($path, 'dokumen-skpd') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -87,7 +89,7 @@
                     <span class="menu-arrow"></span>
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <div class="menu-item">
+                    <div class="menu-item"  {{ ( str_contains($path, 'Renstra') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{url('dokumen-skpd?type=Renstra')}}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -95,7 +97,7 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Renstra</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'Renja') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ url('dokumen-skpd?type=Renja') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -103,7 +105,7 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Renja</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'Sektoral') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ url('dokumen-skpd?type=Sektoral') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -111,7 +113,7 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Data Sektoral</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item"  {{ ( str_contains($path, 'Skpd') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ url('dokumen-skpd?type=Skpd') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -122,8 +124,8 @@
                 </div>
             </div>	
 
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ( str_contains($path, 'dokumen-daerah') !== false ? 'show' : '') }}">
+                <span class="menu-link" {{ ( str_contains($path, 'dokumen-daerah') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -141,7 +143,7 @@
                     <span class="menu-arrow"></span>
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'rpjmd') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ route('rpjmd') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -149,7 +151,7 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">RPJMD</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'rkpd') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ route('rkpd') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -157,7 +159,7 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">RKPD</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'lainnya') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ route('lainnya') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -169,7 +171,7 @@
             </div>	
 
             <div class="menu-item">
-                <a class="menu-link" href="{{ url('/kinerja-makro') }}">
+                <a class="menu-link {{ ( str_contains($path, 'kinerja-makro') !== false ? 'active_custom' : '') }}" href="{{ url('/kinerja-makro') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
                         <svg width="17" height="22" viewBox="0 0 17 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -187,8 +189,8 @@
             <!-- KHUSUS ADMIN -->
             @if(Auth::user()->id_role == 1)
           
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ( str_contains($path, 'master') !== false ? 'show' : '') }}">
+                <span class="menu-link" {{ ( str_contains($path, 'master') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -203,7 +205,7 @@
                     <span class="menu-arrow"></span>
                 </span>
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
-                    <div class="menu-item menu-items">
+                    <div class="menu-item menu-items" {{ ( str_contains($path, 'perangkat-desa') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ route('admin.perangkat_desa') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -211,7 +213,7 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Perangkat Desa</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'bidang-verifikator') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ route('admin.bidang_verifikator') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -219,7 +221,7 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Bidang verifikator</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'akun') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ route('admin.akun') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -230,7 +232,7 @@
                 </div>
             </div>
 
-            <div class="menu-item">
+            <div class="menu-item {{ ( str_contains($path, 'jadwal') !== false ? 'active_custom' : '') }}" href="{{ url('/kinerja-makro') }}">
                 <a class="menu-link" href="{{ url('/jadwal') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
@@ -250,7 +252,7 @@
 
             <!-- KHUSUS OPD -->
             @if(Auth::user()->id_role == 2)
-            <div class="menu-item">
+            <div class="menu-item {{ ( str_contains($path, 'Renstra') !== false ? 'active_custom' : '') }}" href="{{ url('/kinerja-makro') }}">
                 <a class="menu-link" href="{{ url('/akun-opd/dokumen?type=Renstra') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
@@ -263,7 +265,7 @@
                     <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen Renstra</span>
                 </a>
             </div>
-            <div class="menu-item">
+            <div class="menu-item {{ ( str_contains($path, 'Renja') !== false ? 'active_custom' : '') }}" href="{{ url('/kinerja-makro') }}">
                 <a class="menu-link" href="{{ url('/akun-opd/dokumen?type=Renja') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
@@ -278,7 +280,7 @@
                 </a>
             </div>
 
-            <div class="menu-item">
+            <div class="menu-item {{ ( str_contains($path, 'Data-sektoral') !== false ? 'active_custom' : '') }}" href="{{ url('/kinerja-makro') }}">
                 <a class="menu-link" href="{{ url('/akun-opd/dokumen?type=Data-sektoral') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
@@ -291,7 +293,7 @@
                 </a>
             </div>
 
-            <div class="menu-item">
+            <div class="menu-item {{ ( str_contains($path, 'Data-lainnya') !== false ? 'active_custom' : '') }}" href="{{ url('/kinerja-makro') }}">
                 <a class="menu-link" href="{{ url('/akun-opd/dokumen?type=Data-lainnya') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
@@ -304,7 +306,7 @@
                 </a>
             </div>
 
-            <div class="menu-item">
+            <div class="menu-item {{ ( str_contains($path, 'indikator-kinerja-kunci') !== false ? 'active_custom' : '') }}" href="{{ url('/kinerja-makro') }}">
                 <a class="menu-link" href="{{ url('/akun-opd/dokumen/indikator-kinerja-kunci') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
@@ -322,7 +324,7 @@
 
             <!-- KHUSUS DESA -->
             @if(Auth::user()->id_role == 3)
-            <div class="menu-item">
+            <div class="menu-item {{ ( str_contains($path, 'RPJMDes') !== false ? 'active_custom' : '') }}" href="{{ url('/kinerja-makro') }}">
                 <a class="menu-link" href="{{ url('/akun-desa/dokumen?type=RPJMDes') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
@@ -335,7 +337,7 @@
                     <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen RPJMDes</span>
                 </a>
             </div>
-            <div class="menu-item">
+            <div class="menu-item {{ ( str_contains($path, 'RKPDes') !== false ? 'active_custom' : '') }}" href="{{ url('/kinerja-makro') }}">
                 <a class="menu-link" href="{{ url('/akun-desa/dokumen?type=RKPDes') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
@@ -350,7 +352,7 @@
                 </a>
             </div>
 
-            <div class="menu-item">
+            <div class="menu-item {{ ( str_contains($path, 'SDGS') !== false ? 'active_custom' : '') }}" href="{{ url('/kinerja-makro') }}">
                 <a class="menu-link" href="{{ url('/akun-desa/dokumen?type=SDGS') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
@@ -364,7 +366,7 @@
                 </a>
             </div>
 
-            <div class="menu-item">
+            <div class="menu-item {{ ( str_contains($path, 'daftar-alokasi-desa') !== false ? 'active_custom' : '') }}" href="{{ url('/kinerja-makro') }}">
                 <a class="menu-link" href="{{ url('/daftar-alokasi-desa') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
@@ -450,7 +452,7 @@
             </div>	
             @endif
 
-            <div class="menu-item">
+            <div class="menu-item {{ ( str_contains($path, 'pengaturan-akun') !== false ? 'active_custom' : '') }}" href="{{ url('/kinerja-makro') }}">
                 <a class="menu-link" href="{{ url('/pengaturan-akun') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">

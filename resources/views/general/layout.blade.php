@@ -20,7 +20,7 @@ License: For each use you must have a valid license purchased only from above li
 		<link rel="canonical" href="Https://preview.keenthemes.com/metronic8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="csrf-token" content="{{ csrf_token() }}">
-		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+		<link rel="shortcut icon" href="assets/media/logo/favicon.ico" />
 		<!--begin::Fonts-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">

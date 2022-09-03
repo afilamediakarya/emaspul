@@ -204,10 +204,10 @@
         e.preventDefault();
         let type = $(this).attr('data-type');
         if (type == 'add') {
-            control.submitForm('/akun/store','Tambah','Akun');
+            control.submitForm('/master/akun/store','Tambah','Akun');
         }else{
             let id = $("input[name='id']").val();
-            control.submitForm('/akun/update/'+id,'Update','Akun');
+            control.submitForm('/master/akun/update/'+id,'Update','Akun');
         }
     });
 
@@ -219,7 +219,7 @@
     $(document).on('click','.button-update', function (e) {
         e.preventDefault();
         $('#password_content').hide();
-        let url = '/akun/byParams/'+$(this).attr('data-id');
+        let url = '/master/akun/byParams/'+$(this).attr('data-id');
         control.overlay_form('Update','Akun', url);
     })
 
@@ -275,7 +275,7 @@
                 },
             }
         ];
-        control.initDatatable('/akun/datatable-list',columns,columnDefs);
+        control.initDatatable('/master/akun/datatable-list',columns,columnDefs);
 
        
 
