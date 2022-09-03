@@ -42,6 +42,7 @@
                             <th>Nama Paket</th>
                             <th>Volume</th>
                             <th>Pagu</th>
+                            <th>Sumber Dana</th>
                             <th>Lokasi</th>
                             <th>Aksi</th>
                         </tr>
@@ -125,19 +126,24 @@
                     </div>
                 </div>
                 
-                <!-- <div class="mb-10">
-                    <label class="form-label">Pagu</label>
-                    <select class="form-select" id="select_pagu"  data-control="select2" name="pagu" data-placeholder="Pilih Pagu">
-
-                    </select>
-                    <small class="text-danger pagu_error"></small>
-                </div> -->
-
-                <div class="mb-10">
-                    <label class="form-label">Pagu</label>
-                    <input type="text" class="form-control form-control-solid number-separator" value="0" name="pagu" placeholder="Lokasi">
-                    <small class="text-danger pagu_error"></small>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-10">
+                            <label class="form-label">Pagu</label>
+                            <input type="text" class="form-control form-control-solid number-separator" value="0" name="pagu" placeholder="Lokasi">
+                            <small class="text-danger pagu_error"></small>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mb-10">
+                            <label class="form-label">Sumber Dana</label>
+                            <input type="text" class="form-control form-control-solid" name="sumber_dana" placeholder="Sumber Dana">
+                            <small class="text-danger sumber_dana_error"></small>
+                        </div>
+                    </div>
                 </div>
+
+                
            
                 <div class="mb-10">
                     <label class="form-label">Lokasi</label>
@@ -217,6 +223,8 @@
                 data:null
             },{
                 data:'pagu'
+            },{
+                data:'sumber_dana'
             },{
                 data : 'lokasi'
             },{

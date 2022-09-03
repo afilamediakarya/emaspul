@@ -128,7 +128,8 @@ class alokasiDesaController extends Controller
             'volume' => 'required',
             'satuan' => 'required',
             'pagu' => 'required',
-            'lokasi' => 'required'
+            'lokasi' => 'required',
+            'sumber_dana' => 'required'
         ]);
 
         $data = new alokasi_desa();
@@ -137,6 +138,7 @@ class alokasiDesaController extends Controller
         $data->satuan = $request->satuan;
         $data->pagu = str_replace(',', '', $request->pagu);
         $data->lokasi = $request->lokasi;
+        $data->sumber_dana = $request->sumber_dana;
         $data->id_perangkat_desa = Auth::user()->id_unit_kerja;
         $data->tahun = session('tahun_penganggaran');
         $data->user_insert = Auth::user()->id;
@@ -181,7 +183,8 @@ class alokasiDesaController extends Controller
             'volume' => 'required',
             'satuan' => 'required',
             'pagu' => 'required',
-            'lokasi' => 'required'
+            'lokasi' => 'required',
+            'sumber_dana' => 'required'
         ]);
 
         $data = alokasi_desa::where('id',$params)->first();
@@ -190,6 +193,7 @@ class alokasiDesaController extends Controller
         $data->satuan = $request->satuan;
         $data->pagu = str_replace(',', '', $request->pagu);
         $data->lokasi = $request->lokasi;
+        $data->sumber_dana = $request->sumber_dana;
         $data->tahun = session('tahun_penganggaran');
         $data->user_update = Auth::user()->id;
         $data->save();
