@@ -504,6 +504,7 @@ class dokumenDesaController extends Controller
         
         $perangkat_desa = DB::table('user')->select('perangkat_desa.id_desa')->join('perangkat_desa','user.id_unit_kerja','perangkat_desa.id')->where('user.id',Auth::user()->id)->first();
 
+       
 
         $where_unit_kerja="";
         $where_paket = "";
@@ -512,8 +513,6 @@ class dokumenDesaController extends Controller
         }else if (Auth::user()->id_role == 3) {
             $where_paket = "AND desa.id=".$perangkat_desa->id_desa;
         }
-
-     
 
         $result = [];
        $data = DB::table('unit_kerja')->select('id','nama_unit_kerja')->whereRaw("id<>'' $where_unit_kerja")->get();
@@ -534,12 +533,25 @@ class dokumenDesaController extends Controller
                 ->whereRaw("paket_dak.id_dpa='$dpa->id' AND sumber_dana_dpa.jenis_belanja='Belanja Modal'")
                 ->get();
                 foreach($dpa->Paket as $paket){
+
+                    if($paket->jenis_paket=='dau'){
+                        $paket->Lokasi=DB::table('paket_dau_lokasi')
+                        ->join('desa','paket_dau_lokasi.id_desa','=','desa.id')
+                        ->join('kecamatan','desa.id_kecamatan','=','kecamatan.id')
+                        ->select('desa.nama as nama_desa','kecamatan.nama as nama_kecamatan')
+                        ->whereRaw("id_paket_dau='$paket->id' $where_paket")
+                        ->get();
+                    }else{
                         $paket->Lokasi=DB::table('paket_dak_lokasi')
                         ->join('desa','paket_dak_lokasi.id_desa','=','desa.id')
                         ->join('kecamatan','desa.id_kecamatan','=','kecamatan.id')
                         ->select('desa.nama as nama_desa','kecamatan.nama as nama_kecamatan')
-                        ->whereRaw("id_paket_dak='$paket->id' '$where_paket'")
+                        ->whereRaw("id_paket_dak='$paket->id' $where_paket")
                         ->get();
+                    }
+
+                    
+
                     $paket->Desa='';
                     $paket->Kecamatan='';
                     foreach($paket->Lokasi as $lokasi){
