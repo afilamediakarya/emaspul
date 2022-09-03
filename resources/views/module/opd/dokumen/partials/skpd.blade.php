@@ -93,7 +93,8 @@
                         disabled = 'disabled'
                     }
                     return `
-                        <a href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm"> <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_310_12505)"><path opacity="0.3" d="M2.42857 1H5.86821C6.04555 1 6.21715 1.06284 6.35256 1.17737L8.73435 3.19197C8.90283 3.33447 9 3.54394 9 3.7646V10.0417C9 10.9369 8.98978 11 8.07143 11H2.42857C1.51022 11 1.5 10.9369 1.5 10.0417V1.95833C1.5 1.06306 1.51022 1 2.42857 1ZM4 6.5C3.72386 6.5 3.5 6.72386 3.5 7C3.5 7.27614 3.72386 7.5 4 7.5H7.5C7.77614 7.5 8 7.27614 8 7C8 6.72386 7.77614 6.5 7.5 6.5H4ZM4 8.5C3.72386 8.5 3.5 8.72386 3.5 9C3.5 9.27614 3.72386 9.5 4 9.5H5.5C5.77614 9.5 6 9.27614 6 9C6 8.72386 5.77614 8.5 5.5 8.5H4Z" fill="#F1F3F6"/><path d="M3.42857 2H7.36821C7.54555 2 7.71715 2.06284 7.85256 2.17737L10.2343 4.19197C10.4028 4.33447 10.5 4.54394 10.5 4.7646V11.0417C10.5 11.9369 10.4898 12 9.57143 12H3.42857C2.51022 12 2.5 11.9369 2.5 11.0417V2.95833C2.5 2.06306 2.51022 2 3.42857 2ZM4 6.5C3.72386 6.5 3.5 6.72386 3.5 7C3.5 7.27614 3.72386 7.5 4 7.5H7.5C7.77614 7.5 8 7.27614 8 7C8 6.72386 7.77614 6.5 7.5 6.5H4ZM4 8.5C3.72386 8.5 3.5 8.72386 3.5 9C3.5 9.27614 3.72386 9.5 4 9.5H5.5C5.77614 9.5 6 9.27614 6 9C6 8.72386 5.77614 8.5 5.5 8.5H4Z" fill="#F1F3F6"/></g><defs><clipPath id="clip0_310_12505"><rect width="12" height="12" fill="white" transform="translate(0 0.5)"/></clipPath></defs></svg>Tampilkan</a>
+                        <a href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm">
+                        <i class="fa fa-eye" aria-hidden="true" style="color:white"></i> Detail</a>
                         `;
                 },
             }
