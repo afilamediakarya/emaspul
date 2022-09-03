@@ -533,23 +533,12 @@ class dokumenDesaController extends Controller
                 ->whereRaw("paket_dak.id_dpa='$dpa->id' AND sumber_dana_dpa.jenis_belanja='Belanja Modal'")
                 ->get();
                 foreach($dpa->Paket as $paket){
-
-                    if($paket->jenis_paket=='dau'){
-                        $paket->Lokasi=DB::table('paket_dau_lokasi')
-                        ->join('desa','paket_dau_lokasi.id_desa','=','desa.id')
-                        ->join('kecamatan','desa.id_kecamatan','=','kecamatan.id')
-                        ->select('desa.nama as nama_desa','kecamatan.nama as nama_kecamatan')
-                        ->whereRaw("id_paket_dau='$paket->id' $where_paket")
-                        ->get();
-                    }else{
-                        $paket->Lokasi=DB::table('paket_dak_lokasi')
-                        ->join('desa','paket_dak_lokasi.id_desa','=','desa.id')
-                        ->join('kecamatan','desa.id_kecamatan','=','kecamatan.id')
-                        ->select('desa.nama as nama_desa','kecamatan.nama as nama_kecamatan')
-                        ->whereRaw("id_paket_dak='$paket->id' $where_paket")
-                        ->get();
-                    }
-
+                    $paket->Lokasi=DB::table('paket_dak_lokasi')
+                    ->join('desa','paket_dak_lokasi.id_desa','=','desa.id')
+                    ->join('kecamatan','desa.id_kecamatan','=','kecamatan.id')
+                    ->select('desa.nama as nama_desa','kecamatan.nama as nama_kecamatan')
+                    ->whereRaw("id_paket_dak='$paket->id' $where_paket")
+                    ->get();
                     
 
                     $paket->Desa='';
