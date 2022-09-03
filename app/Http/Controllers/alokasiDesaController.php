@@ -20,11 +20,11 @@ class alokasiDesaController extends Controller
     public function datatable_list(){
         $jenis = request('jenis');
         $data = array();
-
+        $tahun= session('tahun_penganggaran');
         if (Auth::user()->id_role == 3) {
-            $data = alokasi_desa::where('tahun',session('tahun_penganggaran'))->where('id_perangkat_desa',Auth::user()->id_unit_kerja)->latest()->get();
+            $data = alokasi_desa::where('tahun',$tahun)->where('id_perangkat_desa',Auth::user()->id_unit_kerja)->latest()->get();
         }else{
-            $data = DB::select("SELECT alokasi_desa.id, alokasi_desa.nama_paket, alokasi_desa.volume,alokasi_desa.satuan, alokasi_desa.pagu, alokasi_desa.sumber_dana, alokasi_desa.lokasi,alokasi_desa.sumber_dana, desa.nama FROM alokasi_desa INNER JOIN perangkat_desa ON alokasi_desa.id_perangkat_desa = perangkat_desa.id INNER JOIN desa ON perangkat_desa.id_desa = desa.id");
+            $data = DB::select("SELECT alokasi_desa.id, alokasi_desa.nama_paket, alokasi_desa.volume,alokasi_desa.satuan, alokasi_desa.pagu, alokasi_desa.sumber_dana, alokasi_desa.lokasi,alokasi_desa.sumber_dana, desa.nama FROM alokasi_desa INNER JOIN perangkat_desa ON alokasi_desa.id_perangkat_desa = perangkat_desa.id INNER JOIN desa ON perangkat_desa.id_desa = desa.id WHERE alokasi_desa.tahun=".$tahun);
         }
 
         
@@ -67,7 +67,7 @@ class alokasiDesaController extends Controller
         $spreadsheet->getActiveSheet()->getPageMargins()->setBottom(0.5);
         $spreadsheet->getActiveSheet()->getStyle('A1:A4')->getAlignment()->setWrapText(true);
 
-        $sheet->setCellValue('A1', 'DAFTAR ALOKASI DANA DESA (NAMA DESA)')->mergeCells('A1:F1');
+        $sheet->setCellValue('A1', 'DAFTAR ALOKASI DANA DESA ')->mergeCells('A1:F1');
         $sheet->setCellValue('A2', 'TAHUN ANGGARAN (TAHUN)')->mergeCells('A1:F1');
         $sheet->setCellValue('A3', ' ')->mergeCells('A2:F2');
        
