@@ -35,8 +35,8 @@
                         <tr class="fw-bolder fs-6 text-gray-800">
                             <th>No</th>
                             <th>Nama Dokumen</th>
-                            <th>Nomor Perbub</th>
-                            <th>Tanggal Perbub</th>
+                            <th>Nomor Peraturan</th>
+                            <th>Tanggal Peraturan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -124,13 +124,13 @@
                 </div>
 
                 <div class="mb-10">
-                    <label class="form-label">Nomor Perbub</label>
+                    <label class="form-label">Nomor Peraturan</label>
                     <input type="text" class="form-control form-control-solid" id="nomor_perbub" name="nomor_perbub" placeholder="Masukkan Nomor Perbub">
                     <small class="text-danger nomor_perbub_error"></small>
                 </div>
 
                 <div class="mb-10">
-                    <label class="form-label">Tanggal Perbub</label>
+                    <label class="form-label">Tanggal Peraturan</label>
                     <input type="date" class="form-control form-control-solid" id="tanggal_perbub" name="tanggal_perbub">
                     <small class="text-danger tanggal_perbub_error"></small>
                 </div>
