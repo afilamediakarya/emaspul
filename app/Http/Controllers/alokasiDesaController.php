@@ -24,7 +24,7 @@ class alokasiDesaController extends Controller
         if (Auth::user()->id_role == 3) {
             $data = alokasi_desa::where('tahun',session('tahun_penganggaran'))->where('id_perangkat_desa',Auth::user()->id_unit_kerja)->latest()->get();
         }else{
-            $data = DB::select("SELECT alokasi_desa.id, alokasi_desa.nama_paket, alokasi_desa.volume,alokasi_desa.satuan, alokasi_desa.pagu, alokasi_desa.lokasi, desa.nama FROM alokasi_desa INNER JOIN perangkat_desa ON alokasi_desa.id_perangkat_desa = perangkat_desa.id INNER JOIN desa ON perangkat_desa.id_desa = desa.id");
+            $data = DB::select("SELECT alokasi_desa.id, alokasi_desa.nama_paket, alokasi_desa.volume,alokasi_desa.satuan, alokasi_desa.pagu, alokasi_desa.lokasi,alokasi_desa.sumber_dana, desa.nama FROM alokasi_desa INNER JOIN perangkat_desa ON alokasi_desa.id_perangkat_desa = perangkat_desa.id INNER JOIN desa ON perangkat_desa.id_desa = desa.id");
         }
 
         
