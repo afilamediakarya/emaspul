@@ -16,16 +16,6 @@ class ChekAuth
      */
     public function handle(Request $request, Closure $next, $roles)
     {
-        // if (!Auth::check()) {
-        //     return redirect('login');
-        // }
-        // $user = Auth::user();
-
-        // if($user->id_role == $roles)
-        // return $next($request);
-
-
-        // return redirect('login')->with('error',"kamu gak punya akses");
 
         if (Auth::user() &&  Auth::user()->id_role == $roles) {
             return $next($request);

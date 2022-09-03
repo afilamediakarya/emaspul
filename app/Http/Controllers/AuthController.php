@@ -16,9 +16,9 @@ class AuthController extends Controller
             } elseif ($user->id_role == 2) {
                 return redirect()->intended('dashboard-admin-opd');
             }elseif ($user->id_role == 3) {
-                return redirect()->intended('dashboard.admin_desa');
+                return redirect()->intended('dashboard-admin-desa');
             }elseif ($user->id_role == 4) {
-                return redirect()->intended('dashboard.admin.verifikator');
+                return redirect()->intended('dashboard-admin-verifikator');
             }
         }else{
             return view('auth.login');
