@@ -383,8 +383,8 @@
             @endif
 
             @if(Auth::user()->id_role == 2 || Auth::user()->id_role == 3 || Auth::user()->id_role == 1)
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                <span class="menu-link">
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ ( str_contains($path, 'dokumen-daerah') !== false || str_contains($path, 'alokasi-skpd') !== false || str_contains($path, 'daftar-alokasi-desa') !== false ? 'show' : '') }}">
+                <span class="menu-link" {{ ( str_contains($path, 'dokumen-daerah') !== false || str_contains($path, 'alokasi-skpd') !== false || str_contains($path, 'daftar-alokasi-desa') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -402,7 +402,7 @@
                 <div class="menu-sub menu-sub-accordion menu-active-bg">
                    
                     @if(Auth::user()->id_role == 2 || Auth::user()->id_role == 3)
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'rpjmd') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{route('rpjmd')}}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -410,7 +410,7 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen RPJMD</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'rkpd') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ route('rkpd') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -418,7 +418,7 @@
                             <span class="menu-title" style="color:#ffffff;font-family: 'Nunito Sans', sans-serif;font-weight:bold;">Dokumen RKPD</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'lainnya') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ route('lainnya') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -428,7 +428,7 @@
                     </div>
                     @endif
 
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'daftar-alokasi-skpd') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ url('/alokasi-skpd/daftar-alokasi-skpd') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
@@ -438,7 +438,7 @@
                     </div>
 
                     @if(Auth::user()->id_role == 1)
-                    <div class="menu-item">
+                    <div class="menu-item" {{ ( str_contains($path, 'daftar-alokasi-desa') !== false ? 'style=background:#282EAD' : 'style=background:none') }}>
                         <a class="menu-link" href="{{ url('/daftar-alokasi-desa') }}">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
