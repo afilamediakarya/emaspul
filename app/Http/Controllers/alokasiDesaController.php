@@ -24,7 +24,7 @@ class alokasiDesaController extends Controller
         if (Auth::user()->id_role == 3) {
             $data = alokasi_desa::where('tahun',session('tahun_penganggaran'))->where('id_perangkat_desa',Auth::user()->id_unit_kerja)->latest()->get();
         }else{
-            $data = DB::select("SELECT alokasi_desa.id, alokasi_desa.nama_paket, alokasi_desa.volume,alokasi_desa.satuan, alokasi_desa.pagu, alokasi_desa.lokasi,alokasi_desa.sumber_dana, desa.nama FROM alokasi_desa INNER JOIN perangkat_desa ON alokasi_desa.id_perangkat_desa = perangkat_desa.id INNER JOIN desa ON perangkat_desa.id_desa = desa.id");
+            $data = DB::select("SELECT alokasi_desa.id, alokasi_desa.nama_paket, alokasi_desa.volume,alokasi_desa.satuan, alokasi_desa.pagu, alokasi_desa.sumber_dana, alokasi_desa.lokasi,alokasi_desa.sumber_dana, desa.nama FROM alokasi_desa INNER JOIN perangkat_desa ON alokasi_desa.id_perangkat_desa = perangkat_desa.id INNER JOIN desa ON perangkat_desa.id_desa = desa.id");
         }
 
         
@@ -67,17 +67,19 @@ class alokasiDesaController extends Controller
         $spreadsheet->getActiveSheet()->getPageMargins()->setBottom(0.5);
         $spreadsheet->getActiveSheet()->getStyle('A1:A4')->getAlignment()->setWrapText(true);
 
-        $sheet->setCellValue('A1', 'ALOKASI DANA DESA')->mergeCells('A1:E1');
-        $sheet->setCellValue('A2', ' ')->mergeCells('A2:E2');
+        $sheet->setCellValue('A1', 'DAFTAR ALOKASI DANA DESA (NAMA DESA)')->mergeCells('A1:F1');
+        $sheet->setCellValue('A2', 'TAHUN ANGGARAN (TAHUN)')->mergeCells('A1:F1');
+        $sheet->setCellValue('A3', ' ')->mergeCells('A2:F2');
        
         
         $sheet->setCellValue('A4','NO')->getColumnDimension('A')->setWidth(5);
         $sheet->setCellValue('B4','NAMA KEGIATAN')->getColumnDimension('B')->setWidth(40);
         $sheet->setCellValue('C4','VOLUME')->getColumnDimension('C')->setWidth(15);
         $sheet->setCellValue('D4','PAGU')->getColumnDimension('D')->setWidth(20);
-        $sheet->setCellValue('E4','LOKASI')->getColumnDimension('E')->setWidth(20);
+        $sheet->setCellValue('E4','SUMBER DANA')->getColumnDimension('D')->setWidth(20);
+        $sheet->setCellValue('F4','LOKASI')->getColumnDimension('E')->setWidth(20);
         
-        $sheet->getStyle('A4:E4')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('C6E0B4');
+        $sheet->getStyle('A4:F4')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('C6E0B4');
         
 
         $cell = 5;
@@ -86,7 +88,8 @@ class alokasiDesaController extends Controller
             $sheet->setCellValue('B' . $cell, $value->nama_paket);
             $sheet->setCellValue('C' . $cell, $value->volume. ' ' .$value->satuan);
             $sheet->setCellValue('D' . $cell, number_format($value->pagu));
-            $sheet->setCellValue('E' . $cell, $value->lokasi);
+            $sheet->setCellValue('E' . $cell, $value->sumber_dana);
+            $sheet->setCellValue('F' . $cell, $value->lokasi);
             $cell++;
         }
 
@@ -99,15 +102,15 @@ class alokasiDesaController extends Controller
             ],
         ];
 
-        $sheet->getStyle('A4:E'. $cell )->applyFromArray($border);
-        $sheet->getStyle('A1:E4')->getFont()->setBold(true);
-        $sheet->getStyle('A1:E'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('A4:F'. $cell )->applyFromArray($border);
+        $sheet->getStyle('A1:F4')->getFont()->setBold(true);
+        $sheet->getStyle('A1:F'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
         $sheet->getStyle('B5:B'. $cell )->getAlignment()->setVertical('top')->setHorizontal('left');
         $sheet->getStyle('D5:D'. $cell )->getAlignment()->setVertical('top')->setHorizontal('right');
         
 
         $sheet->setCellValue('A' . ++$cell, '');
-        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':E' . $cell);
+        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':F' . $cell);
             $spreadsheet->getActiveSheet()->getHeaderFooter()
                 ->setOddHeader('&C&H' . url()->current());
             $spreadsheet->getActiveSheet()->getHeaderFooter()

@@ -137,7 +137,7 @@ License: For each use you must have a valid license purchased only from above li
 	
 									<div class="row g-3 align-items-center">
 										<div class="col-auto">
-											<label for="year_" class="col-form-label">Tahun Perencanaan</label>
+											<label for="year_" class="col-form-label">Tahun Anggaran</label>
 										</div>
 										<div class="col-auto">
 											<input type="text" id="year_" value="{{Session::get('tahun_penganggaran')}}" class="form-control form-control-solid datepicker">
