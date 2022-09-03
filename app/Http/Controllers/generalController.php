@@ -11,9 +11,11 @@ use App\Models\jadwal;
 use App\Models\verifikasi_document;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\InfoRequest;
+use App\Rules\MatchOldPassword;
 use Str;
 use Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 class generalController extends Controller
 {
 
@@ -674,6 +676,28 @@ class generalController extends Controller
     }
 
     public function set_pengaturan_akun(Request $request){
-        return $request;
+        $request->validate([
+            'password_lama' => ['required', new MatchOldPassword],
+            'password' => 'required|confirmed|min:6',
+        ]);
+       
+       $data = DB::table('user')->where('id', Auth::user()->id)->update(['password' => Hash::make($request->password)]);
+
+        if ($data) {
+            return response()->json([
+                'type' => 'success',
+                'status' => true,
+                'message' =>'Akun berhasil di update',
+                'data' => $data,
+                'url' => '/pengaturan-akun'
+            ]);
+        }else{
+            return response()->json([
+                'type' => 'failed',
+                'status' => false,
+                'message' =>'Akun Gagal di update',
+                'data' => $data,
+            ]);
+        }
     }
 }

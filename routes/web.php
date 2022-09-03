@@ -159,7 +159,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('pengaturan-akun')->group(function () {
         Route::get('/', [generalController::class, 'pengaturan_akun']);
-        Route::get('/update', [generalController::class, 'set_pengaturan_akun']);
+        Route::post('/update', [generalController::class, 'set_pengaturan_akun']);
     });
 
     Route::prefix('kinerja-makro')->group(function () {

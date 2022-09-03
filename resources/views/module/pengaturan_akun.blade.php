@@ -43,18 +43,18 @@
                         <form class="form-data">
                             <div class="mb-10">
                                 <label class="form-label">Password Lama</label>
-                                <input type="text" class="form-control form-control-solid" name="password_old">
-                                <small class="text-danger nama_documents_error"></small>
+                                <input type="password" class="form-control form-control-solid" id="password_lama" name="password_lama">
+                                <small class="text-danger password_lama_error"></small>
                             </div>
                             <div class="mb-10">
                                 <label class="form-label">Password Baru</label>
-                                <input type="text" class="form-control form-control-solid" name="password">
-                                <small class="text-danger nama_documents_error"></small>
+                                <input type="password" class="form-control form-control-solid" id="password" name="password">
+                                <small class="text-danger password_error"></small>
                             </div>
                             <div class="mb-10">
                                 <label class="form-label">Ulangi Password Baru</label>
-                                <input type="text" class="form-control form-control-solid" name="password_confirmation">
-                                <small class="text-danger nama_documents_error"></small>
+                                <input type="password" class="form-control form-control-solid" name="password_confirmation">
+                                <small class="text-danger password_confirmation_error"></small>
                             </div>
                             <button type="submit" class="btn btn_general btn-sm btn-submit">Simpan Perubahan</button>
                         </form>   
@@ -71,13 +71,12 @@
 @endsection
 @section('script')
 <script>
-     let control = new Control('type_2');
-     let element = ['nama_documents','periode_awal','periode_akhir','nomor_perbub','tanggal_perbub','referensi_nama_dokumen'];
+     let control = new Control('type_3');
+     let element = ['password_lama','password','password_confirmation'];
 
     $(document).on('submit', ".form-data", function(e){
         e.preventDefault();
-        let type = $(this).attr('data-type');
-        control.submitFormMultipart('/general/storeDocuments?jenis=renstra&type=type_b','Tambah','Dokumen Renstra',element);
+        control.submitForm('/pengaturan-akun/update','Update','Akun',element);
     });
 
 
