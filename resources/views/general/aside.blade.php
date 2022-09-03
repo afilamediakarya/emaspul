@@ -451,7 +451,7 @@
             @endif
 
             <div class="menu-item">
-                <a class="menu-link" href="#">
+                <a class="menu-link" href="{{ url('/pengaturan-akun') }}">
                     <span class="menu-icon">          
                         <span class="svg-icon svg-icon-2">
                       

@@ -665,4 +665,15 @@ class generalController extends Controller
             ],400);
         }
     }
+
+    public function pengaturan_akun(){
+        $breadcumb = 'Pengaturan Akun';
+        $current_breadcumb = '';
+        $user = DB::table('user')->select('nama_lengkap','nip','username')->where('id',Auth::user()->id)->first();
+        return view('module.pengaturan_akun',compact('breadcumb','current_breadcumb','user'));
+    }
+
+    public function set_pengaturan_akun(Request $request){
+        return $request;
+    }
 }
