@@ -328,7 +328,7 @@ License: For each use you must have a valid license purchased only from above li
 
 
 		$(document).on('change', '#year_', function () {
-			window.location.href = '/??tahun='+$(this).val();
+			window.location.href = '/set-tahun-penganggaran?tahun='+$(this).val();
 		})
 
 			// let control = new Control('/logout','');

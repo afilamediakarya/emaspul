@@ -157,6 +157,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/data-alokasi-skpd', [dokumenDesaController::class, 'data_alokasi_desa']);
     });
 
+  
+
     Route::prefix('pengaturan-akun')->group(function () {
         Route::get('/', [generalController::class, 'pengaturan_akun']);
         Route::post('/update', [generalController::class, 'set_pengaturan_akun']);
