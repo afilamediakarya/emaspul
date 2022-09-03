@@ -393,6 +393,11 @@ class generalController extends Controller
     }
 
     public function storeDocuments(Request $request){
+
+        $request->validate([
+            'file' => 'required|mimes:pdf|max:25000',
+        ]);
+
         $jenis = request('jenis');
         $type = request('type');
         $data = array();

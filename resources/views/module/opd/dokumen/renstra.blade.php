@@ -200,7 +200,9 @@
             <!--begin::Hint-->
             <span class="form-text text-muted">Max file size is 25MB and max number of files is 1.</span>
             <!--end::Hint-->
+            
         </div>
+        
         <!--end::Col-->
     </div>
 
