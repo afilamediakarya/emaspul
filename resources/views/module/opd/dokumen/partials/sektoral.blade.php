@@ -96,7 +96,7 @@
                     }
                     return `
                         <a href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm">
-                        <i class="fa fa-eye" aria-hidden="true" style="color:white"></i> Detail</a>`;
+                        <i class="fa fa-file-pdf" aria-hidden="true" style="color:white"></i> Dokumen</a>`;
                 },
             }
         ];
