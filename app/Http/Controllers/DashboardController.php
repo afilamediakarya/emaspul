@@ -126,7 +126,7 @@ class DashboardController extends Controller
             $data['total_pagu'] = 'Rp. '.number_format($total_pagu);
         }else{
 
-            $document = DB::select("SELECT COUNT(*) AS jml_documents, (SELECT COUNT(*) FROM documents WHERE status_document=4 AND jenis_document <= 4 AND tahun=".session('tahun_penganggaran').") AS jml_terverifikasi FROM documents WHERE tahun=".session('tahun_penganggaran'));
+            $document = DB::select("SELECT COUNT(*) AS jml_documents, (SELECT COUNT(*) FROM documents WHERE status_document=4 AND jenis_document <= 4 AND tahun=".session('tahun_penganggaran').") AS jml_terverifikasi FROM documents WHERE jenis_document<=4 AND tahun=".session('tahun_penganggaran'));
 
             // return $document;
 
