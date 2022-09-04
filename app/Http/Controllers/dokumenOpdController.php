@@ -712,7 +712,7 @@ Penutup.")->mergeCells('D11:G11');
         $dinas = unitKerja::find(Auth::user()->id_unit_kerja)->nama_unit_kerja;
 
         $data=DB::table('renstra_program')
-        ->select('renstra_program.id','program.kode_program','program.nama_program')
+        ->select('renstra_program.id','program.kode_program','program.nama_program','renstra_program.id_program')
         ->join('program','program.id','=','renstra_program.id_program')
         ->whereRaw("id_unit_kerja=".Auth::user()->id_unit_kerja)->get();
         //return json_encode($data);
@@ -815,7 +815,7 @@ Penutup.")->mergeCells('D11:G11');
         $no=1;
         //return $data;
         foreach ( $data as $program ){
-            if ($program->id!=166){
+            if ($program->id_program!=166){
             $count_outcome=$cell+$program->Outcome->count();
             $sheet->setCellValue('B' . $cell, $count_outcome);
             foreach ($program->Outcome as $dt ){
