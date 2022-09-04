@@ -9,7 +9,7 @@
             <div class="widget_dashboard widget_red">
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
-                    <h1>Jumlah SKPD</h1>
+                    <h1>Jumlah Unit Kerja</h1>
                     <!-- <h2 id="jml_skpd"></h2> -->
                     <div class="d-flex">
                     <h2 id="jml_skpd">44 <span>Users</span></h2>
@@ -194,7 +194,7 @@
             method : 'GET',
             success : function (res) {
                 
-                $('#jml_skpd').html(res.jml_skpd+' <span>SKpd</span>');
+                $('#jml_skpd').html(res.jml_skpd+' <span>SKPD</span>');
                 $('#jml_desa').html(res.jml_desa+' <span>Desa</span>');
                 $('#jml_dokumen').html(res.jml_dokumen+' <span>Dokumen</span>');
                 $('#jml_terverifikasi').html(res.jml_terverifikasi+' <span>Dokumen</span>')
