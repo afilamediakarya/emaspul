@@ -173,9 +173,18 @@
 
       $(document).on('click','.button-detail', function (e) {
         e.preventDefault();
+        // let label = ;
+        let label = $(this).attr('data-label').split(" ");
+        let link = 'dokumen-desa';
+
+        // console.log(label);
+
+        if (label[1] == 'Renstra' || label[1] == 'Renja') {
+            link = 'dokumen-skpd'
+        }
         
        let url = `/get-data/documentByVerifikasi?jenis=${$(this).attr('data-jenis')}&document=${$(this).attr('data-id')}`;
-        control.modal_content('Detail RPJMDes', url,`/dokumen-desa/konsederan?document=${$(this).attr('data-id')}&jenis=rpjmdes`);
+        control.modal_content(`Detail ${label[1]}`, url,`/${link}/konsederan?document=${$(this).attr('data-id')}&jenis=${label[1].toLowerCase()}`);
     })
     $(function () {
         $.ajax({
@@ -245,7 +254,7 @@
                 orderable: false,
                 render: function(data, type, full, meta) {
                  console.log(data);
-                    return `<a href="javascript:;" type="button" data-id="${data.id}" data-jenis="${data.jenis_document}"  data-bs-toggle="modal" data-bs-target="#kt_modal_2" class="btn btn-info button-detail btn-sm"> 
+                    return `<a href="javascript:;" type="button" data-id="${data.id}" data-label="${data.nama_documents}" data-jenis="${data.jenis_document}"  data-bs-toggle="modal" data-bs-target="#kt_modal_2" class="btn btn-info button-detail btn-sm"> 
                     <i class="fa fa-eye" aria-hidden="true" style="color:white"></i> Detail</a>`; 
                    
                 },
