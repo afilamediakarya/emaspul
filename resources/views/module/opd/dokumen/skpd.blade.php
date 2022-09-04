@@ -220,7 +220,7 @@
             },{
                 data:'nama_documents'
             },{
-                data:'id',
+                data:null,
             }
         ];
         let columnDefs = [
