@@ -182,6 +182,11 @@
         control.overlay_form('Tambah','Data Lainnya');
     })
 
+    $(document).on('click','.button-show', function (e) {
+        e.preventDefault();
+        window.open('/storage/files/dokumen_skpd/sektoral/'+$(this).attr('data-label'), '_blank');
+    })
+
     $(document).on('submit', ".form-data", function(e){
         e.preventDefault();
         let type = $(this).attr('data-type');
@@ -228,6 +233,8 @@
                     return `
                         <a href="javascript:;" type="button" data-id="${data}" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" class="btn btn_green button-update btn-sm">
                         <i class="fa fa-edit" aria-hidden="true" style="color:white"></i> Edit</a>
+                        <a href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm">
+                        <i class="fa fa-file-pdf" aria-hidden="true" style="color:white"></i> Dokumen</a>
                         `;
                 },
             }
