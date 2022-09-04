@@ -10,7 +10,7 @@
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
                     <h1>Jumlah Paket</h1>
-                    <h2 id="jml_paket" class="fz_36"></h2>
+                    <h2 id="jml_paket" ></h2>
                     </div>
                     <div class="ms-auto p-2 bd-highlight">
                     <svg width="48" height="43" viewBox="0 0 48 43" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +29,7 @@
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
                     <h1>Total Pagu Paket</h1>
-                    <h2 id="jml_pagu" class="fz_32"></h2>
+                    <h2 id="jml_pagu"></h2>
                     </div>
                     <div class="ms-auto p-2 bd-highlight">
                     <svg width="48" height="42" viewBox="0 0 48 42" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +48,7 @@
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
                     <h1>Total ADD</h1>
-                    <h2 id="total_add" class="fz_36">44 <span>Users</span></h2>
+                    <h2 id="total_add">44 <span>Users</span></h2>
                     </div>
                     <div class="ms-auto p-2 bd-highlight">
                         
