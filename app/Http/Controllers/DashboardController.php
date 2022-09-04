@@ -58,12 +58,13 @@ class DashboardController extends Controller
         }else if($current == '4'){
         
 
-            $document = DB::select("SELECT COUNT(*) AS jml_terverifikasi FROM documents WHERE status_document=4 AND id_verifikator=".Auth::user()->id." AND jenis_document <= 4 AND tahun=".session('tahun_penganggaran'));
+            // $document = DB::select("SELECT COUNT(*) AS jml_terverifikasi FROM documents WHERE status_document=4 AND id_verifikator=".Auth::user()->id." AND jenis_document <= 4 AND tahun=".session('tahun_penganggaran'));
 
             $data['jml_skpd'] = DB::table('unit_bidang_verifikasi')->where('id_bidang',Auth::user()->id_unit_kerja)->get()->count();
             $data['jml_desa'] = DB::table('perangkat_desa')->get()->count();
-            $data['jml_dokumen'] = DB::table('documents')->select('documents.id')->join('unit_bidang_verifikasi','unit_bidang_verifikasi.id_perangkat','=','documents.id_perangkat')->where('documents.jenis_document','<=','4')->where('unit_bidang_verifikasi.id_bidang',Auth::user()->id_unit_kerja)->where('documents.tahun',session('tahun_penganggaran'))->where('documents.id_verifikator',Auth::user()->id)->get()->count();
-            $data['jml_terverifikasi'] = $document[0]->jml_terverifikasi;
+            $data['jml_dokumen'] = DB::table('documents')->select('documents.id')->join('unit_bidang_verifikasi','unit_bidang_verifikasi.id_perangkat','=','documents.id_perangkat')->where('documents.jenis_document','<=','4')->where('documents.tahun',session('tahun_penganggaran'))->where('documents.id_verifikator',Auth::user()->id)->get()->count();
+            $data['jml_terverifikasi'] = DB::table('documents')->where('status_document',4)->where('id_verifikator',Auth::user()->id)->where('tahun',session('tahun_penganggaran'))->count();
+
         }else if($current == '2'){
           
             $counts = array();
