@@ -9,8 +9,9 @@
             <div class="widget_dashboard widget_red">
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
-                    <div class="d-flex">
                     <h1>Jumlah Unit Kerja</h1>
+
+                    <div class="d-flex">
                     <h2 id="jml_skpd">44 <span>Users</span></h2>
                     <h2 id="jml_desa" style="position: relative;left: 1rem;">44 <span>Users</span></h2>
                     </div>
