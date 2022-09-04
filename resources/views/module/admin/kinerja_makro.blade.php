@@ -251,9 +251,12 @@
             {
                 targets : 5,
                 render : function (data) {
-                    if (condition) {
+                    if (data != null) {
                         return data.realisasi
+                    }else{
+                        return 0;
                     }
+                   
                 }
             },{
                 targets: -1,

@@ -302,6 +302,11 @@
         control.overlay_form('Tambah','Data Renstra');
     })
 
+    $(document).on('click','.button-show', function (e) {
+        e.preventDefault();
+        window.open('/storage/files/dokumen_skpd/renstra/'+$(this).attr('data-label'), '_blank');
+    })
+
     $(document).on('submit', ".form-data", function(e){
         e.preventDefault();
         let type = $(this).attr('data-type');
@@ -402,7 +407,7 @@
                 render: function(data, type, full, meta) {
                     console.log(data)
                     let disabled = '';
-                    if (data.status_document == '4' || data.status_document == '2') {
+                    if (data.status_document == '4' || data.status_document == '2' || data.status_document == '1') {
                         disabled = 'disabled'
                     }
                     return `
@@ -411,6 +416,9 @@
 
                         <a href="javascript:;" type="button" data-id="${data.id}" data-jenis="${data.jenis_document}"  data-bs-toggle="modal" data-bs-target="#kt_modal_1" class="btn btn-info button-detail btn-sm">
                         <i class="fa fa-eye" aria-hidden="true" style="color:white"></i> Detail</a>
+                        
+                        <a href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm">
+                        <i class="fa fa-file-pdf" aria-hidden="true" style="color:white"></i> Dokumen</a>
                         `;
                 },
             }

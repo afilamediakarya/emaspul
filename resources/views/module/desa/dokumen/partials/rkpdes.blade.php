@@ -128,7 +128,7 @@
           window.location.href = `/verifikasi?document=${params}&jenis=RKPDes`;
      })
 
-     $(document).on('click','.button-show', function (e) {
+    $(document).on('click','.button-show', function (e) {
         e.preventDefault();
         window.open('/storage/files/dokumen_desa/rkpdes/'+$(this).attr('data-label'), '_blank');
     })
