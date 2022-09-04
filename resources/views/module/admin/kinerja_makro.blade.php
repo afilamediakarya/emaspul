@@ -241,13 +241,19 @@
             {
                 targets : 4,
                 render : function (data) {
-                    return data.target
+                    if (data != null) {
+                        return data.target
+                    }else{
+                        return 0;
+                    }
                 }
             },
             {
                 targets : 5,
                 render : function (data) {
-                    return data.realisasi
+                    if (condition) {
+                        return data.realisasi
+                    }
                 }
             },{
                 targets: -1,

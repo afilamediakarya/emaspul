@@ -298,7 +298,7 @@
         ];
 
 
-        control.initDatatable('/general/datatable-list?jenis=8&type=type_a&type_query=query_2',columns,columnDefs);
+        control.initDatatable('/general/datatable-list?jenis=8&type=type_a&type_query=query_range_year',columns,columnDefs);
         control.form_upload();
        
 

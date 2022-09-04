@@ -118,8 +118,25 @@ class generalController extends Controller
         $data = array();
 
         if ($type == 'type_a') {
-
-            if (request('type_query') == 'query_2') {
+            
+            if (request('type_query') == 'query_range_year') {
+                // $tahun_awal = 2022;
+                // $tahun_akhir = 2023;
+                // if ($tahun_awal <= session('tahun_penganggaran') AND $tahun_awal >= session('tahun_penganggaran')) {
+                //     return 'masuk';
+                // } else {
+                //     return 'tidak masuk';
+                // }
+                
+                $data = DB::select("SELECT id,nama_documents,nomor_perbub,tanggal_perbub,file_document FROM documents WHERE jenis_document=".$jenis." AND ".session('tahun_penganggaran')." >= periode_awal AND ".session('tahun_penganggaran')." <= periode_akhir");
+                
+                // ->where('tahun',session('tahun_penganggaran'));
+                // jadwal::where('tahapan', request('tahapan'))
+                // ->where('sub_tahapan', request('sub_tahapan'))
+                // ->whereDate('jadwal_mulai', '<=', now())
+                // ->whereDate('jadwal_selesai', '>=', now())
+                // ->exists();
+            }else if (request('type_query') == 'query_2') {
                 $data = document::select('id','nama_documents','nomor_perbub','tanggal_perbub','file_document')->where('jenis_document',$jenis)->where('tahun',session('tahun_penganggaran'))->latest()->get();
             }else{
                 $data = document::select('id','nama_documents','nomor_perbub','tanggal_perbub','file_document')->where('jenis_document',$jenis)->where('id_perangkat',Auth::user()->id_unit_kerja)->where('tahun',session('tahun_penganggaran'))->latest()->get();
@@ -140,14 +157,29 @@ class generalController extends Controller
                 $queryByBidang = "INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat";
             }
 
-            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents ".$queryByBidang." where jenis_document=".$jenis." ".$other_query." AND tahun=".session('tahun_penganggaran'));
+            $query_range = "";
+            if ($jenis == 1) {
+                $query_range = "AND ".session('tahun_penganggaran')." >= documents.periode_awal AND ".session('tahun_penganggaran')." <= documents.periode_akhir";
+            }else{
+                $query_range = "AND tahun=".session('tahun_penganggaran');
+            }
+
+            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents ".$queryByBidang." where jenis_document=".$jenis." ".$other_query." ".$query_range);
 
         }else if($type == 'type_c'){
             $other_query = '';
         
             if (Auth::user()->id_role == 2) {
+
+                $query_range = "";
+                if ($jenis == 3) {
+                    $query_range = "AND ".session('tahun_penganggaran')." >= documents.periode_awal AND ".session('tahun_penganggaran')." <= documents.periode_akhir";
+                }else{
+                    $query_range = "AND tahun=".session('tahun_penganggaran');
+                }
+
                 $other_query = "AND documents.user_insert =".Auth::user()->id;
-                $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." ".$other_query." AND tahun=".session('tahun_penganggaran'));
+                $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." ".$other_query." ".$query_range);
             }elseif (Auth::user()->id_role == 1) {
                 $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." AND tahun=".session('tahun_penganggaran'));
             }else{
