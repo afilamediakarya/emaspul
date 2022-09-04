@@ -49,7 +49,7 @@
              
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
-                    <h1>Total Pagu Daftar Alokasi</h1>
+                    <h1>Pagu Daftar Alokasi</h1>
                     <h2 id="total_pagu"></h2>
                     </div>
                     <div class="ms-auto p-2 bd-highlight">
