@@ -166,9 +166,11 @@ class generalController extends Controller
 
             $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_verifikator, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents ".$queryByBidang." where jenis_document=".$jenis." ".$other_query." ".$query_range);
 
-            foreach ($data as $key => $value) {
-                if (!is_null($value->id_verifikator) && $value->id_verifikator !== Auth::user()->id) {
-                    array_splice($data, $key, 1); 
+            if (Auth::user()->id_role == 4) {
+                foreach ($data as $key => $value) {
+                    if (!is_null($value->id_verifikator) && $value->id_verifikator !== Auth::user()->id) {
+                        array_splice($data, $key, 1); 
+                    }
                 }
             }
 
