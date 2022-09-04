@@ -229,7 +229,7 @@
                             <p class="fz-16 content_detail_4"></p>
                         </div>
                         <div class="col-lg-6">
-                            <span class="fz-12">Tanggal Peraturan</span>
+                            <span class="fz-12">Tanggal Penetapan</span>
                             <p class="fz-16 content_detail_5"></p>
                         </div>
                    </div>
