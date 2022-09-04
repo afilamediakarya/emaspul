@@ -154,7 +154,7 @@ class generalController extends Controller
             }
 
             if (Auth::user()->id_role == 4) {
-                $queryByBidang = "INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat";
+                // $queryByBidang = "INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat";
             }
 
             $query_range = "";
