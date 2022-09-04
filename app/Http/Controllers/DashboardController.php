@@ -58,7 +58,7 @@ class DashboardController extends Controller
         }else if($current == '4'){
             // return Auth::user()->id_unit_kerja;
             $data['jml_skpd'] = DB::table('unit_bidang_verifikasi')->where('id_bidang',Auth::user()->id_unit_kerja)->get()->count();
-            $data['jml_dokumen'] = DB::table('documents')->select('documents.id')->join('unit_bidang_verifikasi','unit_bidang_verifikasi.id_perangkat','=','documents.id_perangkat')->where('documents.jenis_document','<=','4')->where('unit_bidang_verifikasi.id_bidang',Auth::user()->id_unit_kerja)->where('documents.tahun',session('tahun_penganggaran'))->get()->count();
+            $data['jml_dokumen'] = DB::table('documents')->select('documents.id')->join('unit_bidang_verifikasi','unit_bidang_verifikasi.id_perangkat','=','documents.id_perangkat')->where('documents.jenis_document','<=','4')->where('unit_bidang_verifikasi.id_bidang',Auth::user()->id_unit_kerja)->where('documents.tahun',session('tahun_penganggaran'))->where('documents.id_verifikator',Auth::user()->id)->get()->count();
             $data['jml_verifikator'] = DB::table('user')->where('id_unit_kerja',Auth::user()->id_unit_kerja)->get()->count();
         }else if($current == '2'){
           
