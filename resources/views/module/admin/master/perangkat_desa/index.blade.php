@@ -103,7 +103,7 @@
                     <small class="text-danger pagu_desa_error"></small>
                 </div>
                 <div class="mb-10">
-                    <label class="form-label">Nama Jabatan Kepala</label>
+                    <label class="form-label">Nama Jabatan</label>
                     <input type="text" class="form-control form-control-solid" name="jabatan_kepala" placeholder="Masukkan nama jabatan kepala">
                     <small class="text-danger jabatan_kepala_error"></small>
                 </div>
