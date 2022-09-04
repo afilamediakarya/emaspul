@@ -187,7 +187,7 @@
 
     $(document).on('click','.button-show', function (e) {
         e.preventDefault();
-        window.open('/storage/files/dokumen_skpd/sektoral/'+$(this).attr('data-label'), '_blank');
+        window.open('/storage/files/dokumen_desa/sdgs/'+$(this).attr('data-label'), '_blank');
     })
 
     $(document).on('submit', ".form-data", function(e){
