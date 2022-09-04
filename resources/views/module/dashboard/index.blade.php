@@ -10,7 +10,12 @@
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
                     <h1>Jumlah SKPD</h1>
+                    
+                    <div class="d-flex">
                     <h2 id="jml_skpd">44 <span>Users</span></h2>
+                    <h2 id="jml_desa" style="position: relative;left: 1rem;">44 <span>Users</span></h2>
+                    </div>
+                    
                     </div>
                     <div class="ms-auto p-2 bd-highlight">
                         <svg width="36" height="48" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +33,9 @@
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
                     <h1>Jumlah Dokumen</h1>
+                    <div class="d-flex">
                     <h2 id="jml_document">44 <span>Users</span></h2>
+                    </div>
                     </div>
                     <div class="ms-auto p-2 bd-highlight">
                     <svg width="36" height="48" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,7 +54,9 @@
                 <div class="d-flex bd-highlight mb-3">
                     <div class="p-2 bd-highlight">
                     <h1>Jumlah Terverifikasi</h1>
+                    <div class="d-flex">
                     <h2 id="jml_terverifikasi">44 <span>Users</span></h2>
+                    </div>
                     </div>
                     <div class="ms-auto p-2 bd-highlight">
                         
@@ -178,7 +187,7 @@
         // console.log(label);
 
         if (label[1] == 'Renstra' || label[1] == 'Renja') {
-            link = 'dokumen-skpd'
+            link = 'dokumen-skpd';
         }
         
        let url = `/get-data/documentByVerifikasi?jenis=${$(this).attr('data-jenis')}&document=${$(this).attr('data-id')}`;
@@ -191,10 +200,10 @@
             success : function (res) {
                 console.log(res);
                 $('#jml_skpd').html(res.jml_skpd+' <span>SKPD</span>');
+                $('#jml_desa').html(res.jml_desa+' <span>Desa</span>');
                 $('#jml_document').html(res.jml_document+' <span>Dokumen</span>');
-                $('#jml_terverifikasi').html(res.jml_terverifikasi+' <span>Dokumen</span>')
-              
-                
+                $('#jml_terverifikasi').html(res.jml_terverifikasi+' <span>Dokumen</span>');
+
             },
             error : function (xhr) {
                 alert('gagal');

@@ -225,7 +225,7 @@ class generalController extends Controller
 
             if (Auth::user()->id_role == 4) {
                 
-                $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,documents.user_insert, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat WHERE documents.jenis_document <= 4  AND unit_bidang_verifikasi.id_bidang=".Auth::user()->id_unit_kerja." AND documents.tahun=".session('tahun_penganggaran')." AND documents.id_verifikator=".Auth::user()->id);
+                $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,documents.user_insert,documents.id_verifikator, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat WHERE documents.jenis_document <= 4 AND documents.tahun=".session('tahun_penganggaran')." AND documents.id_verifikator=".Auth::user()->id);
 
                 foreach ($data as $key => $value) {
                     if (strpos($value->nama_documents, 'Renstra') !== false || strpos($value->nama_documents, 'Renja') !== false) {
@@ -235,6 +235,8 @@ class generalController extends Controller
                         
                     }
                 }
+
+
 
             }else if(Auth::user()->id_role == 3){
                 $data = DB::select("SELECT documents.id,documents.nama_documents, documents.status_document, documents.jenis_document, (SELECT user.nama_lengkap FROM user WHERE user.id = documents.id_verifikator) AS verifikator FROM documents WHERE (id_perangkat = ".Auth::user()->id_unit_kerja.") AND (jenis_document <= ".$document_type.")");
