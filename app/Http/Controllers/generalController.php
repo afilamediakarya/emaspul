@@ -195,9 +195,11 @@ class generalController extends Controller
                     // return Auth::user()->id_unit_kerja;
                     $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,documents.id_verifikator,(SELECT unit_kerja.nama_unit_kerja FROM unit_kerja INNER JOIN user ON user.`id_unit_kerja`=unit_kerja.`id` WHERE user.`id` = documents.`user_insert`) AS nama_unit_kerja, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat where documents.jenis_document = ".$jenis." AND unit_bidang_verifikasi.id_bidang=".Auth::user()->id_unit_kerja." AND documents.tahun=".session('tahun_penganggaran'));
 
-                    foreach ($data as $key => $value) {
-                        if (!is_null($value->id_verifikator) && $value->id_verifikator !== Auth::user()->id) {
-                            array_splice($data, $key, 1); 
+                    if (Auth::user()->id_role == 4) {
+                        foreach ($data as $key => $value) {
+                            if (!is_null($value->id_verifikator) && $value->id_verifikator !== Auth::user()->id) {
+                                array_splice($data, $key, 1); 
+                            }
                         }
                     }
               
