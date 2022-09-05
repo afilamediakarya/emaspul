@@ -401,6 +401,11 @@ class Control {
             ajax: url,
             columns:columns,
             columnDefs:columnDefs,
+            // scrollX:true,
+            // fixedColumns: {
+            //     leftColumns: 1,
+            //     rightColumns: 1
+            // }
         });
     }
 
