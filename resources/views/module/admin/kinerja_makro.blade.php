@@ -5,8 +5,8 @@
 @endif
  <a style="margin-left: 1rem;
 " href="/kinerja-makro/datatable-list?type=export" target="_blank" role="button" class="btn btn-danger btn-sm ">  <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.2667 5.82386H10.6476C10.5795 5.82386 10.5238 5.87957 10.5238 5.94767V6.56671C10.5238 6.63481 10.5795 6.69052 10.6476 6.69052H11.2667C11.3348 6.69052 11.3905 6.63481 11.3905 6.56671V5.94767C11.3905 5.87957 11.3348 5.82386 11.2667 5.82386ZM11.7619 4.21433H9.90476V0.93338C9.90476 0.865285 9.84905 0.80957 9.78095 0.80957H3.21905C3.15095 0.80957 3.09524 0.865285 3.09524 0.93338V4.21433H1.2381C0.554048 4.21433 0 4.76838 0 5.45243V10.5286C0 10.8025 0.22131 11.0239 0.495238 11.0239H3.09524V13.0667C3.09524 13.1348 3.15095 13.1905 3.21905 13.1905H9.78095C9.84905 13.1905 9.90476 13.1348 9.90476 13.0667V11.0239H12.5048C12.7787 11.0239 13 10.8025 13 10.5286V5.45243C13 4.76838 12.446 4.21433 11.7619 4.21433ZM4.14762 1.86195H8.85238V4.21433H4.14762V1.86195ZM8.85238 12.1381H4.14762V7.86671H8.85238V12.1381ZM11.9476 9.97147H9.90476V6.81433H3.09524V9.97147H1.05238V5.45243C1.05238 5.35028 1.13595 5.26671 1.2381 5.26671H11.7619C11.864 5.26671 11.9476 5.35028 11.9476 5.45243V9.97147Z" fill="white"/>
-                </svg> Cetak</a>
+<path d="M11.2667 5.82386H10.6476C10.5795 5.82386 10.5238 5.87957 10.5238 5.94767V6.56671C10.5238 6.63481 10.5795 6.69052 10.6476 6.69052H11.2667C11.3348 6.69052 11.3905 6.63481 11.3905 6.56671V5.94767C11.3905 5.87957 11.3348 5.82386 11.2667 5.82386ZM11.7619 4.21433H9.90476V0.93338C9.90476 0.865285 9.84905 0.80957 9.78095 0.80957H3.21905C3.15095 0.80957 3.09524 0.865285 3.09524 0.93338V4.21433H1.2381C0.554048 4.21433 0 4.76838 0 5.45243V10.5286C0 10.8025 0.22131 11.0239 0.495238 11.0239H3.09524V13.0667C3.09524 13.1348 3.15095 13.1905 3.21905 13.1905H9.78095C9.84905 13.1905 9.90476 13.1348 9.90476 13.0667V11.0239H12.5048C12.7787 11.0239 13 10.8025 13 10.5286V5.45243C13 4.76838 12.446 4.21433 11.7619 4.21433ZM4.14762 1.86195H8.85238V4.21433H4.14762V1.86195ZM8.85238 12.1381H4.14762V7.86671H8.85238V12.1381ZM11.9476 9.97147H9.90476V6.81433H3.09524V9.97147H1.05238V5.45243C1.05238 5.35028 1.13595 5.26671 1.2381 5.26671H11.7619C11.864 5.26671 11.9476 5.35028 11.9476 5.45243V9.97147Z" fill="white"/>
+</svg> Cetak</a>
 @endsection
 @section('content')
 <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -38,10 +38,17 @@
                         <tr class="fw-bolder fs-6 text-gray-800">
                             <th>No</th>
                             <th>Indikator</th>
-                            @for($i= 0; $i < 2; $i++)
-                            <th>Target {{$tahun + $i}}</th>
-                            <th>Realisasi {{$tahun + $i}}</th>
-                            @endfor
+                            <th>Target Awal</th>
+                            <th>Target 2019</th>
+                            <th>Target 2020</th>
+                            <th>Target 2021</th>
+                            <th>Target 2022</th>
+                            <th>Target 2023</th>
+                            <th>Realisasi 2019</th>
+                            <th>Realisasi 2020</th>
+                            <th>Realisasi 2021</th>
+                            <th>Realisasi 2022</th>
+                            <th>Realisasi 2023</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -125,8 +132,6 @@
 
               </div>
 
-             
-
                 <div class="separator separator-dashed mt-8 mb-5"></div>
                     <div class="">
                         <button type="submit" class="btn btn_general btn-sm btn-submit">Simpan</button>
@@ -166,12 +171,15 @@
         $('#periode_awal').val(data[0]);
         $('#periode_akhir').val(data[1]);
         let html = '';
-        for (let index = 0; index < 5; index++) {
-            html += `<div class="row">
+        for (let index = 0; index <= 5; index++) {
+            
+            if (index == 0) {
+                html += `<div class="row">
                     <div class="col-lg-4 mb-10">
                         <label class="form-label">Tahun</label>
                         <input type="hidden" id="id_data_makro${index}" name="id_data_makro[${index}]" readonly>
-                        <input type="text" class="form-control form-control-solid" id="tahun${index}" value="${ parseInt(data[0]) + index}" name="tahun[${index}]" readonly>
+                        <input type="hidden" value="${parseInt(data[0]) + index}" name="tahun[${index}]">
+                        <input type="text" class="form-control form-control-solid" id="tahun${index}" value="Tahun Awal" readonly>
                     </div>
                     <div class="col-lg-4 mb-10">
                         <label class="form-label">Target</label>
@@ -182,6 +190,25 @@
                         <input type="text" class="form-control form-control-solid" id="realisasi${index}" value="0" name="realisasi[${index}]">
                     </div>
             </div>`;
+            }else{
+                html += `<div class="row">
+                    <div class="col-lg-4 mb-10">
+                        <label class="form-label">Tahun</label>
+                        <input type="hidden" id="id_data_makro${index}" name="id_data_makro[${index}]" readonly>
+                        <input type="text" class="form-control form-control-solid" id="tahun${index}" value="${parseInt(data[0]) + index}" name="tahun[${index}]" readonly>
+                    </div>
+                    <div class="col-lg-4 mb-10">
+                        <label class="form-label">Target</label>
+                        <input type="text" class="form-control form-control-solid" id="target${index}" value="0" name="target[${index}]">
+                    </div>
+                    <div class="col-lg-4 mb-10">
+                        <label class="form-label">Realisasi</label>
+                        <input type="text" class="form-control form-control-solid" id="realisasi${index}" value="0" name="realisasi[${index}]">
+                    </div>
+            </div>`;
+            }
+
+           
         }
 
         $('#content_row').html(html);
@@ -214,51 +241,33 @@
             },{
                 data:'indikator_makro'
             },{
-                data:'child0'
+                data:'target0'
             },{
-                data:'child0'
+                data:'target1'
             },{
-                data:'child1'
+                data:'target2'
             },{
-                data:'child1'
+                data:'target3'
+            },{
+                data:'target4'
+            },{
+                data:'target5'
+            },{
+                data:'realisasi1'
+            },{
+                data:'realisasi2'
+            },{
+                data:'realisasi3'
+            },{
+                data:'realisasi4'
+            },{
+                data:'realisasi5'
             },{
                 data: 'id',
             }
         ];
         let columnDefs = [
-            {
-                targets : 2,
-                render : function (data) {
-                    return data.target
-                }
-            },
-            {
-                targets : 3,
-                render : function (data) {
-                    return data.realisasi
-                }
-            },
-            {
-                targets : 4,
-                render : function (data) {
-                    if (data != null) {
-                        return data.target
-                    }else{
-                        return 0;
-                    }
-                }
-            },
-            {
-                targets : 5,
-                render : function (data) {
-                    if (data != null) {
-                        return data.realisasi
-                    }else{
-                        return 0;
-                    }
-                   
-                }
-            },{
+           {
                 targets: -1,
                 title: 'Aksi',
                 orderable: false,

@@ -14,7 +14,9 @@ class makroController extends Controller
     public function index(){
         $breadcumb = 'Dokumen Kinerja Makro';
         $current_breadcumb = '';
-        $tahun = session('tahun_penganggaran') - 1;
+        $tes = [];
+        $tahun = session('tahun_penganggaran') + 1;
+     
         $role = Auth::user()->id_role;
         return view('module.admin.kinerja_makro',compact('breadcumb','current_breadcumb','tahun','role'));
     }
@@ -25,13 +27,20 @@ class makroController extends Controller
         $back_year = session('tahun_penganggaran') - 1;
         $data = DB::select("SELECT id, indikator_makro FROM indikator_makro WHERE ".session('tahun_penganggaran')." BETWEEN indikator_makro.periode_awal AND indikator_makro.periode_akhir");
 
-        $keys = '';
+        // $keys = '';
         foreach ($data as $key => $value) {
-            for ($i= 0; $i < 3; $i++) { 
-                $keys = 'child'.$i;
-                $value->{$keys} = DB::table('data_makro')->select('target','realisasi')->where('id_indikator_makro',$value->id)->where('tahun',$back_year + $i)->first();
+            $sub = DB::table("data_makro")->select('id','tahun','target','realisasi')->where('id_indikator_makro',$value->id)->get();
+
+            foreach ($sub as $i => $v) {
+                $target_key = 'target'.$i;
+                $realisasi_key = 'realisasi'.$i;
+
+               $value->{$target_key} = $v->target;
+               $value->{$realisasi_key} = $v->realisasi; 
             }
         }
+
+        
 
         if ($type == 'datatable') {
             return response()->json([
@@ -78,8 +87,8 @@ class makroController extends Controller
         
         $sheet->setCellValue('A4','No')->mergeCells('A4:A5')->getColumnDimension('A')->setWidth(5);
         $sheet->setCellValue('B4','INDIKATOR')->mergeCells('B4:B5')->getColumnDimension('B')->setWidth(40);
-        $sheet->setCellValue('C4','CAPAIAN')->mergeCells('C4:G4');
-        $sheet->setCellValue('H4','TARGET')->mergeCells('H4:L4');
+        $sheet->setCellValue('C4','TARGET ')->mergeCells('C4:G4');
+        $sheet->setCellValue('H4','CAPAIAN')->mergeCells('H4:L4');
 
         $sheet->setCellValue('C5','2019')->getColumnDimension('C')->setWidth(8);
         $sheet->setCellValue('D5','2020')->getColumnDimension('D')->setWidth(8);
@@ -99,17 +108,17 @@ class makroController extends Controller
             $sheet->setCellValue('A' . $cell, $key+1);
             $sheet->setCellValue('B' . $cell, $value->indikator_makro);
 
-            $sheet->setCellValue('C' . $cell, $value->child0->target);
-            //$sheet->setCellValue('D' . $cell, $value->child1->target);
-            //$sheet->setCellValue('E' . $cell, $value->child2->target);
-            //$sheet->setCellValue('F' . $cell, $value->child3->target);
-            //$sheet->setCellValue('G' . $cell, $value->child4->target);
+            $sheet->setCellValue('C' . $cell, $value->target1);
+            $sheet->setCellValue('D' . $cell, $value->target2);
+            $sheet->setCellValue('E' . $cell, $value->target3);
+            $sheet->setCellValue('F' . $cell, $value->target4);
+            $sheet->setCellValue('G' . $cell, $value->target5);
 
-            $sheet->setCellValue('H' . $cell, $value->child0->realisasi);
-            //$sheet->setCellValue('I' . $cell, $value->child1->realisasi);
-            //$sheet->setCellValue('J' . $cell, $value->child2->realisasi);
-            //$sheet->setCellValue('K' . $cell, $value->child3->realisasi);
-            //$sheet->setCellValue('L' . $cell, $value->child4->realisasi);
+            $sheet->setCellValue('H' . $cell, $value->realisasi1);
+            $sheet->setCellValue('I' . $cell, $value->realisasi2);
+            $sheet->setCellValue('J' . $cell, $value->realisasi3);
+            $sheet->setCellValue('K' . $cell, $value->realisasi4);
+            $sheet->setCellValue('L' . $cell, $value->realisasi5);
             $cell++;
         }
 

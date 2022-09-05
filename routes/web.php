@@ -80,7 +80,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::prefix('dokumen')->group(function () {
                 Route::get('/', [dokumenOpdController::class, 'index']);
                 Route::get('/indikator-kinerja-kunci', [dokumenOpdController::class, 'ikk_view']);
-                Route::get('/indikator-kinerja-kunci/datatable_iki', [dokumenOpdController::class, 'datatable_iki']);
+                // Route::get('/indikator-kinerja-kunci/datatable_iki', [dokumenOpdController::class, 'datatable_iki']);
+                Route::get('/indikator-kinerja-kunci/export', [dokumenOpdController::class, 'export_ikk']);
+                
                 
                 Route::get('/export_ikk', [dokumenOpdController::class, 'export_ikk']);
             });

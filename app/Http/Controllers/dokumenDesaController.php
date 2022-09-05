@@ -500,6 +500,19 @@ class dokumenDesaController extends Controller
         return view('module.desa.referensi.daftar_alokasi',compact('breadcumb','current_breadcumb'));
     } 
 
+    public function data_group_alokasi(){
+        $data = DB::table('unit_kerja')->select('id','nama_unit_kerja')->whereRaw("id<>'' $where_unit_kerja")->get();
+
+        foreach($data as $unit_kerja_list){
+            $unit_kerja_list->Dpa=DB::table('dpa')
+            ->join('sub_kegiatan', 'dpa.id_sub_kegiatan', '=', 'sub_kegiatan.id')
+            ->select('dpa.id','dpa.nilai_pagu_dpa','sub_kegiatan.nama_sub_kegiatan')
+            ->where('dpa.tahun',$tahun)
+            ->where('dpa.id_unit_kerja',$unit_kerja_list->id)
+            ->get();
+        }
+    }
+
     public function data_alokasi_desa(){
         
         $perangkat_desa = DB::table('user')->select('perangkat_desa.id_desa')->join('perangkat_desa','user.id_unit_kerja','perangkat_desa.id')->where('user.id',Auth::user()->id)->first();
@@ -584,8 +597,7 @@ class dokumenDesaController extends Controller
                     if($paket->Desa=='' || $paket->Kecamatan==''){
                         continue; 
                     }
-                    // $result[$i]['nama_unit_kerja'] = $res->nama_unit_kerja;
-                    // $result[$i]['nama_paket'] =  $paket->nama_paket;
+    
                     $result[] = [
                         'nama_unit_kerja' => $res->nama_unit_kerja,
                         'nama_paket' => $paket->nama_paket,

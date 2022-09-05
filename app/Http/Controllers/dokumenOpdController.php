@@ -521,189 +521,6 @@ Penutup.")->mergeCells('D11:G11');
         return view('module.opd.dokumen.ikk',compact('breadcumb','current_breadcumb','tahun'));
     }
 
-    public function datatable_iki(){
-        
-        $tahun = session('tahun_penganggaran');
-        $type = request('type');
-        $triwulan=2;
-        $tahun_sebelum=$tahun-1;
-        $tahun_sebelum_sebelumnya=$tahun_sebelum-1;
-
-        $data=DB::table('renstra_sub_kegiatan')->select('sasaran.*')->join('sasaran','sasaran.id','=','renstra_sub_kegiatan.id_sasaran')->whereRaw("renstra_sub_kegiatan.id_sasaran<>'' AND renstra_sub_kegiatan.id_unit_kerja=".Auth::user()->id_unit_kerja)->groupBy('renstra_sub_kegiatan.id_sasaran')->get();
-
-        foreach ( $data as $dt ){
-            $dt->nama_unit_kerja='';
-            $dt->Urusan=DB::table('renstra_program')->select('urusan.*')->join('urusan','urusan.id','=','renstra_program.id_urusan')->whereRaw("renstra_program.id_sasaran='$dt->id' AND id_unit_kerja=".Auth::user()->id_unit_kerja)->groupBy('renstra_program.id_urusan')->get();
-            foreach($dt->Urusan as $urusan){
-
-                $cek=DB::table('renstra_program')->where('id_urusan',$urusan->id)->count();
-                $urusan->BidangUrusan=DB::table('renstra_program')->select('bidang_urusan.*')->join('bidang_urusan','bidang_urusan.id','=','renstra_program.id_bidang_urusan')->whereRaw("renstra_program.id_sasaran='$dt->id' AND renstra_program.id_urusan='$urusan->id' AND id_unit_kerja=".Auth::user()->id_unit_kerja)->groupBy('renstra_program.id_bidang_urusan')->get();
-                foreach($urusan->BidangUrusan as $bidang_urusan){
-                    $bidang_urusan->Program=DB::table('renstra_program')
-                    ->select('renstra_program.*','program.kode_program','program.nama_program')
-                    ->join('program','program.id','=','renstra_program.id_program')->whereRaw("renstra_program.id_sasaran='$dt->id' AND renstra_program.id_urusan='$urusan->id'AND id_unit_kerja=".Auth::user()->id_unit_kerja)->get();
-                    foreach ( $bidang_urusan->Program as $program ){
-                        $program->Outcome=DB::table('renstra_program_outcome')->where('id_renstra_program',$program->id)->get();
-                        foreach ($program->Outcome as $outcame) {
-                            $result[] = [
-                                'indikator' => $outcame->outcome,
-                                'target' => '',
-                                'realisasi' => '',
-                                'target_tahun_sebelum' => '',
-                                'target_tahun_sebelum_sebelunya' =>  '',
-                                'realisasi_tahun_sebelum' => '',
-                                'realisasi_tahub_sebelum_sebelumnya' => ''
-                            ];
-                        }
-
-                       
-                        $program->Kegiatan=DB::table('renstra_kegiatan')
-                        ->select('renstra_kegiatan.*','kegiatan.kode_kegiatan','kegiatan.nama_kegiatan')
-                        ->join('kegiatan','kegiatan.id','=','renstra_kegiatan.id_kegiatan')->whereRaw("renstra_kegiatan.id_renstra_program='$program->id' AND id_unit_kerja=".Auth::user()->id_unit_kerja)->get();
-
-                        foreach ( $program->Kegiatan as $kegiatan ){
-                            
-                            $kegiatan->Output=DB::table('renstra_kegiatan_output')->where('id_renstra_kegiatan',$kegiatan->id)->get();
-                            $kegiatan->SubKegiatan=DB::table('renstra_sub_kegiatan')
-                            ->select('renstra_sub_kegiatan.*','unit_kerja.nama_unit_kerja','dpa.is_non_urusan','sub_kegiatan.kode_sub_kegiatan','sub_kegiatan.nama_sub_kegiatan')
-                            ->join('sub_kegiatan','sub_kegiatan.id','=','renstra_sub_kegiatan.id_sub_kegiatan')
-                            ->join('dpa','dpa.id_sub_kegiatan','=','sub_kegiatan.id')
-                            ->join('unit_kerja','unit_kerja.id','=','renstra_sub_kegiatan.id_unit_kerja')
-                          
-                            ->whereRaw("renstra_sub_kegiatan.id_renstra_kegiatan='$kegiatan->id' AND renstra_sub_kegiatan.id_urusan='$urusan->id' AND renstra_sub_kegiatan.id_program='$program->id_program' AND renstra_sub_kegiatan.id_kegiatan='$kegiatan->id_kegiatan' AND dpa.tahun='$tahun' AND dpa.id_unit_kerja=".Auth::user()->id_unit_kerja)
-                            ->get();
-                            $kegiatan->totPersenK=0;
-                            $kegiatan->totPersenTargetK=0;
-                            $kegiatan->KegiatanTotalRealisasiK=0;
-                            $kegiatan->KegiatanTotalRealisasiRp=0;
-                            $kegiatan->KegiatanTotalTargetKinerjaK=0;
-                            $kegiatan->KegiatanTotalTargetKinerjaRp=0;
-                            for($p=1;$p<=$triwulan;$p++){
-                            $kegiatan->TotalRealisasiKinerjaK[$p]=0;
-                            $kegiatan->TotalPersenRealisasiKinerjaK[$p]=0;
-                            $kegiatan->TotalPersenRealisasiKinerjaRenstra[$p]=0;
-                            $kegiatan->TotalRealisasiKinerjaRp[$p]=0;
-                            }
-
-                            $output="";
-                            $volume='';
-                            $satuan='';
-                            foreach ($kegiatan->Output as $dt ){
-                                $volume.=$dt->volume;
-                                $satuan.=$dt->satuan;
-                                $output.=$dt->output."\n";
-                            }
-
-                            $result[] = [
-                                'indikator' => $output,
-                                'target' => '',
-                                'realisasi' => '',
-                                'target_tahun_sebelum' => '',
-                                'target_tahun_sebelum_sebelunya' =>  '',
-                                'realisasi_tahun_sebelum' => '',
-                                'realisasi_tahub_sebelum_sebelumnya' => ''
-                            ];
-
-                            foreach($kegiatan->SubKegiatan as $sub_kegiatan){
-
-                            
-                                $dt->nama_unit_kerja=$sub_kegiatan->nama_unit_kerja;
-                                $id_dpa=DB::table('dpa')->whereRaw("id_sub_kegiatan='$sub_kegiatan->id_sub_kegiatan' AND id_unit_kerja=".Auth::user()->id_unit_kerja)->first()->id;
-                                $sub_kegiatan->Indikator=DB::table('renstra_sub_kegiatan_indikator')->where('id_renstra_sub_kegiatan',$sub_kegiatan->id)->get();
-                                $indikator="";
-                             
-                               
-                                $sub_kegiatan->Realisasi0=DB::table('renstra_realisasi_sub_kegiatan')->whereRaw("id_renstra_sub_kegiatan='$sub_kegiatan->id' AND (tahun <= '$tahun_sebelum')")->get();
-                                // $sub_kegiatan->Realisasi1K=DB::table('realisasi')->whereRaw("id_dpa='$id_dpa' AND tahun='$tahun_sebelum' AND periode<=4")->unique('periode')->reduce(function($total,$value){return $total + optional($value)->realisasi_kinerja;})->get();
-                                $sub_kegiatan->Realisasi1K=0;
-                                $sub_kegiatan->Realisasi1Rp=0;
-                                $getRealisasi=DB::table('realisasi')->selectRaw("distinct(periode),realisasi_kinerja,realisasi_keuangan")->whereRaw("id_dpa='$id_dpa' AND tahun='$tahun_sebelum' AND periode<=4")->get();
-                                foreach($getRealisasi as $ds){
-                                    $sub_kegiatan->Realisasi1K+=$ds->realisasi_kinerja;
-                                    $sub_kegiatan->Realisasi1Rp+=$ds->realisasi_keuangan;
-                                }
-                                $sub_kegiatan->RealisasiK=$sub_kegiatan->Realisasi0->sum('volume')+$sub_kegiatan->Realisasi1K;
-
-
-                                $sub_kegiatan->RealisasiRp=$sub_kegiatan->Realisasi0->sum('realisasi_keuangan')+$sub_kegiatan->Realisasi1Rp;
-                                $sub_kegiatan->TargetK=DB::table('renstra_sub_kegiatan_target')->whereRaw("id_renstra_sub_kegiatan='$sub_kegiatan->id' AND tahun='$tahun'")->sum('volume');
-
-
-                                $sub_kegiatan->TargetRp=DB::table('dpa')->whereRaw("dpa.id_sub_kegiatan='$sub_kegiatan->id_sub_kegiatan' AND dpa.tahun='$tahun' AND id_unit_kerja=".Auth::user()->id_unit_kerja)->sum('dpa.nilai_pagu_dpa');
-                                
-                                $kegiatan->totPersenK+=$sub_kegiatan->total_volume == 0 ? 0 : (($sub_kegiatan->RealisasiK)/$sub_kegiatan->total_volume)*100;
-                                $kegiatan->totPersenTargetK+=$sub_kegiatan->TargetK == 0 ? 0 : (($sub_kegiatan->TargetK)/$sub_kegiatan->TargetK)*100;
-
-                                $totRealisasiKinerjaK=0;
-                                $totRealisasiKinerjaRp=0;
-                                for($p=1;$p<=$triwulan;$p++){
-                                    $realisasi=DB::table('dpa')->join('realisasi','realisasi.id_dpa','=','dpa.id')->whereRaw("dpa.id_sub_kegiatan='$sub_kegiatan->id_sub_kegiatan' AND realisasi.periode='$p' AND realisasi.tahun='$tahun' AND id_unit_kerja=".Auth::user()->id_unit_kerja)->limit(1);
-
-                              
-
-                                    // if($realisasi->count()>0){
-                                    //     $sub_kegiatan->RealisasiKinerjaRp[$p]=$realisasi->first()->realisasi_keuangan;
-                                    //     $sub_kegiatan->RealisasiKinerjaK[$p]=$realisasi->first()->realisasi_kinerja;
-                                    // }else{
-                                    //     $sub_kegiatan->RealisasiKinerjaRp[$p]=0;
-                                    //     $sub_kegiatan->RealisasiKinerjaK[$p]=0;
-                                    // }
-
-                                    // $kegiatan->TotalRealisasiKinerjaK[$p]+=$sub_kegiatan->RealisasiKinerjaK[$p];
-                                        // $kegiatan->TotalPersenRealisasiKinerjaRenstra[$p]+=$sub_kegiatan->total_volume == 0 ? 0 : (($sub_kegiatan->RealisasiKinerjaK[$p])/$sub_kegiatan->total_volume)*100;
-
-
-                                    // $totRealisasiKinerjaK+=$sub_kegiatan->RealisasiKinerjaK[$p];
-                                    // $totRealisasiKinerjaRp+=$sub_kegiatan->RealisasiKinerjaRp[$p];/ $kegiatan->TotalRealisasiKinerjaRp[$p]+=$sub_kegiatan->RealisasiKinerjaRp[$p];
-
-                                    // $kegiatan->TotalPersenRealisasiKinerjaK[$p]+=$sub_kegiatan->TargetK == 0 ? 0 : (($sub_kegiatan->RealisasiKinerjaK[$p])/$sub_kegiatan->TargetK)*100;
-                                    
-                               
-                                }
-
-                                    // $kegiatan->KegiatanTotalRealisasiK+=$sub_kegiatan->RealisasiK;
-                                    // $kegiatan->KegiatanTotalRealisasiRp+=$sub_kegiatan->RealisasiRp;
-                            
-                                
-                              
-                                    // $kegiatan->KegiatanTotalTargetKinerjaK+=$sub_kegiatan->TargetK;
-                                    // $kegiatan->KegiatanTotalTargetKinerjaRp+=$sub_kegiatan->TargetRp;
-                            
-
-                                $sub_kegiatan->K13=$totRealisasiKinerjaK;
-                                $sub_kegiatan->Rp13=$totRealisasiKinerjaRp;
-                                
-                                $sub_kegiatan->K14=$sub_kegiatan->RealisasiK+$sub_kegiatan->K13;
-
-                               
-
-                                foreach ($sub_kegiatan->Indikator as $in_indikator => $dt ){
-                                    $indikator.=$dt->indikator." (".$dt->satuan.") \n";
-                                    $result[] = [
-                                        'indikator' => $indikator,
-                                        'target' => $sub_kegiatan->total_volume,
-                                        'realisasi' => $sub_kegiatan->K14,
-                                        'target_tahun_sebelum' =>  DB::table('renstra_sub_kegiatan_target')->whereRaw("id_renstra_sub_kegiatan='$sub_kegiatan->id' AND tahun='$tahun_sebelum'")->sum('volume'),
-                                        'target_tahun_sebelum_sebelunya' =>  DB::table('renstra_sub_kegiatan_target')->whereRaw("id_renstra_sub_kegiatan='$sub_kegiatan->id' AND tahun='$tahun_sebelum_sebelumnya'")->sum('volume'),
-                                        'realisasi_tahun_sebelum' => $sub_kegiatan->Realisasi0->sum('volume'),
-                                        'realisasi_tahub_sebelum_sebelumnya' => DB::table('renstra_realisasi_sub_kegiatan')->whereRaw("id_renstra_sub_kegiatan='$sub_kegiatan->id' AND (tahun <= '$tahun_sebelum_sebelumnya')")->get()->sum('volume')
-                                    ];
-                                    
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return response()->json([
-            'type' => 'success',
-            'status' => true,
-            'data' => $result,
-        ]);
-    }
-
     public function export_ikk(){
         $tahun = session('tahun_penganggaran');
         $type = request('type');
@@ -715,7 +532,7 @@ Penutup.")->mergeCells('D11:G11');
         ->select('renstra_program.id','program.kode_program','program.nama_program','renstra_program.id_program')
         ->join('program','program.id','=','renstra_program.id_program')
         ->whereRaw("id_unit_kerja=".Auth::user()->id_unit_kerja)->get();
-        //return json_encode($data);
+     
             foreach ( $data as $program ){
             $program->Outcome=DB::table('renstra_program_outcome')
             ->select('renstra_program_outcome.outcome')
@@ -763,6 +580,17 @@ Penutup.")->mergeCells('D11:G11');
 
         return $this->export_ikk_($data, $tahun, $tahun_sebelum, $dinas);
 
+    }
+
+    public function datatable_iki(){
+        
+      
+
+        return response()->json([
+            'type' => 'success',
+            'status' => true,
+            'data' => $result,
+        ]);
     }
 
     public function export_ikk_($data, $tahun, $tahun_sebelum,$dinas){
