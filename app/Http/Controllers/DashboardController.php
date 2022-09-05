@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use DB;
 class DashboardController extends Controller
 {
@@ -142,5 +144,145 @@ class DashboardController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function export(){
+        $type = request('type');
+        $document_type = request('document_type');
+        $data = array();
+        if (Auth::user()->id_role == 4) {
+  
+            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,documents.user_insert,documents.id_verifikator, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat WHERE documents.jenis_document <= 4 AND documents.tahun=".session('tahun_penganggaran')." AND documents.id_verifikator=".Auth::user()->id);
+
+            foreach ($data as $key => $value) {
+                if (strpos($value->nama_documents, 'Renstra') !== false || strpos($value->nama_documents, 'Renja') !== false) {
+                    $value->unit_kerja = DB::table('unit_kerja')->select('unit_kerja.nama_unit_kerja')->join('user','user.id_unit_kerja','=','unit_kerja.id')->where('user.id',$value->user_insert)->first()->nama_unit_kerja;
+                }else{
+                    $value->unit_kerja = DB::table('perangkat_desa')->select('perangkat_desa.nama_desa')->join('user','user.id_unit_kerja','=','perangkat_desa.id')->where('user.id',$value->user_insert)->first()->nama_desa;
+                    
+                }
+            }
+
+        }else{
+
+            $data = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_perangkat,documents.user_insert, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents WHERE documents.jenis_document <= ".$document_type." AND documents.tahun=".session('tahun_penganggaran'));
+
+            foreach ($data as $key => $value) {
+                if (strpos($value->nama_documents, 'Renstra') !== false || strpos($value->nama_documents, 'Renja') !== false) {
+                    $value->unit_kerja = DB::table('unit_kerja')->select('unit_kerja.nama_unit_kerja')->join('user','user.id_unit_kerja','=','unit_kerja.id')->where('user.id',$value->user_insert)->first()->nama_unit_kerja;
+                }else{
+                    $value->unit_kerja = DB::table('perangkat_desa')->select('perangkat_desa.nama_desa')->join('user','user.id_unit_kerja','=','perangkat_desa.id')->where('user.id',$value->user_insert)->first()->nama_desa;
+                    
+                }
+            }
+        }
+
+        return $this->export_table_admin($data,$type);
+    }
+
+    public function export_table_admin($data,$type){
+        // return $data;
+        $spreadsheet = new Spreadsheet();
+
+        $spreadsheet->getProperties()->setCreator('AFILA')
+            ->setLastModifiedBy('AFILA')
+            ->setTitle('Capaian Kinerja Makro Enrekang')
+            ->setSubject('Capaian Kinerja Makro Enrekang')
+            ->setDescription('Capaian Kinerja Makro Enrekang')
+            ->setKeywords('pdf php')
+            ->setCategory('Capaian Kinerja Makro Enrekang');
+        $sheet = $spreadsheet->getActiveSheet();
+        //$sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        $sheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_FOLIO);
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Bookman Old Style');
+        $spreadsheet->getDefaultStyle()->getFont()->setSize(12);
+        $spreadsheet->getActiveSheet()->getPageSetup()->setHorizontalCentered(true);
+        $spreadsheet->getActiveSheet()->getPageSetup()->setVerticalCentered(false);
+        $sheet->getDefaultRowDimension()->setRowHeight(20);
+
+        //Margin PDF
+        
+        $spreadsheet->getActiveSheet()->getPageMargins()->setTop(0.5);
+        $spreadsheet->getActiveSheet()->getPageMargins()->setRight(0.5);
+        $spreadsheet->getActiveSheet()->getPageMargins()->setLeft(0.5);
+        $spreadsheet->getActiveSheet()->getPageMargins()->setBottom(0.5);
+        $spreadsheet->getActiveSheet()->getStyle('A1:A4')->getAlignment()->setWrapText(true);
+
+        $sheet->setCellValue('A1', 'PROGRESS DOKUMEN')->mergeCells('A1:E1');
+        $sheet->setCellValue('A2', ' ')->mergeCells('A2:E2');
+       
+        
+        $sheet->setCellValue('A4','No')->getColumnDimension('A')->setWidth(5);
+        $sheet->setCellValue('B4','Nama Unit Kerja')->getColumnDimension('B')->setWidth(20);
+        $sheet->setCellValue('C4','Nama Dokumen ')->getColumnDimension('C')->setWidth(20);
+        $sheet->setCellValue('D4','Verifikator')->getColumnDimension('D')->setWidth(20);
+        $sheet->setCellValue('E4','Status')->getColumnDimension('E')->setWidth(20);
+
+        $sheet->getStyle('A4:E5')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('C6E0B4');
+        
+        $cell = 6;
+        foreach ($data as $key => $value) {
+            $sheet->setCellValue('A' . $cell, $key+1);
+            $sheet->setCellValue('B' . $cell, $value->unit_kerja);
+
+            $sheet->setCellValue('C' . $cell, $value->nama_documents);
+            $sheet->setCellValue('D' . $cell, $value->verifikator);
+
+            $status = '';
+            if ($value->status_document == '1') {
+                $status = 'Belum Verifikasi';
+            }else if($value->status_document == '2'){
+                $status = 'Perbaikan';
+            }else if($value->status_document == '3'){
+                $status = 'Belum Selesai';
+            }else{
+                $status = 'Selesai';
+            }
+         
+            $sheet->setCellValue('E' . $cell, $status);
+            $cell++;
+        }
+
+        $border = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '0000000'],
+                ],
+            ],
+        ];
+
+        $sheet->getStyle('A4:E'. $cell )->applyFromArray($border);
+        $sheet->getStyle('A1:E5')->getFont()->setBold(true);
+        $sheet->getStyle('A1:E'. $cell )->getAlignment()->setVertical('center')->setHorizontal('center');
+        $sheet->getStyle('B6:B'. $cell )->getAlignment()->setVertical('top')->setHorizontal('left');
+        
+
+        $sheet->setCellValue('A' . ++$cell, '');
+      
+        if ($type == 'export') {
+            $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':L' . $cell);
+            $spreadsheet->getActiveSheet()->getHeaderFooter()
+                ->setOddHeader('&C&H' . url()->current());
+            $spreadsheet->getActiveSheet()->getHeaderFooter()
+                ->setOddFooter('&L&B &RPage &P of &N'.url()->current());
+            $class = \PhpOffice\PhpSpreadsheet\Writer\Pdf\Mpdf::class;
+            \PhpOffice\PhpSpreadsheet\IOFactory::registerWriter('Pdf', $class);
+            header('Content-Type: application/pdf');
+            //header('Content-Disposition: attachment;filename="Konsederan Renstra '.$data->unit_kerja.'.pdf"');
+            header('Cache-Control: max-age=0');
+            $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Pdf');
+        }else{
+            $writer = new Xlsx($spreadsheet);
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="progress_dokumen.xlsx"');
+        }
+
+            $writer->save('php://output');
+            exit;
+    }
+
+    public function export_table_verifikator($data){
+        
     }
 }

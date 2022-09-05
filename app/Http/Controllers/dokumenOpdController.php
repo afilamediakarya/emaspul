@@ -566,8 +566,8 @@ Penutup.")->mergeCells('D11:G11');
         }
         
 
-        if ($type == 'export') {
-            return $this->export_ikk_($data, $tahun, $tahun_sebelum, $dinas);
+        if ($type == 'export' || $type == 'excel') {
+            return $this->export_ikk_($data, $tahun, $tahun_sebelum, $dinas, $type);
         }else{
           return $this->datatable_iki($data);
         }
@@ -628,7 +628,7 @@ Penutup.")->mergeCells('D11:G11');
         ]);
     }
 
-    public function export_ikk_($data, $tahun, $tahun_sebelum,$dinas){
+    public function export_ikk_($data, $tahun, $tahun_sebelum,$dinas, $type){
         $spreadsheet = new Spreadsheet();
 
         $spreadsheet->getProperties()->setCreator('AFILA')
@@ -731,6 +731,12 @@ Penutup.")->mergeCells('D11:G11');
         $sheet->getStyle('A1:F6')->getFont()->setBold(true);
         $sheet->getStyle('A1:F6')->getAlignment()->setVertical('center')->setHorizontal('center');
         $cell++;
+
+        if ($type == 'excel') {
+            $writer = new Xlsx($spreadsheet);
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="IKK ' . $dinas . '.xlsx"');
+        }else{
             $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':F' . $cell);
             $spreadsheet->getActiveSheet()->getHeaderFooter()
                 ->setOddHeader('&C&H' . url()->current());
@@ -742,6 +748,8 @@ Penutup.")->mergeCells('D11:G11');
             // header('Content-Disposition: attachment;filename="EVALUASI RENJA '.$dinas.'.pdf"');
             header('Cache-Control: max-age=0');
             $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Pdf');
+        }
+            
 
             $writer->save('php://output');
             exit;

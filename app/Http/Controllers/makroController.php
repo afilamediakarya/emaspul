@@ -49,12 +49,12 @@ class makroController extends Controller
                 'data' => $data,
             ]);
         }else{
-            return $this->export_kinerja_makro($data);
+            return $this->export_kinerja_makro($data,$type);
         }
         
     }
 
-    public function export_kinerja_makro($data){
+    public function export_kinerja_makro($data,$type){
         $spreadsheet = new Spreadsheet();
 
         $spreadsheet->getProperties()->setCreator('AFILA')
@@ -138,7 +138,9 @@ class makroController extends Controller
         
 
         $sheet->setCellValue('A' . ++$cell, '');
-        $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':L' . $cell);
+      
+        if ($type == 'export') {
+            $sheet->setCellValue('A' . ++$cell, 'Dicetak melalui ' . url()->current())->mergeCells('A' . $cell . ':L' . $cell);
             $spreadsheet->getActiveSheet()->getHeaderFooter()
                 ->setOddHeader('&C&H' . url()->current());
             $spreadsheet->getActiveSheet()->getHeaderFooter()
@@ -149,6 +151,12 @@ class makroController extends Controller
             //header('Content-Disposition: attachment;filename="Konsederan Renstra '.$data->unit_kerja.'.pdf"');
             header('Cache-Control: max-age=0');
             $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Pdf');
+        }else{
+            $writer = new Xlsx($spreadsheet);
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="kinerja makro.xlsx"');
+        }
+
             $writer->save('php://output');
             exit;
     }

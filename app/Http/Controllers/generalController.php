@@ -101,13 +101,7 @@ class generalController extends Controller
     }
 
     public function setTahunAnggaran(){
-      
-        // session(['tahun_penganggaran' => request('tahun')]);
-        // // Session::put('tahun_penganggaran',request('tahun'));
-
-        // return redirect()->back();
         session(['tahun_penganggaran' => request('tahun')]);
-
         return redirect()->back();
     }
 
@@ -253,6 +247,8 @@ class generalController extends Controller
                         
                     }
                 }
+
+           
             }
 
              
