@@ -193,6 +193,7 @@
                 }
             },
             {
+                width:"10rem",
                 targets: -1,
                 title: 'Aksi',
                 width: '20rem',
@@ -206,18 +207,18 @@
                     let action = '';
 
                     if (role == 1) {
-                       action = `<a href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm">
-                       <i class="fa fa-file-pdf" aria-hidden="true" style="color:white"></i> Dokumen</a>
+                       action = `<a title="Dokumen" href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm btn-icon">
+                       <i class="fa fa-file-pdf" aria-hidden="true" style="color:white"></i></a>
 
-                       <a href="javascript:;" type="button" data-id="${data.id}" data-jenis="${data.jenis_document}"  data-bs-toggle="modal" data-bs-target="#kt_modal_2" class="btn btn-info button-detail btn-sm">
-                       <i class="fa fa-eye" aria-hidden="true" style="color:white"></i> Detail</a>
+                       <a title="Detail" href="javascript:;" type="button" data-id="${data.id}" data-jenis="${data.jenis_document}"  data-bs-toggle="modal" data-bs-target="#kt_modal_2" class="btn btn-info button-detail btn-sm btn-icon">
+                       <i class="fa fa-eye" aria-hidden="true" style="color:white"></i></a>
                         `; 
                     }else{
-                        action = `<button ${disabled} type="button" data-id="${data.id}" class="btn btn-warning btn-verifikasi btn-sm">
-                        <i class="fa fa-check-square" aria-hidden="true" style="color:white"></i> Verifikasi</button>
+                        action = `<button ${disabled} type="button" data-id="${data.id}" title="Verifikasi" class="btn btn-warning btn-verifikasi btn-sm btn-icon">
+                        <i class="fa fa-check-square" aria-hidden="true" style="color:white"></i></button>
                             
-                        <a href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm">
-                        <i class="fa fa-file-pdf" aria-hidden="true" style="color:white"></i> Dokumen</a>`; 
+                        <a title="Dokumen" href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm btn-icon">
+                        <i class="fa fa-file-pdf" aria-hidden="true" style="color:white"></i></a>`; 
                     }
 
                     return action;

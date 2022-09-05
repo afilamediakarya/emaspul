@@ -386,9 +386,9 @@
                 }
             },
             {
+                width:"10rem",
                 targets: -1,
                 title: 'Aksi',
-                // width: '15rem',
                 orderable: false,
                 render: function(data, type, full, meta) {
                     let disabled = '';
@@ -396,14 +396,14 @@
                         disabled = 'disabled'
                     }
                     return `
-                        <button type="button" ${disabled} data-id="${data.id}" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" class="btn btn_green button-update btn-sm filter-btn">
-                        <i class="fa fa-edit" aria-hidden="true" style="color:white"></i> Edit</button>
+                        <button title="Edit" type="button" ${disabled} data-id="${data.id}" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" class="btn btn_green button-update btn-icon btn-sm filter-btn">
+                        <i class="fa fa-edit" aria-hidden="true" style="color:white"></i></button>
 
-                        <a href="javascript:;" type="button" data-id="${data.id}" data-jenis="${data.jenis_document}"  data-bs-toggle="modal" data-bs-target="#kt_modal_1" class="btn btn-info button-detail btn-sm">
-                        <i class="fa fa-eye" aria-hidden="true" style="color:white"></i> Detail</a>
+                        <a title="Detail" href="javascript:;" type="button" data-id="${data.id}" data-jenis="${data.jenis_document}"  data-bs-toggle="modal" data-bs-target="#kt_modal_1" class="btn btn-info button-detail btn-icon btn-sm">
+                        <i class="fa fa-eye" aria-hidden="true" style="color:white"></i></a>
                         
-                        <a href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm">
-                        <i class="fa fa-file-pdf" aria-hidden="true" style="color:white"></i> Dokumen</a>
+                        <a title="Dokumen"href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-icon btn-sm">
+                        <i class="fa fa-file-pdf" aria-hidden="true" style="color:white"></i></a>
                         `;
                 },
             }

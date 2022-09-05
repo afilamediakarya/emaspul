@@ -252,14 +252,15 @@
                 }
             },
             {
+                width:"10rem",
                 targets: -1,
                 title: 'Aksi',
                 // width: '15rem',
                 orderable: false,
                 render: function(data, type, full, meta) {
                  console.log(data);
-                    return `<a href="javascript:;" type="button" data-id="${data.id}" data-label="${data.nama_documents}" data-jenis="${data.jenis_document}"  data-bs-toggle="modal" data-bs-target="#kt_modal_2" class="btn btn-info button-detail btn-sm">
-                    <i class="fa fa-eye" aria-hidden="true" style="color:white"></i> Detail</a>`; 
+                    return `<a title="Detail" href="javascript:;" type="button" data-id="${data.id}" data-label="${data.nama_documents}" data-jenis="${data.jenis_document}"  data-bs-toggle="modal" data-bs-target="#kt_modal_2" class="btn btn-info button-detail btn-sm btn-icon">
+                    <i class="fa fa-eye" aria-hidden="true" style="color:white"></i></a>`; 
                    
                 },
             }
