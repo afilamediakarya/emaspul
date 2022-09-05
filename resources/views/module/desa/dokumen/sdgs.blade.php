@@ -240,16 +240,17 @@
         ];
         let columnDefs = [
             {
+                width:"10rem",
                 targets: -1,
                 title: 'Aksi',
                 // width: '15rem',
                 orderable: false,
                 render: function(data, type, full, meta) {
                     return `
-                        <a href="javascript:;" type="button" data-id="${data.id}" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" class="btn btn_green button-update btn-sm">
-                        <i class="fa fa-edit" aria-hidden="true" style="color:white"></i> Edit</a>
-                        <a href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm">
-                        <i class="fa fa-file-pdf" aria-hidden="true" style="color:white"></i> Dokumen</a>
+                        <a title="Edit" href="javascript:;" type="button" data-id="${data.id}" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" class="btn btn_green button-update btn-sm btn-icon">
+                        <i class="fa fa-edit" aria-hidden="true" style="color:white"></i></a>
+                        <a title="Dokumen" href="javascript:;" target="_blank" data-label="${data.file_document}" class="btn btn-primary button-show btn-sm btn-icon">
+                        <i class="fa fa-file-pdf" aria-hidden="true" style="color:white"></i></a>
                         `;
                 },
             }

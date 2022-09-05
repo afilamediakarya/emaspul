@@ -286,7 +286,7 @@
                 render: function(data, type, full, meta) {
                     if (role == 1) {
                         return `
-                        <a title="Edit" href="javascript:;" type="button" data-id="${data.id}" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" class="btn btn_green button-update btn-sm btn-icon"> 
+                        <a title="Edit" href="javascript:;" type="button" data-id="${data.id}" data-kt-drawer-show="true" data-kt-drawer-target="#side_form" class="btn btn_green button-update btn-sm btn-icon btn-icon"> 
                         <i class="fa fa-edit" aria-hidden="true" style="color:white"></i></a>
                         `;
                     }else{
