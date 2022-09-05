@@ -133,12 +133,12 @@
 
                 <div class="mb-10">
                     <label class="form-label">Nomor Peraturan</label>
-                    <input type="text" class="form-control form-control-solid" id="nomor_perbub" name="nomor_perbub" placeholder="Masukkan Nomor Perbub">
+                    <input type="text" class="form-control form-control-solid" id="nomor_perbub" name="nomor_perbub" placeholder="Masukkan Nomor Peraturan">
                     <small class="text-danger nomor_perbub_error"></small>
                 </div>
 
                 <div class="mb-10">
-                    <label class="form-label">Tanggal Peraturan</label>
+                    <label class="form-label">Tanggal Penetapan</label>
                     <input type="date" class="form-control form-control-solid" id="tanggal_perbub" name="tanggal_perbub">
                     <small class="text-danger tanggal_perbub_error"></small>
                 </div>
@@ -265,7 +265,7 @@
                             <p class="fz-16 content_detail_4"></p>
                         </div>
                         <div class="col-lg-6">
-                            <span class="fz-12">Tanggal Peraturan</span>
+                            <span class="fz-12">Tanggal Penetapan</span>
                             <p class="fz-16 content_detail_5"></p>
                         </div>
                    </div>

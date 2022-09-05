@@ -36,7 +36,7 @@
                             <th>No</th>
                             <th>Nama Dokumen</th>
                             <th>Nomor Peraturan</th>
-                            <th>Tanggal Peraturan</th>
+                            <th>Tanggal Penetapan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -125,12 +125,12 @@
 
                 <div class="mb-10">
                     <label class="form-label">Nomor Peraturan</label>
-                    <input type="text" class="form-control form-control-solid" id="nomor_perbub" name="nomor_perbub" placeholder="Masukkan Nomor Perbub">
+                    <input type="text" class="form-control form-control-solid" id="nomor_perbub" name="nomor_perbub" placeholder="Masukkan Nomor Peraturan">
                     <small class="text-danger nomor_perbub_error"></small>
                 </div>
 
                 <div class="mb-10">
-                    <label class="form-label">Tanggal Peraturan</label>
+                    <label class="form-label">Tanggal Penetapan</label>
                     <input type="date" class="form-control form-control-solid" id="tanggal_perbub" name="tanggal_perbub">
                     <small class="text-danger tanggal_perbub_error"></small>
                 </div>

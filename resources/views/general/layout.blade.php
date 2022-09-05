@@ -50,7 +50,7 @@ License: For each use you must have a valid license purchased only from above li
 					<div class="aside-logo-custom flex-column-auto" id="kt_aside_logo">
 						<!--begin::Logo-->
 						<a href="#">
-						<img src="{{ asset('assets/media/logo/logo.png') }}" alt="logo e-maspul" id="logo_">
+						<img src="{{ asset('assets/media/logo/logo_front.png') }}" alt="logo e-maspul" id="logo_">
 
 						</a>
                             <!-- <h4 class="text-white">Prediksi Performa Mahasiswa</h4> -->
