@@ -33,15 +33,11 @@
                     <thead>
                         <tr class="fw-bolder fs-6 text-gray-800">
                             <th>No</th>
+                            <th>Indikator 2021</th>
                             <th>Indikator</th>
-                            @for($i= 0; $i < 2; $i++)
-                            <th>Target {{$tahun + $i}}</th>
-                            @endfor
-                            @for($i= 0; $i < 2; $i++)
-                            <th>Realisasi {{$tahun + $i}}</th>
-                            @endfor
+                            <th>Indikator</th>
                             <th>Target RPJMD</th>
-                            <th>Realisasi RJMD</th>
+                            <th>Target RPJMD</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -71,22 +67,18 @@
       
         let columns = [
             { 
-            data : null, 
+                data : null, 
                 render: function (data, type, row, meta) {
                         return meta.row + meta.settings._iDisplayStart + 1;
                 }  
             },{
                 data:'indikator'
             },{
-                data:'target_tahun_sebelum'
+                data:'target0'
             },{
-                data:'target_tahun_sebelum_sebelunya'
+                data:'target1'
             },{
-                data:'realisasi_tahun_sebelum'
-            },{
-                data:'realisasi_tahub_sebelum_sebelumnya'
-            },{
-                data:'target'
+                data:'target2'
             },{
                 data:'realisasi'
             }

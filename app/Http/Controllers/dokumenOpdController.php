@@ -110,7 +110,6 @@ class dokumenOpdController extends Controller
 
         $user = DB::table('user')->where('id',$data->user_insert)->first();        
 
-
         $data->hari = $this->getHari();
         $data->tanggal = date('d');
         $data->bulan = date('m');
@@ -416,18 +415,7 @@ Penutup.")->mergeCells('D11:G11');
         $sheet->getStyle('F27')->getFont()->setUnderline(true);
         $sheet->setCellValue('F27', $data->nama_user)->mergeCells('F27:G27');
         $sheet->setCellValue('F28', $data->nip_user)->mergeCells('F28:G28');
-        $sheet->setCellValue('A29', ' 
-        
-
-
-
-
-
-
-
-
-        
-        ')->mergeCells('A29:G29');
+        $sheet->setCellValue('A29', '')->mergeCells('A29:G29');
         
 
         $spreadsheet->createSheet();
@@ -578,13 +566,60 @@ Penutup.")->mergeCells('D11:G11');
         }
         
 
-        return $this->export_ikk_($data, $tahun, $tahun_sebelum, $dinas);
+        if ($type == 'export') {
+            return $this->export_ikk_($data, $tahun, $tahun_sebelum, $dinas);
+        }else{
+          return $this->datatable_iki($data);
+        }
 
     }
 
-    public function datatable_iki(){
+    public function datatable_iki($data){
         
-      
+        $result = [];
+        foreach ( $data as $program ){
+            if ($program->id_program!=166){
+                foreach ($program->Outcome as $dt ){
+                    $outcome="";
+                    $outcome.=$dt->outcome." \n";
+                    $result[] = [
+                        'indikator' => $outcome,
+                        'target0' => '',
+                        'target1' =>  '',
+                        'target2' =>  '',
+                        'realisasi' =>  '',
+                    ];
+                    foreach ( $program->Kegiatan->sortBy('kode_kegiatan') as $kegiatan ){
+                        $output="";
+                        foreach ($kegiatan->Output as $dt ){
+                            $output.=$dt->output."\n";
+                        }
+
+                        $result[] = [
+                            'indikator' => $output,
+                            'target0' => '',
+                            'target1' =>  '',
+                            'target2' =>  '',
+                            'realisasi' =>  '',
+                        ];
+
+                        foreach ( $kegiatan->SubKegiatan->sortBy('kode_sub_kegiatan') as $sub_kegiatan ){
+                            $indikator="";
+                            $indikator=$sub_kegiatan->tolak_ukur;
+                            $satuan='';
+                            $satuan=$sub_kegiatan->satuan;
+                            $result[] = [
+                                'indikator' => $indikator,
+                                'target0' => $sub_kegiatan->target0->volume.' '.$satuan,
+                                'target1' =>  $sub_kegiatan->target1->volume.' '.$satuan,
+                                'target2' =>  $sub_kegiatan->target2->volume.' '.$satuan,
+                                'realisasi' =>  $sub_kegiatan->realisasi0.' '.$satuan,
+                            ];
+                        }
+                    }
+                }
+            }
+        }
 
         return response()->json([
             'type' => 'success',
