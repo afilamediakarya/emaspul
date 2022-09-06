@@ -7,6 +7,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use QrCode;
+
 class dokumenDesaController extends Controller
 {
     public function index(){
@@ -115,7 +117,18 @@ class dokumenDesaController extends Controller
     }
 
     public function konsederan_rpjmdes($data){
+
+
+
         $spreadsheet = new Spreadsheet();
+
+        // $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+
+        $qr_code = QrCode::size(100)->generate('A basic example of QR code!');
+
+        $qr_fix = trim(str_replace('<?xml version="1.0" encoding="UTF-8"?>','',$qr_code));
+
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
 
         $spreadsheet->getProperties()->setCreator('AFILA')
             ->setLastModifiedBy('AFILA')
@@ -204,20 +217,11 @@ class dokumenDesaController extends Controller
       $sheet->getStyle('F27')->getFont()->setUnderline(true);
       $sheet->setCellValue('F27', $data->nama_user)->mergeCells('F27:G27');
       //$sheet->setCellValue('F28', $data->nip_user)->mergeCells('F28:G28');
-      $sheet->setCellValue('A29', ' 
+      $sheet->setCellValue('A29', $qr_fix)->mergeCells('A29:G29');
       
 
+    //    return QrCode::size(500)->generate('sdfsdfsdf');
 
-
-
-
-
-
-
-
-      
-      
-      ')->mergeCells('A29:G29');
 
 
         $cell = 35;

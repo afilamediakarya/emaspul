@@ -82,12 +82,14 @@
                 </svg> Cetak</a> <span></span>
 
                 <a style="margin-left: 12px;" href="/get-data/dashboard/export?type=excel&document_type=4" target="_blank" role="button" class="btn btn-success btn-sm "> <i class="fas fa-file-excel"></i>  Excel</a> 
+                
         </div>
         </div>
        
             <div class="card-body p-0">
                 <div class="container">
                 <div class="py-5">
+
                     <table id="kt_table_data" class="table table-row-dashed table-row-gray-300 gy-7">
                         <thead>
                             <tr class="fw-bolder fs-6 text-gray-800">
