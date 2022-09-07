@@ -124,60 +124,72 @@ class dokumenOpdController extends Controller
 
                 $html = '';
 
-                $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
+                $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RANCANGAN AWAL RENCANA STRATEGIS (RENSTRA) <br>'.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
 
                 $html .= "<h4 style='text-align:center; line-height: -20pt;'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
 
                 $html .= '<p style="text-align:justify" line-height: 15pt; style="text-indent: 45px;">
-                Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Dokumen RPJM Desa '.$data->unit_kerja.' Kabupaten Enrekang Periode '.$data->periode_awal.' - '.$data->periode_akhir.', sebagai berikut : </p>';
+                Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Rancangan awal Renstra PD '.$data->unit_kerja.' Kabupaten Enrekang Periode '.$data->periode_awal.' - '.$data->periode_akhir.', sebagai berikut : </p>';
 
-                $html .= '<p style="text-align:justify" style="text-indent: 45px;"> Setelah dilakukan verifikasi RPJM Desa maka disepakati : </p>';
+                $html .= '<p style="text-align:justify" style="text-indent: 45px;"> Setelah dilakukan verifikasi rancangan awal Renstra maka disepakati : </p>';
 
                 $html .= "<table style='vertical-align: text-top; line-height: 15pt;'>
                 <tr>
                     <td style='width: 18%;'>KESATU</td>
                     <td style='text-align: justify;  line-height: 15pt;'>
-                        Pedoman penyusunan RPJM Desa agar disesuaikan dengan Ketentuan
-                        Peraturan Menteri Dalam Negeri Nomor 114 Tahun 2014 tentang Pedoman
-                        Pembangunan Desa, meliputi :
+                    Sistematika penulisan Renstra agar disesuaikan dengan ketentuan Peraturan Menteri Dalam Negeri Republik Indonesia Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi Pembangunan Daerah, Tata Cara Evaluasi Rancangan Peraturan Daerah tentang RPJPD dan RPJMD, serta Tata Cara Perubahan RPJPD, RPJMD, dan Rencana Kerja Pemerintah Daerah, paling sedikit memuat :
                     
                         <table>
                             <tr>
                             <td style='vertical-align: text-top;'>1. </td>
-                            <td style='text-align: justify;  line-height: 15pt;'>Penyempurnaan RPJM Desa sesuai saran dan masukan Tim Verifikasi
-                            sebagaimana tersebut pada formulir verifikasi terlampir yang
-                            merupakan bagian tidak terpisahkan dari Berita Acara ini</td>
+                            <td style='text-align: justify;  line-height: 15pt;'>Pendahuluan;</td>
                             </tr>
                             <tr>
-                            <td style='vertical-align: text-top; line-height: 15pt;'>2. </td>
-
-                            <td style='text-align: justify; line-height: 15pt;'>RPJM Desa mengacu pada RPJM kabupaten/kota, yang memuat Visi
-                            dan Misi Kepala Desa, rencana penyelenggaraan Pemerintahan Desa,
-                            Pelaksanaan Pembangunan, Pembinaan Kemasyarakatan,
-                            Pemberdayaan Masyarakat, dan arah kebijakan Pembangunan Desa</td>
+                            <td style='vertical-align: text-top;'>2. </td>
+                            <td style='text-align: justify;  line-height: 15pt;'>Gambaran Pelayanan Perangkat Daerah;</td>
+                            </tr>
+                            <tr>
+                            <td style='vertical-align: text-top;'>3. </td>
+                            <td style='text-align: justify;  line-height: 15pt;'>Permasalahan dan Isu Isu Strategis Perangkat Daerah</td>
+                            </tr>
+                            <tr>
+                            <td style='vertical-align: text-top;'>4. </td>
+                            <td style='text-align: justify;  line-height: 15pt;'>Tujuan dan Sasaran Perangkat Daerah;</td>
+                            </tr>
+                            <tr>
+                            <td style='vertical-align: text-top;'>5. </td>
+                            <td style='text-align: justify;  line-height: 15pt;'>Rencana Program dan Kegiatan serta  Pendanaan;</td>
+                            </tr>
+                            <tr>
+                            <td style='vertical-align: text-top;'>6. </td>
+                            <td style='text-align: justify;  line-height: 15pt;'>Kinerja Penyelenggaran Bidang Urusan; dan</td>
+                            </tr>
+                            <tr>
+                            <td style='vertical-align: text-top;'>7. </td>
+                            <td style='text-align: justify;  line-height: 15pt;'>Penutup.</td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <tr>
                     <td>KEDUA</td>
-                    <td style='text-align:justify line-height: 15pt;'>Melakukan penyempurnaan RPJM Desa Periode 2019 - 2024 Berdasarkan
-                        hasil verifikasi, meliputi :
+                    <td style='text-align:justify line-height: 15pt;'>Melakukan penyempurnaan rancangan Renstra Tahun periode ".$data->periode_awal.'-'.$data->periode_akhir." Berdasarkan  hasil verifikasi, meliputi :
                             <table>
                             <tr>
                             <td style='vertical-align: text-top; '>1. </td>
-                            <td style='text-align: justify; line-height: 15pt;'>Penyempurnaan RPJM Desa sesuai saran dan masukan Tim Verifikasi
-                            sebagaimana tersebut pada formulir verifikasi terlampir yang
-                            merupakan bagian tidak terpisahkan dari Berita Acara ini;</td>
+                            <td style='text-align: justify; line-height: 15pt;'>Penyempurnaan rancangan Renstra sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini;</td>
                             </tr>
                             <tr>
                             <td style='vertical-align: text-top; '>2. </td>
-
-                            <td style='text-align: justify; line-height: 15pt;'>Melakukan Upload Dokumen perbaikan atas hasil verifikasi RPJM Desa
-                            Tallung Tondok Periode 2019 - 2024 melalui portal
-                            https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF.</td>
+                            <td style='text-align: justify; line-height: 15pt;'>Penyempurnaan matrik Rumusan Rencana Program dan Kegiatan Perangkat Daerah periode ".$data->periode_awal.'-'.$data->periode_akhir." melalui portal https://emonev.enrekangkab.go.id/</td>
                             </tr>
                         </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>KETIGA</td>
+                    <td style='text-align:justify line-height: 15pt;'>Melakukan Upload Dokumen perbaikan hasil verifikasi Rancangan Akhir Renstra periode ".$data->periode_awal.'-'.$data->periode_akhir." melalui portal https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF.
+                            
                     </td>
                 </tr>
             </table>";
@@ -189,8 +201,12 @@ class dokumenOpdController extends Controller
             $html .= '<table style="width:100%">
             <tr>
                 <td style="width:50%;"></td>
-                <td style="width:50%; text-align:center;">Verifikator RPJM Desa<br></td>
+                <td style="width:50%; text-align:center;">Verifikator Renstra PD<br>Kabupaten Enrekang</td>
             </tr>
+            <tr>
+        <td></td>
+        <td style="text-align:center;">'.substr($qrcode,38).'</td>
+    </tr>
             <tr>
                 <td></td>
                 <td style="text-align:center;">'.$data->nama_verifikator.'</td>
@@ -242,63 +258,68 @@ class dokumenOpdController extends Controller
     }
 
     public function html_render_renja($data){
+
+        $qrcode=QrCode::size(120)->generate('RemoteStack');
          
         $html = '';
 
-        $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
+        $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->tahun.'<hr></h4>';
 
         $html .= "<h4 style='text-align:center; line-height: -20pt;'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
 
         $html .= '<p style="text-align:justify" line-height: 15pt; style="text-indent: 45px;">
-        Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Dokumen RPJM Desa '.$data->unit_kerja.' Kabupaten Enrekang Periode '.$data->periode_awal.' - '.$data->periode_akhir.', sebagai berikut : </p>';
+        Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Rancangan awal Renja  '.$data->unit_kerja.' Kabupaten Enrekang Periode '.$data->tahun.', sebagai berikut : </p>';
 
-        $html .= '<p style="text-align:justify" style="text-indent: 45px;"> Setelah dilakukan verifikasi RPJM Desa maka disepakati : </p>';
+        $html .= '<p style="text-align:justify" style="text-indent: 45px;"> Setelah dilakukan verifikasi rancangan awal Renja maka disepakati : </p>';
 
         $html .= "<table style='vertical-align: text-top; line-height: 15pt;'>
         <tr>
             <td style='width: 18%;'>KESATU</td>
-            <td style='text-align: justify;  line-height: 15pt;'>
-                Pedoman penyusunan RPJM Desa agar disesuaikan dengan Ketentuan
-                Peraturan Menteri Dalam Negeri Nomor 114 Tahun 2014 tentang Pedoman
-                Pembangunan Desa, meliputi :
+            <td style='text-align: justify;  line-height: 15pt;'>Sistematika penulisan Renja agar disesuaikan dengan ketentuan Peraturan Menteri Dalam Negeri Republik Indonesia Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi Pembangunan Daerah, Tata Cara Evaluasi Rancangan Peraturan Daerah tentang RPJPD dan RPJMD, serta Tata Cara Perubahan RPJPD, RPJMD, dan Rencana Kerja Pemerintah Daerah, paling sedikit memuat :
             
                 <table>
                     <tr>
                     <td style='vertical-align: text-top;'>1. </td>
-                    <td style='text-align: justify;  line-height: 15pt;'>Penyempurnaan RPJM Desa sesuai saran dan masukan Tim Verifikasi
-                    sebagaimana tersebut pada formulir verifikasi terlampir yang
-                    merupakan bagian tidak terpisahkan dari Berita Acara ini</td>
+                    <td style='text-align: justify;  line-height: 15pt;'>Pendahuluan;</td>
                     </tr>
                     <tr>
-                    <td style='vertical-align: text-top; line-height: 15pt;'>2. </td>
-
-                    <td style='text-align: justify; line-height: 15pt;'>RPJM Desa mengacu pada RPJM kabupaten/kota, yang memuat Visi
-                    dan Misi Kepala Desa, rencana penyelenggaraan Pemerintahan Desa,
-                    Pelaksanaan Pembangunan, Pembinaan Kemasyarakatan,
-                    Pemberdayaan Masyarakat, dan arah kebijakan Pembangunan Desa</td>
+                    <td style='vertical-align: text-top;'>2. </td>
+                    <td style='text-align: justify;  line-height: 15pt;'>Hasil Evaluasi Renja Perangkat Daerah tahun lalu;</td>
                     </tr>
+                    <tr>
+                    <td style='vertical-align: text-top;'>3. </td>
+                    <td style='text-align: justify;  line-height: 15pt;'>Tujuan dan Sasaran Perangkat Daerah;</td>
+                    </tr>
+                    <tr>
+                    <td style='vertical-align: text-top;'>4. </td>
+                    <td style='text-align: justify;  line-height: 15pt;'>Rencana Kerja dan Pendanaan Perangkat Daerah; dan</td>
+                    </tr>
+                    <tr>
+                    <td style='vertical-align: text-top;'>5. </td>
+                    <td style='text-align: justify;  line-height: 15pt;'>Penutup.</td>
+                    </tr>
+                    
                 </table>
             </td>
         </tr>
         <tr>
             <td>KEDUA</td>
-            <td style='text-align:justify line-height: 15pt;'>Melakukan penyempurnaan RPJM Desa Periode 2019 - 2024 Berdasarkan
-                hasil verifikasi, meliputi :
+            <td style='text-align:justify line-height: 15pt;'>Melakukan penyempurnaan rancangan Renja Tahun ".($data->tahun+1)." Berdasarkan  hasil verifikasi, meliputi :
                     <table>
                     <tr>
                     <td style='vertical-align: text-top; '>1. </td>
-                    <td style='text-align: justify; line-height: 15pt;'>Penyempurnaan RPJM Desa sesuai saran dan masukan Tim Verifikasi
-                    sebagaimana tersebut pada formulir verifikasi terlampir yang
-                    merupakan bagian tidak terpisahkan dari Berita Acara ini;</td>
+                    <td style='text-align: justify; line-height: 15pt;'>Penyempurnaan rancangan Renja sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini;</td>
                     </tr>
                     <tr>
                     <td style='vertical-align: text-top; '>2. </td>
 
-                    <td style='text-align: justify; line-height: 15pt;'>Melakukan Upload Dokumen perbaikan atas hasil verifikasi RPJM Desa
-                    Tallung Tondok Periode 2019 - 2024 melalui portal
-                    https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF.</td>
+                    <td style='text-align: justify; line-height: 15pt;'>Penyempurnaan matrik Rumusan Rencana Program dan Kegiatan Perangkat Daerah Tahun ".($data->tahun+1)." dan Prakiraan Maju Tahun ".($data->tahun+2)." melalui portal https://enrekangkab.sipd.kemendagri.go.id/</td>
                     </tr>
                 </table>
+            </td>
+            <td>KETIGA</td>
+            <td style='text-align:justify line-height: 15pt;'>Melakukan Upload Dokumen perbaikan hasil verifikasi Rancangan Akhir Renja Tahun ".($data->tahun+1)." melalui portal https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF.
+                    
             </td>
         </tr>
     </table>";
@@ -310,7 +331,11 @@ class dokumenOpdController extends Controller
     $html .= '<table style="width:100%">
     <tr>
         <td style="width:50%;"></td>
-        <td style="width:50%; text-align:center;">Verifikator RPJM Desa<br></td>
+        <td style="width:50%; text-align:center;">Verifikator Renja PD<br>Kabupaten Enrekang</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td style="text-align:center;">'.substr($qrcode,38).'</td>
     </tr>
     <tr>
         <td></td>

@@ -115,7 +115,7 @@ class dokumenDesaController extends Controller
     public function html_render_rpjmdes($data){
 
         $qrcode=QrCode::size(120)->generate('RemoteStack');
-        $qrcode=QrCode::format('png')->mergeString(public_path('assets/media/logo/logo_front.png'))->generate('test');
+        //$qrcode=QrCode::format('png')->mergeString(public_path('assets/media/logo/logo_front.png'))->generate('test');
         
         $html = "";
 
@@ -244,6 +244,9 @@ $mpdf->Output();
     
 
     public function html_render_rkpdes($data){
+
+        $qrcode=QrCode::size(120)->generate('RemoteStack');
+        
         $html = '';
         
         $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RANCANGAN RENCANA KERJA PEMERINTAH <br> (RKPDes) DESA '.strtoupper($data->unit_kerja).'<br> KABUPATEN ENREKANG TAHUN '.$data->tahun.'<hr></h4>';
