@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/checkJadwal', [generalController::class, 'checkJadwal'])->name('get_data.checkJadwal');
         Route::get('/dashboard', [DashboardController::class, 'get_dashboard']);
         Route::get('/dashboard/export', [DashboardController::class, 'export']);
+        Route::post('/qr-code', [generalController::class, 'qr_code']);
     });  
 
     Route::prefix('general')->group(function () {

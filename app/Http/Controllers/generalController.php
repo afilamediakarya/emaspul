@@ -105,6 +105,10 @@ class generalController extends Controller
         return redirect()->back();
     }
 
+    public function qr_code(Request $request){
+        session(['qr_code' => $request->data]);
+    }
+
     public function datatable_list(){
         $jenis = request('jenis');
         $type = request('type');

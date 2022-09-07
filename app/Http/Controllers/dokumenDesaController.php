@@ -112,6 +112,8 @@ class dokumenDesaController extends Controller
 
 
     public function html_render_rpjmdes($data){
+
+        
         $html = '';
 
         $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
@@ -176,6 +178,8 @@ class dokumenDesaController extends Controller
 
     $html .= '<p style="text-align:justify vertical-align: text-top;"  style="text-indent: 45px;">Demikian berita acara ini dibuat dan dipergunakan sebagaimana mestinya.</p>';
 
+    $html .= session('qr_code');
+
     $html .= '<table style="width:100%">
     <tr>
         <td style="width:50%;"></td>
@@ -188,9 +192,14 @@ class dokumenDesaController extends Controller
     
 </table>';
 
+<<<<<<< Updated upstream
 $mpdf = new \Mpdf\Mpdf([
 	'default_font' => 'Bookman Old Style'
 ]);
+=======
+
+$mpdf = new \Mpdf\Mpdf();
+>>>>>>> Stashed changes
 $mpdf->adjustFontDescLineheight = 1.5;
 
 $mpdf->SetHTMLFooter('<hr>
@@ -366,9 +375,7 @@ $mpdf->WriteHTML($html2);
 $mpdf->SetTitle('Berita Acara Hasil Verifikasi RKPDes '.$data->unit_kerja.'');
 $mpdf->Output();
 
-
-
-
+session()->forget('qr_code');
 
         return $html;
     }

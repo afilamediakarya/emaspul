@@ -598,6 +598,20 @@ class Control {
 
         //     correctLevel: QRCode.CorrectLevel.H // L, M, Q, H
         // });
+
+          var qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: `https://langitmaspul.enrekangkab.go.id/detail-dokumen?documents=${id_documents}&jenis=${jenis}`,
+            drawer: 'svg',
+            width: 150,
+            height: 150,
+            colorDark: "#005DC5",
+            quietZone: 0,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+           logo: '/assets/media/logo/logo.png',
+            //PI: '#f55066',
+            correctLevel: QRCode.CorrectLevel.H // L, M, Q, H
+        });      
     }
 
 }
