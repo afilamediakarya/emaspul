@@ -114,13 +114,14 @@ class dokumenDesaController extends Controller
     public function html_render_rpjmdes($data){
         $html = '';
 
-        $html .= '<h4 style="text-align:center">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).'KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'</h4>';
+        $html .= '<h4 style="text-align:center">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'</h4>';
 
         $html .= '<hr>';
 
         $html .= "<h4 style='text-align:center'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
 
-        $html .= '<p style="text-align:center"> Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Dokumen RPJM Desa '.$data->unit_kerja.' Kabupaten Enrekang Periode '.$data->periode_awal.' - '.$data->periode_akhir.', sebagai berikut : </p>';
+        $html .= '<p style="text-align:justify">
+        Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Dokumen RPJM Desa '.$data->unit_kerja.' Kabupaten Enrekang Periode '.$data->periode_awal.' - '.$data->periode_akhir.', sebagai berikut : </p>';
 
         $html .= '<p style="text-align:left"> Setelah dilakukan verifikasi RPJM Desa maka disepakati : </p>';
 
@@ -253,6 +254,17 @@ class dokumenDesaController extends Controller
         <td>-</td>
     </tr>
 </table>';
+
+$mpdf = new \Mpdf\Mpdf();
+$mpdf->WriteHTML($html);
+
+$html2="a";
+
+$mpdf->AddPage();
+$mpdf->WriteHTML($html2);
+
+
+$mpdf->Output();
 
 
 
