@@ -102,7 +102,7 @@ class dokumenOpdController extends Controller
     public function konsederan(){
         $jenis = request('jenis');
         $document = request('document');
-        $fungsi = 'konsederan_'.$jenis;
+        $fungsi = 'html_render_'.$jenis;
         $data = array();
        
         $data = DB::table('documents')->select('documents.id','documents.tahun','documents.periode_awal','documents.periode_akhir','documents.nomor_konsederan','documents.user_insert','unit_kerja.nama_unit_kerja as unit_kerja','user.nama_lengkap as nama_verifikator','user.nip as nip_verifikator')->join('unit_kerja','documents.id_perangkat','=','unit_kerja.id')->join('user', 'documents.id_verifikator','=','user.id')->where('documents.id',$document)->first();
@@ -120,9 +120,129 @@ class dokumenOpdController extends Controller
         return $this->{$fungsi}($data);
     }
 
-    public function html_render_rpjmd($data){
+    public function html_render_renstra($data){
 
-        
+                $html = '';
+
+                $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
+
+                $html .= "<h4 style='text-align:center; line-height: -20pt;'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
+
+                $html .= '<p style="text-align:justify" line-height: 15pt; style="text-indent: 45px;">
+                Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Dokumen RPJM Desa '.$data->unit_kerja.' Kabupaten Enrekang Periode '.$data->periode_awal.' - '.$data->periode_akhir.', sebagai berikut : </p>';
+
+                $html .= '<p style="text-align:justify" style="text-indent: 45px;"> Setelah dilakukan verifikasi RPJM Desa maka disepakati : </p>';
+
+                $html .= "<table style='vertical-align: text-top; line-height: 15pt;'>
+                <tr>
+                    <td style='width: 18%;'>KESATU</td>
+                    <td style='text-align: justify;  line-height: 15pt;'>
+                        Pedoman penyusunan RPJM Desa agar disesuaikan dengan Ketentuan
+                        Peraturan Menteri Dalam Negeri Nomor 114 Tahun 2014 tentang Pedoman
+                        Pembangunan Desa, meliputi :
+                    
+                        <table>
+                            <tr>
+                            <td style='vertical-align: text-top;'>1. </td>
+                            <td style='text-align: justify;  line-height: 15pt;'>Penyempurnaan RPJM Desa sesuai saran dan masukan Tim Verifikasi
+                            sebagaimana tersebut pada formulir verifikasi terlampir yang
+                            merupakan bagian tidak terpisahkan dari Berita Acara ini</td>
+                            </tr>
+                            <tr>
+                            <td style='vertical-align: text-top; line-height: 15pt;'>2. </td>
+
+                            <td style='text-align: justify; line-height: 15pt;'>RPJM Desa mengacu pada RPJM kabupaten/kota, yang memuat Visi
+                            dan Misi Kepala Desa, rencana penyelenggaraan Pemerintahan Desa,
+                            Pelaksanaan Pembangunan, Pembinaan Kemasyarakatan,
+                            Pemberdayaan Masyarakat, dan arah kebijakan Pembangunan Desa</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>KEDUA</td>
+                    <td style='text-align:justify line-height: 15pt;'>Melakukan penyempurnaan RPJM Desa Periode 2019 - 2024 Berdasarkan
+                        hasil verifikasi, meliputi :
+                            <table>
+                            <tr>
+                            <td style='vertical-align: text-top; '>1. </td>
+                            <td style='text-align: justify; line-height: 15pt;'>Penyempurnaan RPJM Desa sesuai saran dan masukan Tim Verifikasi
+                            sebagaimana tersebut pada formulir verifikasi terlampir yang
+                            merupakan bagian tidak terpisahkan dari Berita Acara ini;</td>
+                            </tr>
+                            <tr>
+                            <td style='vertical-align: text-top; '>2. </td>
+
+                            <td style='text-align: justify; line-height: 15pt;'>Melakukan Upload Dokumen perbaikan atas hasil verifikasi RPJM Desa
+                            Tallung Tondok Periode 2019 - 2024 melalui portal
+                            https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF.</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>";
+
+            
+
+            $html .= '<p style="text-align:justify vertical-align: text-top;"  style="text-indent: 45px;">Demikian berita acara ini dibuat dan dipergunakan sebagaimana mestinya.</p>';
+
+            $html .= '<table style="width:100%">
+            <tr>
+                <td style="width:50%;"></td>
+                <td style="width:50%; text-align:center;">Verifikator RPJM Desa<br></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align:center;">'.$data->nama_verifikator.'</td>
+            </tr>
+            
+        </table>';
+
+        $mpdf = new \Mpdf\Mpdf([
+            'default_font' => 'Bookman Old Style'
+        ]);
+
+        $mpdf->adjustFontDescLineheight = 1.5;
+
+        $mpdf->SetHTMLFooter('<hr>
+        <table width="100%" style="vertical-align: top; ; 
+            font-size: 8pt; color: #000000; ">
+            Catatan
+            <tr>
+                <td width="85%" style="text-align: left;">
+                <ul>
+
+                    <li>Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Bappelitbangda Enrekang</li>
+                    <li>Surat ini dapat dibuktikan keasliannya dengan melakukan <b>scan</b> pada <b>QR Code</b></li>
+                    </ul>
+                </td>
+                <td style="width=15%;  font-weight: bold; text-align: rigth; font-style: italic;">Halaman {PAGENO} dari {nbpg}</td>
+            </tr>
+        </table>');
+
+
+        $mpdf->WriteHTML($html);
+        $mpdf->AddPage();
+
+        $html2 = '<h4 style="text-align:center; line-height: 15pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
+
+        $mpdf->WriteHTML($html2);
+        //$mpdf->SetFooter('Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Bappelitbangda Enrekang');
+        //$mpdf->SetFooter('Halaman {PAGENO} dari {nb} ');
+
+
+        $mpdf->SetTitle('Berita Acara Hasil Verifikasi RPJMDes '.$data->unit_kerja.'');
+        $mpdf->Output();
+
+
+
+
+
+        return $html;
+    }
+
+    public function html_render_renja($data){
+         
         $html = '';
 
         $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
@@ -141,7 +261,7 @@ class dokumenOpdController extends Controller
                 Pedoman penyusunan RPJM Desa agar disesuaikan dengan Ketentuan
                 Peraturan Menteri Dalam Negeri Nomor 114 Tahun 2014 tentang Pedoman
                 Pembangunan Desa, meliputi :
-             
+            
                 <table>
                     <tr>
                     <td style='vertical-align: text-top;'>1. </td>
@@ -187,8 +307,6 @@ class dokumenOpdController extends Controller
 
     $html .= '<p style="text-align:justify vertical-align: text-top;"  style="text-indent: 45px;">Demikian berita acara ini dibuat dan dipergunakan sebagaimana mestinya.</p>';
 
-    $html .= session('qr_code');
-
     $html .= '<table style="width:100%">
     <tr>
         <td style="width:50%;"></td>
@@ -202,7 +320,7 @@ class dokumenOpdController extends Controller
 </table>';
 
 $mpdf = new \Mpdf\Mpdf([
-	'default_font' => 'Bookman Old Style'
+    'default_font' => 'Bookman Old Style'
 ]);
 
 $mpdf->adjustFontDescLineheight = 1.5;
@@ -241,8 +359,8 @@ $mpdf->Output();
 
 
 
-        return $html;
-    }
+return $html;
+}
 
     public function konsederan_renstra($data){
       

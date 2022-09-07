@@ -308,8 +308,6 @@
         e.preventDefault();
         window.open('/storage/files/dokumen_desa/rpjmdes/'+$(this).attr('data-label'), '_blank');
     })
-   
-
 
     $(document).on('click', '.btn-verifikasi', function (e) {
             e.preventDefault();
@@ -319,7 +317,6 @@
 
      $(document).on('click','.button-detail', function (e) {
         e.preventDefault();
-
        let url = `/get-data/documentByVerifikasi?jenis=${$(this).attr('data-jenis')}&document=${$(this).attr('data-id')}`;
         control.modal_content('Detail RPJMDes', url,`/dokumen-desa/konsederan?document=${$(this).attr('data-id')}&jenis=rpjmdes`);
     })
