@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use App\Models\unitKerja;
 use App\Models\bidangUrusan;
+use QrCode;
 class dokumenOpdController extends Controller
 {
     public function index(){
@@ -117,10 +118,12 @@ class dokumenOpdController extends Controller
         $data->nama_user = $user->nama_lengkap;
         $data->nip_user = $user->nip;
         
-        return $this->{$fungsi}($data);
+        return $this->{$fungsi}($data,$jenis,$document);
     }
 
-    public function html_render_renstra($data){
+    public function html_render_renstra($data,$jenis,$document){
+
+        $qrcode=QrCode::size(120)->generate('https://langitmaspul.enrekangkab.go.id/detail-dokumen?document='.$document.'&jenis='.$jenis);
 
                 $html = '';
 
@@ -242,6 +245,71 @@ class dokumenOpdController extends Controller
 
         $html2 = '<h4 style="text-align:center; line-height: 15pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
 
+        $html2 .='      
+<table border="1" style="border-collapse:collapse; width:100%;">
+    <thead>
+    <tr>
+        <th style=" line-height: 15pt; width:5%;" rowspan="2" >NO.</th>
+        <th style=" line-height: 15pt; width:45%;" rowspan="2">INDIKATOR</th>
+        <th style=" line-height: 15pt; width:20%;" colspan="2">KESESUAIAN</th>
+        <th style="text-align: center; width:30%;  line-height: 15pt;" rowspan="2">TINDAK LANJUT</th>
+    </tr>
+    <tr>
+        <th style=" line-height: 15pt;" >YA</th>
+        <th style=" line-height: 15pt;" >TIDAK</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: text-top; line-height: 15pt;">1.</td>
+        <td style="text-align: center; line-height: 15pt;"></td>
+        <td style="text-align: center; line-height: 15pt;"></td>
+        <td style="text-align: center; line-height: 15pt;"></td>
+        <td style="text-align: center; line-height: 15pt;"></td>
+    </tr>
+    </thead>
+              
+';
+
+$html2 .='<tbody>';
+$icons1 = '';
+$icons2 = '';
+foreach ( $data->tabel as $i => $row ){
+    $html2 .='<tr>';
+    $html2 .='<td>'.$i.'</td>';
+    $html2 .='<td>'.$row->indikator.'</td>';
+    if ($row->verifikasi==1){
+        $icons1 ='<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_310_17035)">
+        <path d="M17.5098 7.74121H16.2536C15.9804 7.74121 15.7205 7.87246 15.5598 8.09746L11.3491 13.9367L9.44197 11.2903C9.28125 11.068 9.02411 10.9341 8.74822 10.9341H7.49197C7.31786 10.9341 7.21608 11.1323 7.31786 11.2742L10.6554 15.9028C10.7342 16.0129 10.8381 16.1025 10.9586 16.1644C11.079 16.2262 11.2124 16.2585 11.3478 16.2585C11.4831 16.2585 11.6166 16.2262 11.737 16.1644C11.8574 16.1025 11.9613 16.0129 12.0402 15.9028L17.6813 8.08139C17.7857 7.93943 17.6839 7.74121 17.5098 7.74121Z" fill="#50CD89"/>
+        <path d="M12.5 0C5.87321 0 0.5 5.37321 0.5 12C0.5 18.6268 5.87321 24 12.5 24C19.1268 24 24.5 18.6268 24.5 12C24.5 5.37321 19.1268 0 12.5 0ZM12.5 21.9643C6.99821 21.9643 2.53571 17.5018 2.53571 12C2.53571 6.49821 6.99821 2.03571 12.5 2.03571C18.0018 2.03571 22.4643 6.49821 22.4643 12C22.4643 17.5018 18.0018 21.9643 12.5 21.9643Z" fill="#50CD89"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_310_17035">
+        <rect width="24" height="24" fill="white" transform="translate(0.5)"/>
+        </clipPath>
+        </defs>
+        </svg>';
+    }
+    else{
+        $icons2 ='<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_310_17047)">
+        <path d="M17.1448 7.78948C17.1448 7.67162 17.0483 7.5752 16.9305 7.5752L15.1626 7.58323L12.5001 10.7573L9.84029 7.58591L8.06975 7.57787C7.9519 7.57787 7.85547 7.67162 7.85547 7.79216C7.85547 7.84305 7.87422 7.89127 7.90636 7.93145L11.3912 12.0832L7.90636 16.2323C7.87399 16.2716 7.85604 16.3207 7.85547 16.3716C7.85547 16.4895 7.9519 16.5859 8.06975 16.5859L9.84029 16.5779L12.5001 13.4038L15.1599 16.5752L16.9278 16.5832C17.0456 16.5832 17.1421 16.4895 17.1421 16.3689C17.1421 16.3181 17.1233 16.2698 17.0912 16.2297L13.6117 12.0806L17.0965 7.92877C17.1287 7.89127 17.1448 7.84037 17.1448 7.78948Z" fill="#F1416C"/>
+        <path d="M12.5 0.0268555C5.87321 0.0268555 0.5 5.40007 0.5 12.0269C0.5 18.6536 5.87321 24.0269 12.5 24.0269C19.1268 24.0269 24.5 18.6536 24.5 12.0269C24.5 5.40007 19.1268 0.0268555 12.5 0.0268555ZM12.5 21.9911C6.99821 21.9911 2.53571 17.5286 2.53571 12.0269C2.53571 6.52507 6.99821 2.06257 12.5 2.06257C18.0018 2.06257 22.4643 6.52507 22.4643 12.0269C22.4643 17.5286 18.0018 21.9911 12.5 21.9911Z" fill="#F1416C"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_310_17047">
+        <rect width="24" height="24" fill="white" transform="translate(0.5)"/>
+        </clipPath>
+        </defs>
+        </svg>';
+    }
+    $html2 .='<td>'.$icons1.'</td>';
+    $html2 .='<td>'.$icons2.'</td>';
+    $html2 .='<td>'.$row->tindak_lanjut.'</td>';
+    $html2 .='</tr>';
+}
+$html2 .='</tbody>';
+$html2 .= '</table>';
+
         $mpdf->WriteHTML($html2);
         //$mpdf->SetFooter('Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Bappelitbangda Enrekang');
         //$mpdf->SetFooter('Halaman {PAGENO} dari {nb} ');
@@ -257,9 +325,9 @@ class dokumenOpdController extends Controller
         return $html;
     }
 
-    public function html_render_renja($data){
+    public function html_render_renja($data,$jenis,$document){
 
-        $qrcode=QrCode::size(120)->generate('RemoteStack');
+        $qrcode=QrCode::size(120)->generate('https://langitmaspul.enrekangkab.go.id/detail-dokumen?document='.$document.'&jenis='.$jenis);
          
         $html = '';
 
@@ -371,6 +439,71 @@ $mpdf->WriteHTML($html);
 $mpdf->AddPage();
 
 $html2 = '<h4 style="text-align:center; line-height: 15pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
+
+$html2 .='      
+<table border="1" style="border-collapse:collapse; width:100%;">
+    <thead>
+    <tr>
+        <th style=" line-height: 15pt; width:5%;" rowspan="2" >NO.</th>
+        <th style=" line-height: 15pt; width:45%;" rowspan="2">INDIKATOR</th>
+        <th style=" line-height: 15pt; width:20%;" colspan="2">KESESUAIAN</th>
+        <th style="text-align: center; width:30%;  line-height: 15pt;" rowspan="2">TINDAK LANJUT</th>
+    </tr>
+    <tr>
+        <th style=" line-height: 15pt;" >YA</th>
+        <th style=" line-height: 15pt;" >TIDAK</th>
+    </tr>
+    <tr>
+        <td style="vertical-align: text-top; line-height: 15pt;">1.</td>
+        <td style="text-align: center; line-height: 15pt;"></td>
+        <td style="text-align: center; line-height: 15pt;"></td>
+        <td style="text-align: center; line-height: 15pt;"></td>
+        <td style="text-align: center; line-height: 15pt;"></td>
+    </tr>
+    </thead>
+              
+';
+
+$html2 .='<tbody>';
+$icons1 = '';
+$icons2 = '';
+foreach ( $data->tabel as $i => $row ){
+    $html2 .='<tr>';
+    $html2 .='<td>'.$i.'</td>';
+    $html2 .='<td>'.$row->indikator.'</td>';
+    if ($row->verifikasi==1){
+        $icons1 ='<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_310_17035)">
+        <path d="M17.5098 7.74121H16.2536C15.9804 7.74121 15.7205 7.87246 15.5598 8.09746L11.3491 13.9367L9.44197 11.2903C9.28125 11.068 9.02411 10.9341 8.74822 10.9341H7.49197C7.31786 10.9341 7.21608 11.1323 7.31786 11.2742L10.6554 15.9028C10.7342 16.0129 10.8381 16.1025 10.9586 16.1644C11.079 16.2262 11.2124 16.2585 11.3478 16.2585C11.4831 16.2585 11.6166 16.2262 11.737 16.1644C11.8574 16.1025 11.9613 16.0129 12.0402 15.9028L17.6813 8.08139C17.7857 7.93943 17.6839 7.74121 17.5098 7.74121Z" fill="#50CD89"/>
+        <path d="M12.5 0C5.87321 0 0.5 5.37321 0.5 12C0.5 18.6268 5.87321 24 12.5 24C19.1268 24 24.5 18.6268 24.5 12C24.5 5.37321 19.1268 0 12.5 0ZM12.5 21.9643C6.99821 21.9643 2.53571 17.5018 2.53571 12C2.53571 6.49821 6.99821 2.03571 12.5 2.03571C18.0018 2.03571 22.4643 6.49821 22.4643 12C22.4643 17.5018 18.0018 21.9643 12.5 21.9643Z" fill="#50CD89"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_310_17035">
+        <rect width="24" height="24" fill="white" transform="translate(0.5)"/>
+        </clipPath>
+        </defs>
+        </svg>';
+    }
+    else{
+        $icons2 ='<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_310_17047)">
+        <path d="M17.1448 7.78948C17.1448 7.67162 17.0483 7.5752 16.9305 7.5752L15.1626 7.58323L12.5001 10.7573L9.84029 7.58591L8.06975 7.57787C7.9519 7.57787 7.85547 7.67162 7.85547 7.79216C7.85547 7.84305 7.87422 7.89127 7.90636 7.93145L11.3912 12.0832L7.90636 16.2323C7.87399 16.2716 7.85604 16.3207 7.85547 16.3716C7.85547 16.4895 7.9519 16.5859 8.06975 16.5859L9.84029 16.5779L12.5001 13.4038L15.1599 16.5752L16.9278 16.5832C17.0456 16.5832 17.1421 16.4895 17.1421 16.3689C17.1421 16.3181 17.1233 16.2698 17.0912 16.2297L13.6117 12.0806L17.0965 7.92877C17.1287 7.89127 17.1448 7.84037 17.1448 7.78948Z" fill="#F1416C"/>
+        <path d="M12.5 0.0268555C5.87321 0.0268555 0.5 5.40007 0.5 12.0269C0.5 18.6536 5.87321 24.0269 12.5 24.0269C19.1268 24.0269 24.5 18.6536 24.5 12.0269C24.5 5.40007 19.1268 0.0268555 12.5 0.0268555ZM12.5 21.9911C6.99821 21.9911 2.53571 17.5286 2.53571 12.0269C2.53571 6.52507 6.99821 2.06257 12.5 2.06257C18.0018 2.06257 22.4643 6.52507 22.4643 12.0269C22.4643 17.5286 18.0018 21.9911 12.5 21.9911Z" fill="#F1416C"/>
+        </g>
+        <defs>
+        <clipPath id="clip0_310_17047">
+        <rect width="24" height="24" fill="white" transform="translate(0.5)"/>
+        </clipPath>
+        </defs>
+        </svg>';
+    }
+    $html2 .='<td>'.$icons1.'</td>';
+    $html2 .='<td>'.$icons2.'</td>';
+    $html2 .='<td>'.$row->tindak_lanjut.'</td>';
+    $html2 .='</tr>';
+}
+$html2 .='</tbody>';
+$html2 .= '</table>';
 
 $mpdf->WriteHTML($html2);
 //$mpdf->SetFooter('Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Bappelitbangda Enrekang');
