@@ -415,7 +415,7 @@ $mpdf->SetHTMLFooter('<hr>
 $mpdf->WriteHTML($html);
 $mpdf->AddPage();
 
-$html2 = '<h4 style="text-align:center; line-height: 15pt;">LAMPIRAN VERIFIKASI RENCANA KERJA PEMERINTAH DESA <br> (RKP DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->tahun.'<hr></h4>';
+$html2 = '<h4 style="text-align:center; line-height: 15pt;">LAMPIRAN VERIFIKASI RENCANA KERJA PEMERINTAH DESA <br> (RKP DESA) '.strtoupper($data->unit_kerja).'KABUPATEN ENREKANG PERIODE '.$data->tahun.'<hr></h4>';
 
 $html2 .='      
 <table border="1" style="border-collapse:collapse; width:100%;">
