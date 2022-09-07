@@ -24,6 +24,16 @@ class publicController extends Controller
         $jenis = request('jenis');
         $document = request('document');
 
+        if ($jenis == 'rkpdes') {
+            $jenis = 2;
+        }elseif ($jenis == 'rpjmdes') {
+             $jenis = 1;
+        }elseif ($jenis == 'renja') {
+             $jenis = 4;
+        }else{
+            $jenis = 3; 
+        }
+
         $data = DB::select("SELECT documents.id,documents.nama_documents, documents.nomor_perbub,documents.tanggal_perbub,documents.status_document,  (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents where jenis_document=".$jenis." AND id=".$document." LIMIT 1");
 
         $master_verifikasi = $this->get_master_verifikasi($document);
