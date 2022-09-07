@@ -247,7 +247,7 @@
                 </svg>
                 Cetak Konsederan</a>
 
-                <div id="qrcode" style="width:100px; height:100px; margin-top:15px;position: absolute;visibility: hidden;"></div>
+             
 
                <div class="box_detail">
                     <div class="row">
@@ -309,27 +309,7 @@
         window.open('/storage/files/dokumen_desa/rpjmdes/'+$(this).attr('data-label'), '_blank');
     })
 
-    $(document).on('click','#konsederan', function (e) {
-        e.preventDefault();
-        let ref = $(this).attr('href');
-        let ele = $('#qrcode').html();
-
-        $.ajaxSetup({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-        });
-
-        $.ajax({ url: "/get-data/qr-code",
-            type: "POST",
-            data: {
-                data: ''+ele+''
-            } ,
-            success: function (msg) { console.log(msg); window.open(ref, '_blank'); },
-            error: function (type) { alert("ERROR!!" + type.responseText); }
-
-        });
-    })
+   
 
     $(document).on('click', '.btn-verifikasi', function (e) {
             e.preventDefault();
@@ -340,7 +320,6 @@
      $(document).on('click','.button-detail', function (e) {
         e.preventDefault();
 
-        control.qr_code($(this).attr('data-id'),$(this).attr('data-jenis'),$(this).attr('data-label'));
         
        let url = `/get-data/documentByVerifikasi?jenis=${$(this).attr('data-jenis')}&document=${$(this).attr('data-id')}`;
         control.modal_content('Detail RPJMDes', url,`/dokumen-desa/konsederan?document=${$(this).attr('data-id')}&jenis=rpjmdes`);
