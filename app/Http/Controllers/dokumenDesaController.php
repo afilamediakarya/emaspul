@@ -190,34 +190,54 @@ class dokumenDesaController extends Controller
 
 $mpdf = new \Mpdf\Mpdf();
 $mpdf->adjustFontDescLineheight = 1.5;
-$mpdf->WriteHTML($html);
 
-//$mpdf->SetFooter('Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Bappelitbangda Enrekang ||Halaman {PAGENO} dari {nb} ');
-
-$html2 = '<h4 style="text-align:center; line-height: 15pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
-
-
-
-
-
-
-
-$mpdf->AddPage();
-$mpdf->WriteHTML($html2);
-//$mpdf->SetFooter('Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Bappelitbangda Enrekang');
-//$mpdf->SetFooter('Halaman {PAGENO} dari {nb} ');
-
-$mpdf->SetHTMLFooter('
+$mpdf->SetHTMLFooter('<hr>
 <table width="100%" style="vertical-align: top; ; 
     font-size: 8pt; color: #000000; ">
+    Catatan
     <tr>
         <td width="85%" style="text-align: left;">
-        Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Bappelitbangda Enrekang<br>
-        
+        <ul>
+
+            <li>Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Bappelitbangda Enrekang</li>
+            <li>Surat ini dapat dibuktikan keasliannya dengan melakukan scan pada <b>QR Code</b></li>
+            </ul>
         </td>
         <td style="width=15%;  font-weight: bold; text-align: rigth; font-style: italic;">Halaman {PAGENO} dari {nbpg}</td>
     </tr>
 </table>');
+
+
+$mpdf->WriteHTML($html);
+
+
+
+$mpdf->AddPage();
+
+$html2 = '<h4 style="text-align:center; line-height: 15pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
+
+
+$mpdf->SetHTMLFooter('<hr>
+<table width="100%" style="vertical-align: top; ; 
+    font-size: 8pt; color: #000000; ">
+    <tr>
+    
+        <td width="85%" style="text-align: left;">
+        <ul>
+
+            <li>Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Bappelitbangda Enrekang</li>
+            <li>Surat ini dapat dibuktikan keasliannya dengan melakukan scan pada <b>QR Code</b></li>
+            </ul>
+        </td>
+        <td style="width=15%;  font-weight: bold; text-align: rigth; font-style: italic;">Halaman {PAGENO} dari {nbpg}</td>
+    </tr>
+</table>');
+
+$mpdf->WriteHTML($html2);
+//$mpdf->SetFooter('Dokumen ini telah ditandatangani secara elektronik yang diterbitkan oleh Bappelitbangda Enrekang');
+//$mpdf->SetFooter('Halaman {PAGENO} dari {nb} ');
+
+
 
 $mpdf->Output();
 
