@@ -297,8 +297,8 @@ foreach ( $data->tabel as $i => $row ){
         </svg>';
         $icons1 = '';
     }
-    $html2 .='<td style="text-align: center;>'.$icons1.'</td>';
-    $html2 .='<td style="text-align: center;>'.$icons2.'</td>';
+    $html2 .='<td style="text-align: center;">'.$icons1.'</td>';
+    $html2 .='<td style="text-align: center;">'.$icons2.'</td>';
     $html2 .='<td>'.$row->tindak_lanjut.'</td>';
     $html2 .='</tr>';
 }
@@ -488,8 +488,8 @@ foreach ( $data->tabel as $i => $row ){
         </svg>';
         $icons1 = '';
     }
-    $html2 .='<td style="text-align: center;'.$icons1.'</td>';
-    $html2 .='<td style="text-align: center;>'.$icons2.'</td>';
+    $html2 .='<td style="text-align: center;">'.$icons1.'</td>';
+    $html2 .='<td style="text-align: center;">'.$icons2.'</td>';
     $html2 .='<td>'.$row->tindak_lanjut.'</td>';
     $html2 .='</tr>';
 }
