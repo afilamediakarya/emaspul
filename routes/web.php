@@ -37,6 +37,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/set-tahun-penganggaran', [generalController::class, 'setTahunAnggaran'])->name('set-tahun-penganggaran');
 Route::get('/', [generalController::class, 'index'])->name('index');
 Route::get('/detail-dokumen', [publicController::class, 'detailDokuments']);
+Route::get('/detail-dokumen/get_data', [publicController::class, 'get_data']);
 Route::get('/tes-html', [dokumenDesaController::class, 'html_render']);
 
 Route::group(['middleware' => ['auth']], function () {

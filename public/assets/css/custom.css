@@ -210,3 +210,28 @@ margin-top: 2rem;
 .landing-blue-bg{
 background-color: #005DC5;
 }
+
+.mg-3{
+    margin : 3rem;
+}
+
+#tb_xs{
+    display: none; 
+}
+
+#tb_md{
+    display: block;
+}
+
+@media (max-width:480px){
+    #tb_md{
+        display: none;
+    }
+
+    #tb_xs{
+        display: block; 
+    }
+    .logo-default{
+        width: 73%;
+    }
+}

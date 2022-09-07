@@ -1292,12 +1292,12 @@
     })() : (function() { // Drawing in Canvas
         function _onMakeImage() {
 
-            console.log(this._htOption.drawer);
 
             if (this._htOption.drawer == 'svg') {
                 var svgData = this._oContext.getSerializedSvg(true);
                 this.dataURL = svgData;
                 this._el.innerHTML = svgData;
+              
             } else {
                 // canvas
                 // this._elImage.crossOrigin='Anonymous';
@@ -1356,80 +1356,39 @@
          * @param {Function} fFail Occurs if it doesn't support Data URI
          */
         function _safeSetDataURI(fSuccess, fFail) {
-
-            // alert("A")
-            // var self = this;
-            // self._fFail = fFail;
-            // self._fSuccess = fSuccess;
-
-            // // Check it just once
-            // if (self._bSupportDataURI === null) {
-            //     var el = document.createElement("img");
-            //     var fOnError = function() {
-            //         self._bSupportDataURI = false;
-
-            //         if (self._fFail) {
-            //             self._fFail.call(self);
-            //         }
-            //     };
-            //     var fOnSuccess = function() {
-            //         self._bSupportDataURI = true;
-
-            //         if (self._fSuccess) {
-            //             self._fSuccess.call(self);
-            //         }
-            //     };
-
-            //     el.onabort = fOnError;
-            //     el.onerror = fOnError;
-            //     el.onload = fOnSuccess;
-            //     el.src =
-            //         "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=="; // the Image contains 1px data.
-            //     return;
-            // } else if (self._bSupportDataURI === true && self._fSuccess) {
-            //     self._fSuccess.call(self);
-            // } else if (self._bSupportDataURI === false && self._fFail) {
-            //     self._fFail.call(self);
-            // }
-
-            // var self = this;
-            // self._fFail = fFail;
-            // self._fSuccess = fSuccess;
+            var self = this;
+            self._fFail = fFail;
+            self._fSuccess = fSuccess;
 
             // Check it just once
-            // if (self._bSupportDataURI === null) {
-              
-            //     var el = document.createElement("img");
-            //     var fOnError = function() {
-            //         self._bSupportDataURI = false;
+            if (self._bSupportDataURI === null) {
+                var el = document.createElement("img");
+                var fOnError = function() {
+                    self._bSupportDataURI = false;
 
-            //         if (self._fFail) {
-            //             self._fFail.call(self);
-            //         }
-            //     };
-            //     var fOnSuccess = function() {
-            //         self._bSupportDataURI = true;
+                    if (self._fFail) {
+                        self._fFail.call(self);
+                    }
+                };
+                var fOnSuccess = function() {
+                    self._bSupportDataURI = true;
 
-            //         if (self._fSuccess) {
-            //             self._fSuccess.call(self);
-            //         }
-            //     };
+                    if (self._fSuccess) {
+                        self._fSuccess.call(self);
+                    }
+                };
 
-            //     el.onabort = fOnError;
-            //     el.onerror = fOnError;
-            //     el.onload = fOnSuccess;
-            //     el.src = "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=="; // the Image contains 1px data.
-            //     alert("B")
-            //     console.log(el);
-            //     return;
-            // } else if (self._bSupportDataURI === true && self._fSuccess) {
-            //     alert("C")
-            //     self._fSuccess.call(self);
-            // } else if (self._bSupportDataURI === false && self._fFail) {
-            //     alert("D")
-            //     self._fFail.call(self);
-            // }
-
+                el.onabort = fOnError;
+                el.onerror = fOnError;
+                el.onload = fOnSuccess;
+                el.src =
+                    "data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=="; // the Image contains 1px data.
+                return;
+            } else if (self._bSupportDataURI === true && self._fSuccess) {
+                self._fSuccess.call(self);
+            } else if (self._bSupportDataURI === false && self._fFail) {
+                self._fFail.call(self);
+            }
         };
 
         /**
@@ -1440,65 +1399,27 @@
          * @param {Object} htOption QRCode Options 
          */
         var Drawing = function(el, htOption) {
-            alert("AB")
-      
-            // this._bIsPainted = false;
-            // this._android = _getAndroid();
-            // this._el = el;
-            // this._htOption = htOption;
-
-            // if (this._htOption.drawer == 'svg') {
-            //     this._oContext = {};
-            //     this._elCanvas = {};
-            // } else {
-            //     // canvas
-            //     this._elCanvas = document.createElement("canvas");
-            //     this._el.appendChild(this._elCanvas);
-            //     this._oContext = this._elCanvas.getContext("2d");
-
-            //     // BEDDU 1
-            // }
-
-            // this._bSupportDataURI = null;
-            // this.dataURL = null;
-
-            // this._bIsPainted = false;
-    		// this._android = _getAndroid();
-		
-			// this._htOption = htOption;
-			// this._elCanvas = document.createElement("canvas");
-			// this._elCanvas.width = htOption.width;
-			// this._elCanvas.height = htOption.height;
-			// el.appendChild(this._elCanvas);
-            // console.log(this._elCanvas);
-			// this._el = el;
-			// this._oContext = this._elCanvas.getContext("2d");
-		    // this._bIsPainted = false;
-            // this._elImage = document.createElement("img");
-			// this._elImage.alt = "Scan me!";
-			// this._elImage.style.display = "none";
-			// this._el.appendChild(this._elImage);
-			// this._bSupportDataURI = null;
-
             this._bIsPainted = false;
-    		this._android = _getAndroid();
-		
-			this._htOption = htOption;
-			this._elCanvas = document.createElement("canvas");
-			this._elCanvas.width = htOption.width;
-			this._elCanvas.height = htOption.height;
-			el.appendChild(this._elCanvas);
-			this._el = el;
-			this._oContext = this._elCanvas.getContext("2d");
-			this._bIsPainted = false;
-			this._elImage = document.createElement("img");
-			this._elImage.alt = "Scan me!";
-			this._elImage.style.display = "none";
-			this._el.appendChild(this._elImage);
-			this._bSupportDataURI = null;
+            this._android = _getAndroid();
+            this._el = el;
+            this._htOption = htOption;
 
-	
-           
+            if (this._htOption.drawer == 'svg') {
+                this._oContext = {};
+                this._elCanvas = {};
+            } else {
+                // canvas
+                this._elCanvas = document.createElement("canvas");
+                this._el.appendChild(this._elCanvas);
+                this._oContext = this._elCanvas.getContext("2d");
+                // this._elImage = document.createElement("img");
+                // this._elImage.alt = "Scan me!";
+                // this._elImage.style.display = "none";
+                // this._el.appendChild(this._elImage);
+            }
+
+            this._bSupportDataURI = null;
+            this.dataURL = null;
         };
 
         /**
