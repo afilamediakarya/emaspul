@@ -127,7 +127,7 @@ class dokumenOpdController extends Controller
 
                 $html = '';
 
-                $html .= '<h4 style="text-align:center; line-height: 12pt;">BERITA ACARA <br> HASIL VERIFIKASI RANCANGAN AWAL RENCANA STRATEGIS (RENSTRA) <br>'.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
+                $html .= '<h4 style="text-align:center; line-height: 12pt;">BERITA ACARA <br> HASIL VERIFIKASI RANCANGAN RENCANA STRATEGIS (RENSTRA) <br>'.strtoupper($data->unit_kerja).'<br> KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
 
                 $html .= "<h4 style='text-align:center; line-height: -20pt;'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
 
@@ -244,7 +244,7 @@ class dokumenOpdController extends Controller
         $mpdf->WriteHTML($html);
         $mpdf->AddPage();
 
-        $html2 = '<h4 style="text-align:center; line-height: 12pt;">FORMULIR VERIFIKASI RANCANGAN AWAL RENCANA STRATEGIS (RENSTRA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
+        $html2 = '<h4 style="text-align:center; line-height: 12pt;">FORMULIR VERIFIKASI RANCANGAN RENCANA STRATEGIS (RENSTRA) <br>'.strtoupper($data->unit_kerja).'<br>KABUPATEN ENREKANG PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
 
         $html2 .='      
 <table border="1" style="border-collapse:collapse; width:100%;">
@@ -327,7 +327,7 @@ $html2 .= '</table>';
          
         $html = '';
 
-        $html .= '<h4 style="text-align:center; line-height: 12pt;">BERITA ACARA <br> HASIL VERIFIKASI RANCANGAN RENCANA KERJA<br>'.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->tahun.'<hr></h4>';
+        $html .= '<h4 style="text-align:center; line-height: 12pt;">BERITA ACARA <br> HASIL VERIFIKASI RANCANGAN RENCANA KERJA<br>'.strtoupper($data->unit_kerja).'<br> KABUPATEN ENREKANG PERIODE '.$data->tahun.'<hr></h4>';
 
         $html .= "<h4 style='text-align:center; line-height: -20pt;'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
 
@@ -436,7 +436,7 @@ $mpdf->SetHTMLFooter('<hr>
 $mpdf->WriteHTML($html);
 $mpdf->AddPage();
 
-$html2 = '<h4 style="text-align:center; line-height: 12pt;">FORMULIR VERIFIKASI RANCANGAN RENCANA KERJA <br>'.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
+$html2 = '<h4 style="text-align:center; line-height: 12pt;">FORMULIR VERIFIKASI RANCANGAN RENCANA KERJA <br>'.strtoupper($data->unit_kerja).'<br> KABUPATEN ENREKANG TAHUN PERIODE '.$data->tahun.'<hr></h4>';
 
 $html2 .='      
 <table border="1" style="border-collapse:collapse; width:100%;">

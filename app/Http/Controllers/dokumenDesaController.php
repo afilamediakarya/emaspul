@@ -120,7 +120,7 @@ class dokumenDesaController extends Controller
         
         $html = "";
 
-        $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
+        $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) DESA '.strtoupper($data->unit_kerja).'<br> KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
 
         $html .= "<h4 style='text-align:center; line-height: -20pt;'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
 
@@ -226,7 +226,7 @@ $mpdf->SetHTMLFooter('<hr>
 $mpdf->WriteHTML($html);
 $mpdf->AddPage();
 
-$html2 = '<h4 style="text-align:center; line-height: 15pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
+$html2 = '<h4 style="text-align:center; line-height: 15pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).'<br> KABUPATEN ENREKANG PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
 
 $html2 .='      
 <table border="1" style="border-collapse:collapse; width:100%;">
