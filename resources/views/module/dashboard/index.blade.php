@@ -177,6 +177,8 @@
                 </table>
             </div>
 
+        
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">Close</button>
             </div>
@@ -194,12 +196,12 @@
         let label = $(this).attr('data-label').split(" ");
         let link = 'dokumen-desa';
 
-        // console.log(label);
-
         if (label[1] == 'Renstra' || label[1] == 'Renja') {
             link = 'dokumen-skpd';
         }
         
+        control.qr_code($(this).attr('data-id'),$(this).attr('data-jenis'),$(this).attr('data-label'));
+
        let url = `/get-data/documentByVerifikasi?jenis=${$(this).attr('data-jenis')}&document=${$(this).attr('data-id')}`;
         control.modal_content(`Detail ${label[1]}`, url,`/${link}/konsederan?document=${$(this).attr('data-id')}&jenis=${label[1].toLowerCase()}`);
     })

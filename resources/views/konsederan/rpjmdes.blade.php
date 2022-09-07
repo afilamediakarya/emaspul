@@ -1,0 +1,1 @@
+<h4 style="text-align:center">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA </h4>

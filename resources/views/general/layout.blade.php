@@ -307,9 +307,10 @@ License: For each use you must have a valid license purchased only from above li
 		<script src="{{ asset('assets/js/custom/modals/create-app.js') }}"></script>
 		<script src="{{ asset('assets/js/custom/modals/upgrade-plan.js') }}"></script>
 		<script src="{{ asset('assets/js/panel.js') }}"></script>
+		<script src="{{ asset('assets/js/easy.qrcode.min.js') }}"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script>
-
+		
 		$(function () {
 			$(".datepicker").datepicker({
 				format: "yyyy",

@@ -7,7 +7,6 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\DB;
 use Auth;
-use QrCode;
 
 class dokumenDesaController extends Controller
 {
@@ -89,6 +88,8 @@ class dokumenDesaController extends Controller
        return $hari_ini;
     }
 
+
+
     public function konsederan(){
         $jenis = request('jenis');
         $document = request('document');
@@ -108,9 +109,156 @@ class dokumenDesaController extends Controller
         return $this->{$fungsi}($data);
     }
 
+
+
     public function html_render_rpjmdes($data){
         $html = '';
-        $html .= '<h4 style="text-align:center">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA (RPJMDes) <br> Desa </h4>';
+
+        $html .= '<h4 style="text-align:center">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).'KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'</h4>';
+
+        $html .= '<hr>';
+
+        $html .= "<h4 style='text-align:center'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
+
+        $html .= '<p style="text-align:center"> Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Dokumen RPJM Desa '.$data->unit_kerja.' Kabupaten Enrekang Periode '.$data->periode_awal.' - '.$data->periode_akhir.', sebagai berikut : </p>';
+
+        $html .= '<p style="text-align:left"> Setelah dilakukan verifikasi RPJM Desa maka disepakati : </p>';
+
+        $html .= '<table>
+        <tr>
+            <td>Kesatu</td>
+            <td>Pedoman penyusunan RPJM Desa agar disesuaikan dengan Ketentuan
+                Peraturan Menteri Dalam Negeri Nomor 114 Tahun 2014 tentang Pedoman
+                Pembangunan Desa, meliputi : <br>
+                1. Penyempurnaan RPJM Desa sesuai saran dan masukan Tim Verifikasi
+                sebagaimana tersebut pada formulir verifikasi terlampir yang
+                merupakan bagian tidak terpisahkan dari Berita Acara ini <br>
+                2. RPJM Desa mengacu pada RPJM kabupaten/kota, yang memuat Visi
+                dan Misi Kepala Desa, rencana penyelenggaraan Pemerintahan Desa,
+                Pelaksanaan Pembangunan, Pembinaan Kemasyarakatan,
+                Pemberdayaan Masyarakat, dan arah kebijakan Pembangunan Desa <br>
+            </td>
+        </tr>
+        <tr>
+            <td>KEDUA</td>
+            <td>Melakukan penyempurnaan RPJM Desa Periode 2019 - 2024 Berdasarkan
+                hasil verifikasi, meliputi : <br>
+                1. Penyempurnaan RPJM Desa sesuai saran dan masukan Tim Verifikasi
+                sebagaimana tersebut pada formulir verifikasi terlampir yang
+                merupakan bagian tidak terpisahkan dari Berita Acara ini; <br>
+                2. Melakukan Upload Dokumen perbaikan atas hasil verifikasi RPJM Desa
+                Tallung Tondok Periode 2019 - 2024 melalui portal
+                https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF. <br>
+            </td>
+        </tr>
+    </table>';
+
+    $html .= '<p>Demikian berita acara ini dibuat dan dipergunakan sebagaimana mestinya.</p>';
+
+    $html .= '<table style="width:100%">
+    <tr>
+        <td>Verifikator RPJM Desa</td>
+        <td>Tim Penyusun RPJM</td>
+    </tr>
+    <tr>
+        <td>Kabupaten Enrekang</td>
+        <td>Desa '.$data->unit_kerja.' Kabupaten Enrekang</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>'.$data->nama_verifikator.'</td>
+        <td>'.$data->nip_verifikator.'</td>
+    </tr>
+    <tr>
+        <td>'.$data->nama_user.'</td>
+        <td>-</td>
+    </tr>
+</table>';
+
+
+
+
+
+
         return $html;
     }
 
@@ -204,9 +352,6 @@ class dokumenDesaController extends Controller
       $sheet->setCellValue('F27', $data->nama_user)->mergeCells('F27:G27');
       //$sheet->setCellValue('F28', $data->nip_user)->mergeCells('F28:G28');
       $sheet->setCellValue('A29', '')->mergeCells('A29:G29');
-      
-
-    //    return QrCode::size(500)->generate('sdfsdfsdf');
 
 
 

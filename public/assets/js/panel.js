@@ -582,6 +582,22 @@ class Control {
         });
     }
 
- 
+    qr_code(id_documents,jenis,label){
+        // var qrcode = new QRCode(document.getElementById("qrcode"), {
+        //     text: `https://langitmaspul.enrekangkab.go.id/detail-dokumen?documents=${id_documents}&jenis=${jenis}&label=${label}`,
+        //     width: 240,
+        //     height: 240,
+        //     colorDark: "#005DC5",
+        //     logo: 'assets/media/logo/logo.png',
+        //     logoWidth:80,
+        //     logoHeight:80,
+        //     logoBackgroundColor: '#ffffff', // Logo backgroud color, Invalid when `logBgTransparent` is true; default is '#ffffff'
+        //     logoBackgroundTransparent: true, // Whether use transparent image, default is false
+
+        //                         //PI: '#f55066',
+
+        //     correctLevel: QRCode.CorrectLevel.H // L, M, Q, H
+        // });
+    }
 
 }
