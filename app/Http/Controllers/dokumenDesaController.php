@@ -92,16 +92,8 @@ class dokumenDesaController extends Controller
     public function konsederan(){
         $jenis = request('jenis');
         $document = request('document');
-        $fungsi = 'konsederan_'.$jenis;
+        $fungsi = 'html_render_'.$jenis;
         $data = array();
-
-        // if ($jenis == 'rpjmdes') {
-        //     $data = DB::table('documents')->select('documents.id','documents.periode_awal','documents.periode_akhir','perangkat_desa.nama_desa as unit_kerja','perangkat_desa.nama_kepala','perangkat_desa.jabatan_kepala')->join('perangkat_desa','documents.id_perangkat','=','perangkat_desa.id')->where('documents.id',$document)->first();
-        //     $data->tabel = DB::table('verifikasi_documents')->select('verifikasi_documents.id','verifikasi_documents.verifikasi','verifikasi_documents.tindak_lanjut','master_verifikasi.indikator')->join('master_verifikasi','verifikasi_documents.id_master_verifikasi','=','master_verifikasi.id')->where('id_documents',$document)->get();
-        // }else {
-        //     $data = DB::table('documents')->select('documents.id','documents.tahun','perangkat_desa.nama_desa as unit_kerja','perangkat_desa.nama_kepala','perangkat_desa.jabatan_kepala')->join('perangkat_desa','documents.id_perangkat','=','perangkat_desa.id')->where('documents.id',$document)->first();
-        //     $data->tabel = DB::table('verifikasi_documents')->select('verifikasi_documents.id','verifikasi_documents.verifikasi','verifikasi_documents.tindak_lanjut','master_verifikasi.indikator')->join('master_verifikasi','verifikasi_documents.id_master_verifikasi','=','master_verifikasi.id')->where('id_documents',$document)->get();
-        // }
 
         $data = DB::table('documents')->select('documents.id','documents.tahun','documents.periode_awal','documents.periode_akhir','documents.nomor_konsederan','perangkat_desa.nama_desa as unit_kerja','user.nama_lengkap as nama_verifikator','user.nip as nip_verifikator','user.nama_lengkap as nama_user')->join('perangkat_desa','documents.id_perangkat','=','perangkat_desa.id')->join('user','documents.id_verifikator','=','user.id')->where('documents.id',$document)->first();
         $data->tabel = DB::table('verifikasi_documents')->select('verifikasi_documents.id','verifikasi_documents.verifikasi','verifikasi_documents.tindak_lanjut','master_verifikasi.indikator')->join('master_verifikasi','verifikasi_documents.id_master_verifikasi','=','master_verifikasi.id')->where('id_documents',$document)->get();
@@ -116,20 +108,14 @@ class dokumenDesaController extends Controller
         return $this->{$fungsi}($data);
     }
 
+    public function html_render_rpjmdes($data){
+        $html = '';
+        $html .= '<h4 style="text-align:center">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA (RPJMDes) <br> Desa </h4>';
+        return $html;
+    }
+
     public function konsederan_rpjmdes($data){
-
-
-
         $spreadsheet = new Spreadsheet();
-
-        // $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-
-        $qr_code = QrCode::size(100)->generate('A basic example of QR code!');
-
-        $qr_fix = trim(str_replace('<?xml version="1.0" encoding="UTF-8"?>','',$qr_code));
-
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
-
         $spreadsheet->getProperties()->setCreator('AFILA')
             ->setLastModifiedBy('AFILA')
             ->setTitle('Konsederan RKPMDes '.$data->unit_kerja.'')
@@ -186,7 +172,7 @@ class dokumenDesaController extends Controller
       ")->mergeCells('D12:G12');
 
       //$sheet->setCellValue('A12', " ")->mergeCells('A12:G12');
-      $sheet->setCellValue('A13', "KEDUA")->mergeCells('A13:B13');
+      $sheet->setCellValue('A13', 'KEDUA')->mergeCells('A13:B13');
       $sheet->setCellValue('C13', "Melakukan penyempurnaan RPJM Desa Periode ".$data->periode_awal.' - '.$data->periode_akhir." Berdasarkan  hasil verifikasi, meliputi :")->mergeCells('C13:G13');
       $sheet->setCellValue('C14', "1. "); 
       $sheet->setCellValue('D14', "Penyempurnaan RPJM Desa sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini;")->mergeCells('D14:G14');
@@ -217,7 +203,7 @@ class dokumenDesaController extends Controller
       $sheet->getStyle('F27')->getFont()->setUnderline(true);
       $sheet->setCellValue('F27', $data->nama_user)->mergeCells('F27:G27');
       //$sheet->setCellValue('F28', $data->nip_user)->mergeCells('F28:G28');
-      $sheet->setCellValue('A29', $qr_fix)->mergeCells('A29:G29');
+      $sheet->setCellValue('A29', '')->mergeCells('A29:G29');
       
 
     //    return QrCode::size(500)->generate('sdfsdfsdf');

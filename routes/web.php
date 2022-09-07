@@ -14,6 +14,7 @@ use App\Http\Controllers\dokumenOpdController;
 use App\Http\Controllers\pengaturanController;
 use App\Http\Controllers\alokasiDesaController;
 use App\Http\Controllers\makroController;
+use App\Http\Controllers\publicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,9 @@ Route::post('/login', [AuthController::class, 'do_login'])->name('do_login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/set-tahun-penganggaran', [generalController::class, 'setTahunAnggaran'])->name('set-tahun-penganggaran');
 Route::get('/', [generalController::class, 'index'])->name('index');
+Route::get('/detail-dokumen', [publicController::class, 'detailDokuments']);
+Route::get('/tes-html', [dokumenDesaController::class, 'html_render']);
+
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['check_auth:1']], function () {
         Route::get('/dashboard-admin', [DashboardController::class, 'dashboard_admin'])->name('dashboard.admin');
