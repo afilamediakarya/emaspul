@@ -309,7 +309,7 @@ $mpdf->Output();
         $html = '';
         $qrcode=QrCode::size(120)->generate('https://langitmaspul.enrekangkab.go.id/detail-dokumen?document='.$document.'&jenis='.$jenis);
         
-        $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RANCANGAN RENCANA KERJA PEMERINTAH <br> (RKPDes) DESA '.strtoupper($data->unit_kerja).'<br> KABUPATEN ENREKANG TAHUN '.$data->tahun.'<hr></h4>';
+        $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RANCANGAN RENCANA KERJA PEMERINTAH DESA  <br> (RKPDes) '.strtoupper($data->unit_kerja).'<br> KABUPATEN ENREKANG TAHUN '.$data->tahun.'<hr></h4>';
 
         $html .= "<h4 style='text-align:center; line-height: -20pt;'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
 
@@ -415,7 +415,7 @@ $mpdf->SetHTMLFooter('<hr>
 $mpdf->WriteHTML($html);
 $mpdf->AddPage();
 
-$html2 = '<h4 style="text-align:center; line-height: 15pt;">LAMPIRAN VERIFIKASI RENCANA KERJA PEMERINTAH DESA <br> (RKP DESA) '.strtoupper($data->unit_kerja).'KABUPATEN ENREKANG PERIODE '.$data->tahun.'<hr></h4>';
+$html2 = '<h4 style="text-align:center; line-height: 15pt;">LAMPIRAN VERIFIKASI RENCANA KERJA PEMERINTAH DESA <br> (RKP DESA) '.strtoupper($data->unit_kerja).'<b> KABUPATEN ENREKANG TAHUN '.$data->tahun.'<hr></h4>';
 
 $html2 .='      
 <table border="1" style="border-collapse:collapse; width:100%;">
