@@ -199,7 +199,7 @@ class dokumenDesaController extends Controller
     
 </table>';
 
-$mpdf = new \Mpdf\Mpdf();
+$mpdf = New \Mpdf\Mpdf(['tempDir'=>storage_path('tempdir')]);
 
 $mpdf->adjustFontDescLineheight = 1.5;
 
