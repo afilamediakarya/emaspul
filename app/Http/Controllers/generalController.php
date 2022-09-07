@@ -147,9 +147,9 @@ class generalController extends Controller
                 $other_query = "AND documents.id_perangkat =".Auth::user()->id_unit_kerja;
             }
 
-            if (Auth::user()->id_role == 4) {
-                $queryByBidang = "INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat";
-            }
+            // if (Auth::user()->id_role == 4) {
+            //     $queryByBidang = "INNER JOIN unit_bidang_verifikasi ON unit_bidang_verifikasi.id_perangkat = documents.id_perangkat";
+            // }
 
             $query_range = "";
             if ($jenis == 1) {
@@ -159,8 +159,9 @@ class generalController extends Controller
             }
 
             $result = DB::select("SELECT documents.id,documents.nama_documents,documents.periode_awal,documents.periode_akhir,documents.file_document,documents.status_document,documents.jenis_document,documents.id_verifikator, (SELECT perangkat_desa.nama_desa FROM perangkat_desa INNER JOIN user ON user.`id_unit_kerja`=perangkat_desa.`id` WHERE user.`id` = documents.`user_insert`) AS nama_desa, (SELECT user.nama_lengkap FROM user WHERE documents.id_verifikator = user.id) AS verifikator FROM documents ".$queryByBidang." where jenis_document=".$jenis." ".$other_query." ".$query_range);
-            $tes = [];
 
+         
+            $tes = [];
 
             if (Auth::user()->id_role == 4) {
                 foreach ($result as $key => $value) {
