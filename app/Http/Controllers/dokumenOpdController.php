@@ -127,71 +127,71 @@ class dokumenOpdController extends Controller
 
                 $html = '';
 
-                $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RANCANGAN AWAL RENCANA STRATEGIS (RENSTRA) <br>'.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
+                $html .= '<h4 style="text-align:center; line-height: 12pt;">BERITA ACARA <br> HASIL VERIFIKASI RANCANGAN AWAL RENCANA STRATEGIS (RENSTRA) <br>'.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
 
                 $html .= "<h4 style='text-align:center; line-height: -20pt;'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
 
-                $html .= '<p style="text-align:justify" line-height: 15pt; style="text-indent: 45px;">
+                $html .= '<p style="text-align:justify" line-height: 12pt; style="text-indent: 45px;">
                 Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Rancangan awal Renstra PD '.$data->unit_kerja.' Kabupaten Enrekang Periode '.$data->periode_awal.' - '.$data->periode_akhir.', sebagai berikut : </p>';
 
                 $html .= '<p style="text-align:justify" style="text-indent: 45px;"> Setelah dilakukan verifikasi rancangan awal Renstra maka disepakati : </p>';
 
-                $html .= "<table style='vertical-align: text-top; line-height: 15pt;'>
+                $html .= "<table style='vertical-align: text-top; line-height: 12pt;'>
                 <tr>
                     <td style='width: 18%;'>KESATU</td>
-                    <td style='text-align: justify;  line-height: 15pt;'>
+                    <td style='text-align: justify;  line-height: 12pt;'>
                     Sistematika penulisan Renstra agar disesuaikan dengan ketentuan Peraturan Menteri Dalam Negeri Republik Indonesia Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi Pembangunan Daerah, Tata Cara Evaluasi Rancangan Peraturan Daerah tentang RPJPD dan RPJMD, serta Tata Cara Perubahan RPJPD, RPJMD, dan Rencana Kerja Pemerintah Daerah, paling sedikit memuat :
                     
                         <table>
                             <tr>
                             <td style='vertical-align: text-top;'>1. </td>
-                            <td style='text-align: justify;  line-height: 15pt;'>Pendahuluan;</td>
+                            <td style='text-align: justify;  line-height: 12pt;'>Pendahuluan;</td>
                             </tr>
                             <tr>
                             <td style='vertical-align: text-top;'>2. </td>
-                            <td style='text-align: justify;  line-height: 15pt;'>Gambaran Pelayanan Perangkat Daerah;</td>
+                            <td style='text-align: justify;  line-height: 12pt;'>Gambaran Pelayanan Perangkat Daerah;</td>
                             </tr>
                             <tr>
                             <td style='vertical-align: text-top;'>3. </td>
-                            <td style='text-align: justify;  line-height: 15pt;'>Permasalahan dan Isu Isu Strategis Perangkat Daerah</td>
+                            <td style='text-align: justify;  line-height: 12pt;'>Permasalahan dan Isu Isu Strategis Perangkat Daerah</td>
                             </tr>
                             <tr>
                             <td style='vertical-align: text-top;'>4. </td>
-                            <td style='text-align: justify;  line-height: 15pt;'>Tujuan dan Sasaran Perangkat Daerah;</td>
+                            <td style='text-align: justify;  line-height: 12pt;'>Tujuan dan Sasaran Perangkat Daerah;</td>
                             </tr>
                             <tr>
                             <td style='vertical-align: text-top;'>5. </td>
-                            <td style='text-align: justify;  line-height: 15pt;'>Rencana Program dan Kegiatan serta  Pendanaan;</td>
+                            <td style='text-align: justify;  line-height: 12pt;'>Rencana Program dan Kegiatan serta  Pendanaan;</td>
                             </tr>
                             <tr>
                             <td style='vertical-align: text-top;'>6. </td>
-                            <td style='text-align: justify;  line-height: 15pt;'>Kinerja Penyelenggaran Bidang Urusan; dan</td>
+                            <td style='text-align: justify;  line-height: 12pt;'>Kinerja Penyelenggaran Bidang Urusan; dan</td>
                             </tr>
                             <tr>
                             <td style='vertical-align: text-top;'>7. </td>
-                            <td style='text-align: justify;  line-height: 15pt;'>Penutup.</td>
+                            <td style='text-align: justify;  line-height: 12pt;'>Penutup.</td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <tr>
                     <td>KEDUA</td>
-                    <td style='text-align:justify line-height: 15pt;'>Melakukan penyempurnaan rancangan Renstra Tahun periode ".$data->periode_awal.'-'.$data->periode_akhir." Berdasarkan  hasil verifikasi, meliputi :
+                    <td style='text-align:justify line-height: 12pt;'>Melakukan penyempurnaan rancangan Renstra Tahun periode ".$data->periode_awal.'-'.$data->periode_akhir." Berdasarkan  hasil verifikasi, meliputi :
                             <table>
                             <tr>
                             <td style='vertical-align: text-top; '>1. </td>
-                            <td style='text-align: justify; line-height: 15pt;'>Penyempurnaan rancangan Renstra sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini;</td>
+                            <td style='text-align: justify; line-height: 12pt;'>Penyempurnaan rancangan Renstra sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini;</td>
                             </tr>
                             <tr>
                             <td style='vertical-align: text-top; '>2. </td>
-                            <td style='text-align: justify; line-height: 15pt;'>Penyempurnaan matrik Rumusan Rencana Program dan Kegiatan Perangkat Daerah periode ".$data->periode_awal.'-'.$data->periode_akhir." melalui portal https://emonev.enrekangkab.go.id/</td>
+                            <td style='text-align: justify; line-height: 12pt;'>Penyempurnaan matrik Rumusan Rencana Program dan Kegiatan Perangkat Daerah periode ".$data->periode_awal.'-'.$data->periode_akhir." melalui portal https://emonev.enrekangkab.go.id/</td>
                             </tr>
                         </table>
                     </td>
                 </tr>
                 <tr>
                     <td>KETIGA</td>
-                    <td style='text-align:justify line-height: 15pt;'>Melakukan Upload Dokumen perbaikan hasil verifikasi Rancangan Akhir Renstra periode ".$data->periode_awal.'-'.$data->periode_akhir." melalui portal https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF.
+                    <td style='text-align:justify line-height: 12pt;'>Melakukan Upload Dokumen perbaikan hasil verifikasi Rancangan Akhir Renstra periode ".$data->periode_awal.'-'.$data->periode_akhir." melalui portal https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF.
                             
                     </td>
                 </tr>
@@ -243,27 +243,20 @@ class dokumenOpdController extends Controller
         $mpdf->WriteHTML($html);
         $mpdf->AddPage();
 
-        $html2 = '<h4 style="text-align:center; line-height: 15pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
+        $html2 = '<h4 style="text-align:center; line-height: 12pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
 
         $html2 .='      
 <table border="1" style="border-collapse:collapse; width:100%;">
     <thead>
     <tr>
-        <th style=" line-height: 15pt; width:5%;" rowspan="2" >NO.</th>
-        <th style=" line-height: 15pt; width:45%;" rowspan="2">INDIKATOR</th>
-        <th style=" line-height: 15pt; width:20%;" colspan="2">KESESUAIAN</th>
-        <th style="text-align: center; width:30%;  line-height: 15pt;" rowspan="2">TINDAK LANJUT</th>
+        <th style=" line-height: 12pt; width:5%;" rowspan="2" >NO.</th>
+        <th style=" line-height: 12pt; width:45%;" rowspan="2">INDIKATOR</th>
+        <th style=" line-height: 12pt; width:20%;" colspan="2">KESESUAIAN</th>
+        <th style="text-align: center; width:30%;  line-height: 12pt;" rowspan="2">TINDAK LANJUT</th>
     </tr>
     <tr>
-        <th style=" line-height: 15pt;" >YA</th>
-        <th style=" line-height: 15pt;" >TIDAK</th>
-    </tr>
-    <tr>
-        <td style="vertical-align: text-top; line-height: 15pt;">1.</td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-        <td style="text-align: center; line-height: 15pt;"></td>
+        <th style=" line-height: 12pt;" >YA</th>
+        <th style=" line-height: 12pt;" >TIDAK</th>
     </tr>
     </thead>
               
@@ -274,7 +267,7 @@ $icons1 = '';
 $icons2 = '';
 foreach ( $data->tabel as $i => $row ){
     $html2 .='<tr>';
-    $html2 .='<td>'.$i.'</td>';
+    $html2 .='<td>'.++$i.'</td>';
     $html2 .='<td>'.$row->indikator.'</td>';
     if ($row->verifikasi==1){
         $icons1 ='<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -288,6 +281,7 @@ foreach ( $data->tabel as $i => $row ){
         </clipPath>
         </defs>
         </svg>';
+        $icons2 = '';
     }
     else{
         $icons2 ='<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -301,9 +295,10 @@ foreach ( $data->tabel as $i => $row ){
         </clipPath>
         </defs>
         </svg>';
+        $icons1 = '';
     }
-    $html2 .='<td>'.$icons1.'</td>';
-    $html2 .='<td>'.$icons2.'</td>';
+    $html2 .='<td style="text-align: center;>'.$icons1.'</td>';
+    $html2 .='<td style="text-align: center;>'.$icons2.'</td>';
     $html2 .='<td>'.$row->tindak_lanjut.'</td>';
     $html2 .='</tr>';
 }
@@ -331,40 +326,40 @@ $html2 .= '</table>';
          
         $html = '';
 
-        $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->tahun.'<hr></h4>';
+        $html .= '<h4 style="text-align:center; line-height: 12pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->tahun.'<hr></h4>';
 
         $html .= "<h4 style='text-align:center; line-height: -20pt;'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
 
-        $html .= '<p style="text-align:justify" line-height: 15pt; style="text-indent: 45px;">
+        $html .= '<p style="text-align:justify" line-height: 12pt; style="text-indent: 45px;">
         Pada hari ini '.$data->hari.', tanggal '.$data->tanggal.' Bulan '.$data->bulan.' tahun '.$data->tahun.' telah dilaksanakan verifikasi terhadap Rancangan awal Renja  '.$data->unit_kerja.' Kabupaten Enrekang Periode '.$data->tahun.', sebagai berikut : </p>';
 
         $html .= '<p style="text-align:justify" style="text-indent: 45px;"> Setelah dilakukan verifikasi rancangan awal Renja maka disepakati : </p>';
 
-        $html .= "<table style='vertical-align: text-top; line-height: 15pt;'>
+        $html .= "<table style='vertical-align: text-top; line-height: 12pt;'>
         <tr>
             <td style='width: 18%;'>KESATU</td>
-            <td style='text-align: justify;  line-height: 15pt;'>Sistematika penulisan Renja agar disesuaikan dengan ketentuan Peraturan Menteri Dalam Negeri Republik Indonesia Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi Pembangunan Daerah, Tata Cara Evaluasi Rancangan Peraturan Daerah tentang RPJPD dan RPJMD, serta Tata Cara Perubahan RPJPD, RPJMD, dan Rencana Kerja Pemerintah Daerah, paling sedikit memuat :
+            <td style='text-align: justify;  line-height: 12pt;'>Sistematika penulisan Renja agar disesuaikan dengan ketentuan Peraturan Menteri Dalam Negeri Republik Indonesia Nomor 86 Tahun 2017 tentang Tata Cara Perencanaan, Pengendalian dan Evaluasi Pembangunan Daerah, Tata Cara Evaluasi Rancangan Peraturan Daerah tentang RPJPD dan RPJMD, serta Tata Cara Perubahan RPJPD, RPJMD, dan Rencana Kerja Pemerintah Daerah, paling sedikit memuat :
             
                 <table>
                     <tr>
                     <td style='vertical-align: text-top;'>1. </td>
-                    <td style='text-align: justify;  line-height: 15pt;'>Pendahuluan;</td>
+                    <td style='text-align: justify;  line-height: 12pt;'>Pendahuluan;</td>
                     </tr>
                     <tr>
                     <td style='vertical-align: text-top;'>2. </td>
-                    <td style='text-align: justify;  line-height: 15pt;'>Hasil Evaluasi Renja Perangkat Daerah tahun lalu;</td>
+                    <td style='text-align: justify;  line-height: 12pt;'>Hasil Evaluasi Renja Perangkat Daerah tahun lalu;</td>
                     </tr>
                     <tr>
                     <td style='vertical-align: text-top;'>3. </td>
-                    <td style='text-align: justify;  line-height: 15pt;'>Tujuan dan Sasaran Perangkat Daerah;</td>
+                    <td style='text-align: justify;  line-height: 12pt;'>Tujuan dan Sasaran Perangkat Daerah;</td>
                     </tr>
                     <tr>
                     <td style='vertical-align: text-top;'>4. </td>
-                    <td style='text-align: justify;  line-height: 15pt;'>Rencana Kerja dan Pendanaan Perangkat Daerah; dan</td>
+                    <td style='text-align: justify;  line-height: 12pt;'>Rencana Kerja dan Pendanaan Perangkat Daerah; dan</td>
                     </tr>
                     <tr>
                     <td style='vertical-align: text-top;'>5. </td>
-                    <td style='text-align: justify;  line-height: 15pt;'>Penutup.</td>
+                    <td style='text-align: justify;  line-height: 12pt;'>Penutup.</td>
                     </tr>
                     
                 </table>
@@ -372,22 +367,23 @@ $html2 .= '</table>';
         </tr>
         <tr>
             <td>KEDUA</td>
-            <td style='text-align:justify line-height: 15pt;'>Melakukan penyempurnaan rancangan Renja Tahun ".($data->tahun+1)." Berdasarkan  hasil verifikasi, meliputi :
+            <td style='text-align:justify line-height: 12pt;'>Melakukan penyempurnaan rancangan Renja Tahun ".($data->tahun+1)." Berdasarkan  hasil verifikasi, meliputi :
                     <table>
                     <tr>
                     <td style='vertical-align: text-top; '>1. </td>
-                    <td style='text-align: justify; line-height: 15pt;'>Penyempurnaan rancangan Renja sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini;</td>
+                    <td style='text-align: justify; line-height: 12pt;'>Penyempurnaan rancangan Renja sesuai saran dan masukan Tim Verifikasi sebagaimana tersebut pada formulir verifikasi terlampir yang merupakan bagian tidak terpisahkan dari Berita Acara ini;</td>
                     </tr>
                     <tr>
                     <td style='vertical-align: text-top; '>2. </td>
 
-                    <td style='text-align: justify; line-height: 15pt;'>Penyempurnaan matrik Rumusan Rencana Program dan Kegiatan Perangkat Daerah Tahun ".($data->tahun+1)." dan Prakiraan Maju Tahun ".($data->tahun+2)." melalui portal https://enrekangkab.sipd.kemendagri.go.id/</td>
+                    <td style='text-align: justify; line-height: 12pt;'>Penyempurnaan matrik Rumusan Rencana Program dan Kegiatan Perangkat Daerah Tahun ".($data->tahun+1)." dan Prakiraan Maju Tahun ".($data->tahun+2)." melalui portal https://enrekangkab.sipd.kemendagri.go.id/</td>
                     </tr>
                 </table>
             </td>
+            <tr>
             <td>KETIGA</td>
-            <td style='text-align:justify line-height: 15pt;'>Melakukan Upload Dokumen perbaikan hasil verifikasi Rancangan Akhir Renja Tahun ".($data->tahun+1)." melalui portal https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF.
-                    
+            <td style='text-align:justify line-height: 12pt;'>Melakukan Upload Dokumen perbaikan hasil verifikasi Rancangan Akhir Renja Tahun ".($data->tahun+1)." melalui portal https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF.
+            </tr>     
             </td>
         </tr>
     </table>";
@@ -438,27 +434,20 @@ $mpdf->SetHTMLFooter('<hr>
 $mpdf->WriteHTML($html);
 $mpdf->AddPage();
 
-$html2 = '<h4 style="text-align:center; line-height: 15pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
+$html2 = '<h4 style="text-align:center; line-height: 12pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
 
 $html2 .='      
 <table border="1" style="border-collapse:collapse; width:100%;">
     <thead>
     <tr>
-        <th style=" line-height: 15pt; width:5%;" rowspan="2" >NO.</th>
-        <th style=" line-height: 15pt; width:45%;" rowspan="2">INDIKATOR</th>
-        <th style=" line-height: 15pt; width:20%;" colspan="2">KESESUAIAN</th>
-        <th style="text-align: center; width:30%;  line-height: 15pt;" rowspan="2">TINDAK LANJUT</th>
+        <th style=" line-height: 12pt; width:5%;" rowspan="2" >NO.</th>
+        <th style=" line-height: 12pt; width:45%;" rowspan="2">INDIKATOR</th>
+        <th style=" line-height: 12pt; width:20%;" colspan="2">KESESUAIAN</th>
+        <th style="text-align: center; width:30%;  line-height: 12pt;" rowspan="2">TINDAK LANJUT</th>
     </tr>
     <tr>
-        <th style=" line-height: 15pt;" >YA</th>
-        <th style=" line-height: 15pt;" >TIDAK</th>
-    </tr>
-    <tr>
-        <td style="vertical-align: text-top; line-height: 15pt;">1.</td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-        <td style="text-align: center; line-height: 15pt;"></td>
+        <th style=" line-height: 12pt;" >YA</th>
+        <th style=" line-height: 12pt;" >TIDAK</th>
     </tr>
     </thead>
               
@@ -483,6 +472,7 @@ foreach ( $data->tabel as $i => $row ){
         </clipPath>
         </defs>
         </svg>';
+        $icons2 = '';
     }
     else{
         $icons2 ='<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -496,9 +486,10 @@ foreach ( $data->tabel as $i => $row ){
         </clipPath>
         </defs>
         </svg>';
+        $icons1 = '';
     }
-    $html2 .='<td>'.$icons1.'</td>';
-    $html2 .='<td>'.$icons2.'</td>';
+    $html2 .='<td style="text-align: center;'.$icons1.'</td>';
+    $html2 .='<td style="text-align: center;>'.$icons2.'</td>';
     $html2 .='<td>'.$row->tindak_lanjut.'</td>';
     $html2 .='</tr>';
 }

@@ -240,13 +240,6 @@ $html2 .='
         <th style=" line-height: 15pt;" >YA</th>
         <th style=" line-height: 15pt;" >TIDAK</th>
     </tr>
-    <tr>
-        <td style="vertical-align: text-top; line-height: 15pt;">1.</td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-    </tr>
     </thead>
               
 ';
@@ -256,7 +249,7 @@ $icons1 = '';
 $icons2 = '';
 foreach ( $data->tabel as $i => $row ){
     $html2 .='<tr>';
-    $html2 .='<td>'.$i.'</td>';
+    $html2 .='<td>'.++$i.'</td>';
     $html2 .='<td>'.$row->indikator.'</td>';
     if ($row->verifikasi==1){
         $icons1 ='<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -270,6 +263,7 @@ foreach ( $data->tabel as $i => $row ){
         </clipPath>
         </defs>
         </svg>';
+        $icons2 = '';
     }
     else{
         $icons2 ='<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -283,9 +277,10 @@ foreach ( $data->tabel as $i => $row ){
         </clipPath>
         </defs>
         </svg>';
+        $icons1 = '';
     }
-    $html2 .='<td>'.$icons1.'</td>';
-    $html2 .='<td>'.$icons2.'</td>';
+    $html2 .='<td style="text-align: center;>'.$icons1.'</td>';
+    $html2 .='<td style="text-align: center;>'.$icons2.'</td>';
     $html2 .='<td>'.$row->tindak_lanjut.'</td>';
     $html2 .='</tr>';
 }
@@ -433,13 +428,6 @@ $html2 .='
         <th style=" line-height: 15pt;" >YA</th>
         <th style=" line-height: 15pt;" >TIDAK</th>
     </tr>
-    <tr>
-        <td style="vertical-align: text-top; line-height: 15pt;">1.</td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-        <td style="text-align: center; line-height: 15pt;"></td>
-    </tr>
     </thead>
               
 ';
@@ -449,7 +437,7 @@ $icons1 = '';
 $icons2 = '';
 foreach ( $data->tabel as $i => $row ){
     $html2 .='<tr>';
-    $html2 .='<td>'.$i.'</td>';
+    $html2 .='<td>'.++$i.'</td>';
     $html2 .='<td>'.$row->indikator.'</td>';
     if ($row->verifikasi==1){
         $icons1 ='<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -463,6 +451,7 @@ foreach ( $data->tabel as $i => $row ){
         </clipPath>
         </defs>
         </svg>';
+        $icons2 = '';
     }
     else{
         $icons2 ='<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -476,9 +465,10 @@ foreach ( $data->tabel as $i => $row ){
         </clipPath>
         </defs>
         </svg>';
+        $icons1 = '';
     }
-    $html2 .='<td>'.$icons1.'</td>';
-    $html2 .='<td>'.$icons2.'</td>';
+    $html2 .='<td style="text-align: center;>'.$icons1.'</td>';
+    $html2 .='<td style="text-align: center;>'.$icons2.'</td>';
     $html2 .='<td>'.$row->tindak_lanjut.'</td>';
     $html2 .='</tr>';
 }
