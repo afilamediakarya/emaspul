@@ -120,7 +120,7 @@ class dokumenDesaController extends Controller
         
         $html = "";
 
-        $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJM DESA)'.strtoupper($data->unit_kerja).'<br> KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
+        $html .= '<h4 style="text-align:center; line-height: 15pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).'<br> KABUPATEN ENREKANG PERIODE '.$data->periode_awal.' - '.$data->periode_akhir.'<hr></h4>';
 
         $html .= "<h4 style='text-align:center; line-height: -20pt;'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
 
