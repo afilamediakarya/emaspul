@@ -199,7 +199,10 @@ class dokumenDesaController extends Controller
     
 </table>';
 
-$mpdf = New \Mpdf\Mpdf(['tempDir'=>storage_path('tempdir')]);
+$mpdf = new \Mpdf\Mpdf([
+	'default_font' => 'Bookman Old Style',
+    'tempDir'=>storage_path('tempdir')
+]);
 
 $mpdf->adjustFontDescLineheight = 1.5;
 
@@ -387,7 +390,8 @@ $mpdf->Output();
 </table>';
 
 $mpdf = new \Mpdf\Mpdf([
-	'default_font' => 'Bookman Old Style'
+	'default_font' => 'Bookman Old Style',
+    'tempDir'=>storage_path('tempdir')
 ]);
 $mpdf->adjustFontDescLineheight = 1.5;
 

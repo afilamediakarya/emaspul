@@ -218,7 +218,8 @@ class dokumenOpdController extends Controller
         </table>';
 
         $mpdf = new \Mpdf\Mpdf([
-            'default_font' => 'Bookman Old Style'
+            'default_font' => 'Bookman Old Style',
+            'tempDir'=>storage_path('tempdir')
         ]);
 
         $mpdf->adjustFontDescLineheight = 1.5;
@@ -409,7 +410,8 @@ $html2 .= '</table>';
 </table>';
 
 $mpdf = new \Mpdf\Mpdf([
-    'default_font' => 'Bookman Old Style'
+	'default_font' => 'Bookman Old Style',
+    'tempDir'=>storage_path('tempdir')
 ]);
 
 $mpdf->adjustFontDescLineheight = 1.5;
