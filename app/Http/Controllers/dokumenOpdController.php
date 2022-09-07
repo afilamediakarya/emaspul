@@ -244,7 +244,7 @@ class dokumenOpdController extends Controller
         $mpdf->WriteHTML($html);
         $mpdf->AddPage();
 
-        $html2 = '<h4 style="text-align:center; line-height: 12pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
+        $html2 = '<h4 style="text-align:center; line-height: 12pt;">FORMULIR VERIFIKASI RANCANGAN AWAL RENCANA STRATEGIS (RENSTRA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
 
         $html2 .='      
 <table border="1" style="border-collapse:collapse; width:100%;">
@@ -311,7 +311,7 @@ $html2 .= '</table>';
         //$mpdf->SetFooter('Halaman {PAGENO} dari {nb} ');
 
 
-        $mpdf->SetTitle('Berita Acara Hasil Verifikasi RPJMDes '.$data->unit_kerja.'');
+        $mpdf->SetTitle('Berita Acara Hasil Verifikasi Renstra '.$data->unit_kerja.'');
         $mpdf->Output();
 
 
@@ -327,7 +327,7 @@ $html2 .= '</table>';
          
         $html = '';
 
-        $html .= '<h4 style="text-align:center; line-height: 12pt;">BERITA ACARA <br> HASIL VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENEGAH DESA <br> (RPJMDes) <br> DESA '.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->tahun.'<hr></h4>';
+        $html .= '<h4 style="text-align:center; line-height: 12pt;">BERITA ACARA <br> HASIL VERIFIKASI RANCANGAN RENCANA KERJA<br>'.strtoupper($data->unit_kerja).' KABUPATEN ENREKANG PERIODE '.$data->tahun.'<hr></h4>';
 
         $html .= "<h4 style='text-align:center; line-height: -20pt;'>NOMOR : ".strtoupper($data->nomor_konsederan)."</h4>";
 
@@ -436,7 +436,7 @@ $mpdf->SetHTMLFooter('<hr>
 $mpdf->WriteHTML($html);
 $mpdf->AddPage();
 
-$html2 = '<h4 style="text-align:center; line-height: 12pt;">FORMULIR VERIFIKASI RENCANA PEMBANGUNAN JANGKA MENENGAH DESA <br> (RPJM DESA) '.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
+$html2 = '<h4 style="text-align:center; line-height: 12pt;">FORMULIR VERIFIKASI RANCANGAN RENCANA KERJA <br>'.strtoupper($data->unit_kerja).' PERIODE '.$data->periode_awal.'-'.$data->periode_akhir.'<hr></h4>';
 
 $html2 .='      
 <table border="1" style="border-collapse:collapse; width:100%;">
@@ -543,7 +543,7 @@ return $html;
        
         // Header Text
         $sheet->setCellValue('A1', 'BERITA ACARA')->mergeCells('A1:G1');
-        $sheet->setCellValue('A2', 'HASIL VERIFIKASI RANCANGAN AWAL RENCANA STRATEGIS (RENSTRA)')->mergeCells('A2:G2');
+        $sheet->setCellValue('A2', 'HASIL VERIFIKASI RANCANGAN RENCANA STRATEGIS (RENSTRA)')->mergeCells('A2:G2');
         $sheet->setCellValue('A3', ''.strtoupper($data->unit_kerja))->mergeCells('A3:G3');
         $sheet->setCellValue('A4', 'KABUPATEN ENREKANG PERIODE '.$data->periode_awal.'-'.$data->periode_akhir)->mergeCells('A4:G4');
         $border = [
