@@ -192,14 +192,10 @@ class dokumenDesaController extends Controller
     
 </table>';
 
-<<<<<<< Updated upstream
 $mpdf = new \Mpdf\Mpdf([
 	'default_font' => 'Bookman Old Style'
 ]);
-=======
 
-$mpdf = new \Mpdf\Mpdf();
->>>>>>> Stashed changes
 $mpdf->adjustFontDescLineheight = 1.5;
 
 $mpdf->SetHTMLFooter('<hr>
