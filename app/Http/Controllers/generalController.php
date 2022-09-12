@@ -244,7 +244,8 @@ class generalController extends Controller
                     if (strpos($value->nama_documents, 'Renstra') !== false || strpos($value->nama_documents, 'Renja') !== false) {
                         $value->unit_kerja = DB::table('unit_kerja')->select('unit_kerja.nama_unit_kerja')->join('user','user.id_unit_kerja','=','unit_kerja.id')->where('user.id',$value->user_insert)->first()->nama_unit_kerja;
                     }else{
-                        $value->unit_kerja = DB::table('perangkat_desa')->select('perangkat_desa.nama_desa')->join('user','user.id_unit_kerja','=','perangkat_desa.id')->where('user.id',$value->user_insert)->first()->nama_desa;
+                        $value->unit_kerja = DB::table('perangkat_desa')->select('perangkat_desa.nama_desa AS nama_unit_kerja')->join('user','user.id_unit_kerja','=','perangkat_desa.id')->where('user.id',$value->user_insert)->first();
+                        
                         
                     }
                 }
@@ -503,7 +504,6 @@ class generalController extends Controller
             ],200);
         }else {
             $uploadedFile = $request->file('file');
-            return DB::table('unit_kerja')->where('id',Auth::user()->id_unit_kerja)->first();
 
             if (Auth::user()->id_role == 2 || Auth::user()->id_role == 3) {
                 $numb_inc = Auth::user()->id_unit_kerja;

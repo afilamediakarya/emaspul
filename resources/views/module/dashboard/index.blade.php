@@ -228,7 +228,7 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                 }  
             },{
-                data:'unit_kerja'
+                data:null,
             },{
                 data:'nama_documents'
             },{
@@ -240,6 +240,17 @@
             }
         ];
         let columnDefs = [
+            {
+                targets: 1,
+                render: function(data, type, full, meta) {
+                    if (data.jenis_document == 1 || data.jenis_document == 2) {
+                        return data.unit_kerja['nama_unit_kerja']; 
+                    }else{
+                        return data.unit_kerja; 
+                    }
+                    
+                }
+            },
             {
                 targets: 3,
                 render: function(data, type, full, meta) {
