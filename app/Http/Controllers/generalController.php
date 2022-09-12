@@ -461,7 +461,7 @@ class generalController extends Controller
         $data = array();
         $status_document = 0;
         $jenis_document = 0;
-
+        $numb_inc = 0;
 
         if ($type == 'type_a') {
             $status_document = 4;
@@ -503,8 +503,15 @@ class generalController extends Controller
             ],200);
         }else {
             $uploadedFile = $request->file('file');
+            return DB::table('unit_kerja')->where('id',Auth::user()->id_unit_kerja)->first();
+
+            if (Auth::user()->id_role == 2 || Auth::user()->id_role == 3) {
+                $numb_inc = Auth::user()->id_unit_kerja;
+            }else{
+                $numb_inc = 0;
+            }
         
-            $filename = '0_'.$request->referensi_nama_dokumen.'_'.Str::slug($request->nama_documents, '_').'_'.$jenis.'_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
+            $filename = $numb_inc.'_'.$request->referensi_nama_dokumen.'_'.Str::slug($request->nama_documents, '_').'_'.$jenis.'_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
 
             Storage::disk('public')->putFileAs(
             '/files/'.$request->referensi_nama_dokumen.'/'.$jenis,
