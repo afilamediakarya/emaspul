@@ -101,7 +101,10 @@ class generalController extends Controller
     }
 
     public function setTahunAnggaran(){
+        // return request('tahun');
         session(['tahun_penganggaran' => request('tahun')]);
+        // return session('tahun_penganggaran');
+        // session(['key' => 'value']);
         return redirect()->back();
     }
 
@@ -574,6 +577,7 @@ class generalController extends Controller
 
         $status_document = 0;
         $jenis_document = 0;
+        $numb_inc = 0;
 
         if ($type == 'type_a') {
             $status_document = 4;
@@ -616,8 +620,15 @@ class generalController extends Controller
         $data->user_insert = Auth::user()->id;
         if (isset($request->file)) {
             $uploadedFile = $request->file('file');
+       
+            if (Auth::user()->id_role == 2 || Auth::user()->id_role == 3) {
+                $numb_inc = Auth::user()->id_unit_kerja;
+            }else{
+                $numb_inc = 0;
+            }
         
-            $filename = '0_'.$request->referensi_nama_dokumen.'_'.Str::slug($request->nama_documents, '_').'_'.$jenis.'_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
+            $filename = $numb_inc.'_'.$request->referensi_nama_dokumen.'_'.Str::slug($request->nama_documents, '_').'_'.$jenis.'_'.session('tahun_penganggaran').'.'.$uploadedFile->getClientOriginalExtension();
+            
       
             Storage::disk('public')->putFileAs(
             '/files/'.$request->referensi_nama_dokumen.'/'.$jenis,

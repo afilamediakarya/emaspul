@@ -140,7 +140,7 @@ License: For each use you must have a valid license purchased only from above li
 											<label for="year_" class="col-form-label">Tahun Anggaran</label>
 										</div>
 										<div class="col-auto">
-											<input type="text" id="year_" value="{{Session::get('tahun_penganggaran')}}" class="form-control form-control-solid datepicker">
+											<input type="text" id="year_" value="{{session('tahun_penganggaran')}}" class="form-control form-control-solid datepicker">
 										</div>
 										
 									</div>
