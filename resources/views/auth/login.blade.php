@@ -53,9 +53,7 @@
 				<!--begin::Body-->
 				<div class="d-flex flex-column flex-lg-row-fluid py-10">
 					<!--begin::Content-->
-					<a href="javascript:;">
-								<img alt="Logo" src="{{ asset('assets/media/logo/logo_front.png') }}" class="logo_md" />
-							</a>
+					
 					<div class="d-flex flex-center flex-column flex-column-fluid">
 					
 						<!--begin::Wrapper-->
@@ -63,12 +61,17 @@
 						
 							<!--begin::Form-->
 							<form class="form-data form w-100" id="form">
-							
+
 								<!--begin::Heading-->
 								<div class="text-center mb-10">
 									<!--begin::Title-->
-									<h1 class="text-dark mb-3">Selamat Datang</h1>
+									<a href="javascript:;">
+								<img alt="Logo" src="{{ asset('assets/media/logo/logo_front.png') }}" class="logo_md" />
+							</a>
 									<!--end::Title-->
+								</div>
+								<div class="fv-row mb-10">
+									<h1 class="text-dark mb-3">Selamat Datang</h1>
 								</div>
 								<!--begin::Heading-->
 								<!--begin::Input group-->
