@@ -38,7 +38,9 @@
 							</a>
 
                            <p class="text_label_logo mt-10">LAYANAN DIGITAL IMPLEMENTASI SISTEM PERENCANAAN PEMBANGUNAN, MENUJU PERENCANAAN YANG BERKUALITAS</p>
-
+						   <a href="javascript:;">
+								<img alt="Logo" src="{{ asset('assets/media/logo/logo_front.png') }}" class="logo_md" />
+							</a>
                             <div class="text_page_logo mt-5">BAPPELITBANGDA <br> KABUPATEN ENREKANG</div>
 
                             <!-- <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url(assets/media/illustrations/background_bottom.png)"></div> -->
@@ -67,10 +69,10 @@
 									<!--begin::Title-->
 									<a href="javascript:;">
 								<img alt="Logo" src="{{ asset('assets/media/logo/logo_front.png') }}" class="logo_md" />
-							</a>
+								</a>
 									<!--end::Title-->
 								</div>
-								<div class="fv-row mb-10">
+								<div class="fv-row text-center mb-10 ">
 									<h1 class="text-dark mb-3">Selamat Datang</h1>
 								</div>
 								<!--begin::Heading-->
