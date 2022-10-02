@@ -56,11 +56,12 @@
 					<div class="d-flex flex-center flex-column flex-column-fluid">
 						<!--begin::Wrapper-->
 						<div class="w-lg-500px p-10 p-lg-15 mx-auto">
-							<!--begin::Form-->
-							<form class="form-data form w-100" id="form">
-							<a href="javascript:;">
+						<a href="javascript:;">
 								<img alt="Logo" src="{{ asset('assets/media/logo/logo_front.png') }}" class="logo_md" />
 							</a>
+							<!--begin::Form-->
+							<form class="form-data form w-100" id="form">
+							
 								<!--begin::Heading-->
 								<div class="text-center mb-10">
 									<!--begin::Title-->
