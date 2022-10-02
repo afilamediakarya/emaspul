@@ -33,13 +33,9 @@
 						<!--begin::Content-->
 						<div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
 						
-                        <a href="javascript:;">
-								<img alt="Logo" src="{{ asset('assets/media/logo/logo_front.png') }}" class="logo_md" />
-							</a>
-
-                           <p class="text_label_logo mt-10">LAYANAN DIGITAL IMPLEMENTASI SISTEM PERENCANAAN PEMBANGUNAN, MENUJU PERENCANAAN YANG BERKUALITAS</p>
+                        
 						   <a href="javascript:;">
-								<img alt="Logo" src="{{ asset('assets/media/logo/logo_front.png') }}" class="logo_md" />
+								<img alt="Logo" src="{{ asset('assets/media/logo/logo_ekg.png') }}" class="logo_md" />
 							</a>
                             <div class="text_page_logo mt-5">BAPPELITBANGDA <br> KABUPATEN ENREKANG</div>
 
@@ -74,6 +70,9 @@
 								</div>
 								<div class="fv-row text-center mb-10 ">
 									<h1 class="text-dark mb-3">Selamat Datang</h1>
+								</div>
+								<div class="fv-row text-center mb-10 ">
+									<h2 class="text-dark mb-3">LAYANAN DIGITAL IMPLEMENTASI SISTEM PERENCANAAN PEMBANGUNAN, MENUJU PERENCANAAN YANG BERKUALITAS</h2>
 								</div>
 								<!--begin::Heading-->
 								<!--begin::Input group-->
