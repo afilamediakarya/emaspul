@@ -53,10 +53,11 @@
 				<!--begin::Body-->
 				<div class="d-flex flex-column flex-lg-row-fluid py-10">
 					<!--begin::Content-->
-					<div class="d-flex flex-center flex-column flex-column-fluid">
 					<a href="javascript:;">
 								<img alt="Logo" src="{{ asset('assets/media/logo/logo_front.png') }}" class="logo_md" />
 							</a>
+					<div class="d-flex flex-center flex-column flex-column-fluid">
+					
 						<!--begin::Wrapper-->
 						<div class="w-lg-500px p-10 p-lg-15 mx-auto">
 						
