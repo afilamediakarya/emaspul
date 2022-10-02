@@ -37,9 +37,9 @@
 						   <a href="javascript:;">
 								<img alt="Logo" src="{{ asset('assets/media/logo/logo_ekg.png') }}" class="logo_md" />
 							</a>
-                            <div class="text_page_logo mt-5">BAPPELITBANGDA <br> KABUPATEN ENREKANG</div>
+                            <div class="text_page_logo m-10">BAPPELITBANGDA <br> KABUPATEN ENREKANG</div>
 
-                            <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url(assets/media/illustrations/background_bottom.png)"></div> -->
+                            <div class="mt-100 d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url(assets/media/illustrations/background_bottom.png)"></div> -->
                             <!--<img class="background_bottom" src="{{ asset('assets/media/illustrations/background_bottom.png') }}" >-->
 
 						</div>
