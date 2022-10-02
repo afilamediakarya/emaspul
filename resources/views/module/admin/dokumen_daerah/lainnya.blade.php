@@ -93,7 +93,7 @@
                 <input type="hidden" name="id">
                 <div class="mb-10">
                     <label class="form-label">Nama Dokumen</label>
-                    <input type="text" id="nama_documents" class="form-control form-control-solid" name="nama_documents" placeholder="Masukkan Nama Dokumen">
+                    <input type="text" id="nama_documents" class="form-control form-control-solid" name="nama_documents" placeholder="Masukkan Nama Dokumen" required>
                     <small class="text-danger nama_documents_error"></small>
                 </div>
                 <input type="hidden" name="referensi_nama_dokumen" id="referensi_nama_dokumen" value="dokumen_daerah">

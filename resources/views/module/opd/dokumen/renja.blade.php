@@ -103,7 +103,7 @@
                 <input type="hidden" name="id">
                 <div class="mb-10">
                     <label class="form-label">Nama Dokumen</label>
-                    <select name="nama_documents" class="form-control form-control-solid" id="nama_documents">
+                    <select name="nama_documents" class="form-control form-control-solid" id="nama_documents" required>
                         <option selected disabled>Pilih Nama Dokumen</option>
                         <option value="Dokumen Renja Pokok">Dokumen Renja Pokok</option>
                         <option value="Dokumen Renja Perubahan">Dokumen Renja Perubahan</option>
