@@ -170,7 +170,7 @@ class dokumenDesaController extends Controller
                     <td style='vertical-align: text-top; '>2. </td>
 
                     <td style='text-align: justify; line-height: 15pt;'>Melakukan Upload Dokumen perbaikan atas hasil verifikasi RPJM Desa
-                    .$data->unit_kerja. Periode .$data->periode_awal. - .$data->periode_akhir. melalui portal
+                    $data->unit_kerja Periode $data->periode_awal - $data->periode_akhir. melalui portal
                     https://langitmaspul.enrekangkab.go.id/ dalam bentuk PDF.</td>
                     </tr>
                 </table>
